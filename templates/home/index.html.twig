@@ -1,6 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Hello !</h1>
+    <div class="container-md">
+        <h1>Hello !</h1>
+
+        <div class="row">
+
+            {% for groupe in groupes %}
+                <div class="col-sm-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ groupe.name }}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                Crée par :{{ groupe.creator.firstName }} {{ groupe.creator.lastName }} (Id : {{ groupe.creator.id }})
+                            </h6>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {% for member in groupe.members %}
+                                <li class="list-group-item">
+                                    {{ member.firstName }} {{ member.lastName }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+
+        </div>
+
+
+
+    </div>
+
+
 
 {% endblock %}
