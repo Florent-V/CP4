@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -43,6 +45,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 20)]
     private ?string $phone = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
+
+    #[ORM\OneToMany(mappedBy: 'ownedBy', targetEntity: Splitter::class, orphanRemoval: true)]
+    private Collection $splittersOwned;
+
+    #[ORM\ManyToMany(targetEntity: Splitter::class, mappedBy: 'members')]
+    private Collection $splitters;
+
+    #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: ExpenseCategory::class, orphanRemoval: true)]
+    private Collection $categories;
+
+    public function __construct()
+    {
+        $this->splittersOwned = new ArrayCollection();
+        $this->splitters = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -170,6 +191,105 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Splitter>
+     */
+    public function getSplittersOwned(): Collection
+    {
+        return $this->splittersOwned;
+    }
+
+    public function addSplittersOwned(Splitter $splittersOwned): self
+    {
+        if (!$this->splittersOwned->contains($splittersOwned)) {
+            $this->splittersOwned->add($splittersOwned);
+            $splittersOwned->setOwnedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSplittersOwned(Splitter $splittersOwned): self
+    {
+        if ($this->splittersOwned->removeElement($splittersOwned)) {
+            // set the owning side to null (unless already changed)
+            if ($splittersOwned->getOwnedBy() === $this) {
+                $splittersOwned->setOwnedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Splitter>
+     */
+    public function getSplitters(): Collection
+    {
+        return $this->splitters;
+    }
+
+    public function addSplitter(Splitter $splitter): self
+    {
+        if (!$this->splitters->contains($splitter)) {
+            $this->splitters->add($splitter);
+            $splitter->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSplitter(Splitter $splitter): self
+    {
+        if ($this->splitters->removeElement($splitter)) {
+            $splitter->removeMember($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ExpenseCategory>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(ExpenseCategory $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->setAddedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(ExpenseCategory $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getAddedBy() === $this) {
+                $category->setAddedBy(null);
+            }
+        }
 
         return $this;
     }
