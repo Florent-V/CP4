@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Splitter Login Page !{% endblock %}
+
+{% block body %}
+
+
+    <main class="container-md">
+
+        <h1>Bienvenue !</h1>
+        <h2>Connectez-vous pour accéder à vos splitter !</h2>
+
+        {% if error %}
+            <div class="alert alert-warning" role="alert" aria-live="assertive">
+                {% if error.code == 2000 %}
+                    &#9785;&#65039;  {{ error.messageKey|trans(error.messageData, 'security')|raw }}
+                {% elseif error.message == "The presented password is invalid." or error.message == "Bad credentials."%}
+                    &#9785;&#65039; Les identifiants sont incorrects. Veuillez les vérifier et réessayer.
+                {% else %}
+                    {{ error.messageKey|trans(error.messageData, 'security')|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <form action="{{ path('app_login') }}" method="post">
+            <label for="username">Email:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password">
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            {# If you want to control the URL the user is redirected to on success
+        <input type="hidden" name="_target_path" value="/account"> #}
+
+            <button type="submit">login</button>
+        </form>
+
+        <div>
+            <p>Pas encore enregistré ? Créer un compte <a href="{{ path('app_register') }}">ici</a></p>
+            <p><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a></p>
+        </div>
+
+
+
+    </main>
+
+
+
+{% endblock %}
