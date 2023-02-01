@@ -1,6 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Hello !</h1>
+{% block content %}
+    <div class="overview">
+
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary" type="submit">Go !</button>
+            {{ form_end(form) }}
+        </div>
+
+        <div class="splits row">
+
+            {% for split in splitters %}
+                <div class="col-sm-4">
+                    <div class="card mb-4">
+                        <div class="cardIcons">
+                            {% if split.ownedBy == app.user %}
+                                <a href="">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            {% endif %}
+                            <a href="">
+                                <i class="bi bi-plus-lg"></i>
+                            </a>
+                        </div>
+                        <div class="card-header">
+                            <h4 class="card-title">{{ split.name }}</h4>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Infos Paiement</li>
+                            <li class="list-group-item">Infos PAiement</li>
+                            <li class="list-group-item">Infos Paiement</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+
+        <div class="container d-flex justify-content-center">{{ knp_pagination_render(splitters) }}</div>
+
+
+    </div>
 
 {% endblock %}

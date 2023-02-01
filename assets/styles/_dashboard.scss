@@ -1,0 +1,11 @@
+.overview {
+  padding-top: 2rem;
+  form {
+    display: flex;
+    justify-content: flex-end;
+    > div {
+      width: 50%;
+    }
+
+  }
+}

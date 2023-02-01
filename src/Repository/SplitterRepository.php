@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Splitter;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,34 @@ class SplitterRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findUserSplit(User $user, string $search = ''): Query
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->where('s.ownedBy = :user OR :user MEMBER OF s.members');
+
+        if ($search) {
+            $qb->andWhere($qb->expr()->like('s.name', ':search'))
+                ->setParameter('search', '%' . $search . '%');
+        }
+        $qb->setParameter('user', $user);
+
+        return $qb->getQuery();
+    }
+
+    public function findSplitUserIn(User $user, string $search = ''): Query
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere(':user MEMBER OF s.members');
+
+        if ($search) {
+            $qb->andWhere($qb->expr()->like('s.name', ':search'))
+                ->setParameter('search', '%' . $search . '%');
+        }
+        $qb->setParameter('user', $user);
+
+        return $qb->getQuery();
     }
 
 //    /**
