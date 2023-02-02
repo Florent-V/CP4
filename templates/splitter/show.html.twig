@@ -15,6 +15,80 @@
                 {% endif %}
             </div>
         </div>
+
+        <div class="expenseCard">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title text-dark">Liste des dépenses</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for expense in splitter.expenses %}
+                        <li class="list-group-item d-flex align-items-center gap-3">
+                            <div class="expenseDate">
+                                <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
+                                <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
+                            </div>
+                            <div class="expenseDate flex-grow-1">
+                                <p>{{ expense.paidBy.firstName }} a payé pour {{ expense.name }}</p>
+                                <p><i class="bi bi-person-fill"></i>Bénéficiaire : comming soon</p>
+                            </div>
+                            <div>
+                                <span>{{ expense.amount ~ expense.devise }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="balanceCard">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title text-dark">Balances</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for member in splitter.members %}
+                        <li class="list-group-item d-flex align-items-center gap-3">
+                            <div class="memberName">
+                                <p>{{ member.firstName ~ ' ' ~ member.lastName }}</p>
+                            </div>
+                            <div>
+                                <span>{{ balancePerId[member.id] }}€</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        {{ dump(splitter.members) }}
+
+        {{ dump(transfers) }}
+
+        <div class="balanceCard">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title text-dark">Régler les dettes !</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for transfer in transfers %}
+                        <li class="list-group-item d-flex align-items-center gap-3">
+                            <div class="memberName">
+                                <p>{{ transfer['from'].firstName ~ ' doit ' ~ transfer['amount']|round(2) ~ '€ à ' ~ transfer['to'].firstName }}</p>
+                            </div>
+                            <div>
+                                <span>€</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
     </main>
 
     {{ dump(splitter.members) }}

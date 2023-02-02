@@ -39,6 +39,9 @@ class Splitter
     #[ORM\OneToMany(mappedBy: 'splitter', targetEntity: Expense::class, orphanRemoval: true)]
     private Collection $expenses;
 
+    #[ORM\Column(length: 255)]
+    private ?string $uniqueId = null;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
@@ -148,6 +151,18 @@ class Splitter
                 $expense->setSplitter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUniqueId(): ?string
+    {
+        return $this->uniqueId;
+    }
+
+    public function setUniqueId(string $uniqueId): self
+    {
+        $this->uniqueId = $uniqueId;
 
         return $this;
     }

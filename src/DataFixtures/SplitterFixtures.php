@@ -14,8 +14,8 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
     public static int $splitExpense = 0;
 
     public const SPLITTERS = [
-        [2, 7, 9, 5],
-        [4, 6, 2, 8]
+        [2, 7, 9, 5, 11],
+        [4, 6, 2, 8, 13]
     ];
 
     public function load(ObjectManager $manager): void
@@ -27,6 +27,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
             $group = new Splitter();
             $group->setName('Expense Splitter N°' . self::$splitExpense);
             $group->setDescription($faker->paragraph());
+            $group->setUniqueId(md5(uniqid(strval(time()), true)));
             $group->setCategory($this->getReference(
                 'splitterCategory_' .
                 $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
@@ -45,6 +46,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
             $group = new Splitter();
             $group->setName('Splitter N°' . self::$groupIndex);
             $group->setDescription($faker->paragraph());
+            $group->setUniqueId(md5(uniqid(strval(time()), true)));
             $group->setCategory($this->getReference(
                 'splitterCategory_' .
                 $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)

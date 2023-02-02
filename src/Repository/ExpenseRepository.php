@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Expense;
+use App\Entity\Splitter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<Expense>
@@ -38,6 +40,7 @@ class ExpenseRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 
 //    /**
 //     * @return Expense[] Returns an array of Expense objects

@@ -8,6 +8,7 @@ use App\Form\JoinSplitterType;
 use App\Form\ShareSplitterType;
 use App\Form\SplitterType;
 use App\Repository\SplitterRepository;
+use App\Service\BalanceCalculator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,10 +69,18 @@ class SplitterController extends AbstractController
         methods: ['GET']
     )]
     public function show(
-        Splitter $splitter
+        Splitter $splitter,
+        BalanceCalculator $balanceCalculator
     ): Response {
+
+        $balancePerId = $balanceCalculator->calculateIndividualBalance($splitter);
+        $transfers = $balanceCalculator->calculateTransfer($balancePerId);
+
+
         return $this->render('splitter/show.html.twig', [
             'splitter' => $splitter,
+            'balancePerId' => $balancePerId,
+            'transfers' => $transfers,
         ]);
     }
 

@@ -69,6 +69,16 @@ class SplitterRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    public function calculateSum(string $uid): array
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere('s.uniqueId = :uid')
+            ->setParameter('uid', $uid)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
 //    /**
 //     * @return Splitter[] Returns an array of Splitter objects
 //     */
