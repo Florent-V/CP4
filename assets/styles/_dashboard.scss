@@ -1,22 +1,52 @@
 .overview {
-  padding-top: 2rem;
-  form {
-    display: flex;
-    justify-content: flex-end;
-    > div {
-      width: 50%;
-    }
-  }
-  .splits {
-    margin-top: 2rem;
-  }
-  .plus-icons {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    a {
-      box-shadow: 0 0 20px 1px #48abe0;
+    padding-top: 2rem;
+
+    form {
+        display: flex;
+        justify-content: flex-end;
+
+        > div {
+            width: 50%;
+        }
     }
 
-  }
+    .splits {
+        margin-top: 2rem;
+
+        .cardIcons {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 10;
+
+            i {
+                font-size: 1.4rem;
+                color: $primary;
+            }
+        }
+
+        .clickable-card {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+
+    }
+
+    .plus-icons {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+
+        a {
+            box-shadow: 0 0 20px 1px #48abe0;
+        }
+
+    }
 }

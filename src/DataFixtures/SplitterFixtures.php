@@ -35,6 +35,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
                     $faker->unique()->numberBetween(1, UserFixtures::$userIndex)
                 ));
             }
+            $group->addMember($group->getOwnedBy());
             $faker->unique(true);
             $manager->persist($group);
         }

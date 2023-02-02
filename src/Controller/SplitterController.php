@@ -58,7 +58,14 @@ class SplitterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_splitter_show', methods: ['GET'])]
+    #[Route(
+        '/{id}',
+        name: 'app_splitter_show',
+        requirements: [
+            'id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        ],
+        methods: ['GET']
+    )]
     public function show(
         Splitter $splitter
     ): Response {
@@ -67,7 +74,14 @@ class SplitterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_splitter_edit', methods: ['GET', 'POST'])]
+    #[Route(
+        '/{id}/edit',
+        name: 'app_splitter_edit',
+        requirements: [
+            'page' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        ],
+        methods: ['GET', 'POST']
+    )]
     public function edit(
         Request $request,
         Splitter $splitter,
@@ -94,7 +108,14 @@ class SplitterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/share', name: 'app_splitter_share', methods: ['GET', 'POST'])]
+    #[Route(
+        '/{id}/share',
+        name: 'app_splitter_share',
+        requirements: [
+            'page' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        ],
+        methods: ['GET', 'POST']
+    )]
     public function share(
         Request $request,
         Splitter $splitter,
@@ -138,7 +159,14 @@ class SplitterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/join', name: 'app_splitter_join', methods: ['GET'])]
+    #[Route(
+        '/{id}/join',
+        name: 'app_splitter_join',
+        requirements: [
+            'page' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        ],
+        methods: ['GET']
+    )]
     public function join(
         Splitter $splitter,
         SplitterRepository $splitterRepository
@@ -163,6 +191,7 @@ class SplitterController extends AbstractController
 
     #[Route('/joinbycode', name: 'app_splitter_join_by_code', methods: ['GET', 'POST'])]
     public function joinByCode(
+        Request $request,
         SplitterRepository $splitterRepository
     ): Response {
 
@@ -182,6 +211,7 @@ class SplitterController extends AbstractController
             ]);
 
             $splitter->addMember($user);
+            $splitterRepository->save($splitter, true);
 
             $this->addFlash('success', '🙂 Vous avez bien rejoint le Splitter !');
 

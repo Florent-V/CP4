@@ -39,7 +39,7 @@ class HomeController extends AbstractController
         $splitters = $paginator->paginate(
             $querySplitters,
             $request->query->getInt('page', 1),
-            9
+            6
         );
 
         return $this->renderForm('home/index.html.twig', [

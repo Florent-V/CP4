@@ -17,7 +17,7 @@
                     <div class="card mb-4">
                         <div class="cardIcons">
                             {% if split.ownedBy == app.user %}
-                                <a href="">
+                                <a href="{{ path('app_splitter_edit', {'id' : split.id }) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                             {% endif %}
@@ -26,14 +26,26 @@
                             </a>
                         </div>
                         <div class="card-header">
-                            <h4 class="card-title">{{ split.name }}</h4>
+                            <h4 class="card-title text-dark">{{ split.name }}</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                Créé par :
+                                    {{ split.ownedBy.firstName ~ ' ' ~ split.ownedBy.lastName }},
+                            </h6>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                Membres :
+                                {% for user in split.members %}
+                                    {{ user.firstName ~ ' ' ~ user.lastName }},
+                                {% endfor %}
+                            </h6>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Infos Paiement</li>
                             <li class="list-group-item">Infos PAiement</li>
                             <li class="list-group-item">Infos Paiement</li>
                         </ul>
+                        <a class="clickable-card" href="{{ path('app_splitter_show', {id: split.id}) }}"></a>
                     </div>
+
                 </div>
             {% endfor %}
 
