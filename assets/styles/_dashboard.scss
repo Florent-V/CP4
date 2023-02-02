@@ -6,6 +6,17 @@
     > div {
       width: 50%;
     }
+  }
+  .splits {
+    margin-top: 2rem;
+  }
+  .plus-icons {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    a {
+      box-shadow: 0 0 20px 1px #48abe0;
+    }
 
   }
 }

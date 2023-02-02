@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_dashboard.html.twig' %}
 
 {% block content %}
     <div class="overview">
@@ -41,6 +41,10 @@
         </div>
 
         <div class="container d-flex justify-content-center">{{ knp_pagination_render(splitters) }}</div>
+
+        <div class="plus-icons">
+            <a class="btn btn-primary rounded-circle" href="{{ path('app_splitter_new') }}"><i class="bi bi-plus-lg"></i></a>
+        </div>
 
 
     </div>

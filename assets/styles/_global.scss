@@ -11,4 +11,18 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+table {
+  color: #DDDDDD!important;
+}
+
+.container-md {
+  max-width: 800px;
+}
+
+.centerBtn {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
 

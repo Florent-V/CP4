@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Splitter index{% endblock %}
+
+{% block body %}
+    <h1>Splitter index</h1>
+
+    <table style="color: #FFFFFF" class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for splitter in splitters %}
+            <tr>
+                <td>{{ splitter.id }}</td>
+                <td>{{ splitter.name }}</td>
+                <td>
+                    <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}">show</a>
+                    <a href="{{ path('app_splitter_edit', {'id': splitter.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_splitter_new') }}">Create new</a>
+{% endblock %}

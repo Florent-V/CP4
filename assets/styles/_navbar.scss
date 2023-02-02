@@ -1,39 +1,9 @@
-nav {
-  min-width: 200px;
-  border: 2px solid white;
+.navbar {
   img {
-    width: 100px;
-    height: auto;
+    height: 100px;
+    width: auto;
   }
-  h1 {
-    font-size: 2rem;
-    padding-top: 1rem;
-    text-align: center;
+  h1 a:last-of-type {
+    font-size: 4rem;
   }
-  ul li {
-    font-size: 1rem;
-    text-align: center;
-  }
-  .info-user{
-    display: flex;
-    align-items: center;
-    color: $light;
-    width:auto;
-    i {
-      font-size: 2rem;
-    }
-  }
-  h2 {
-    font-size: 1.5rem;
-    width: 100%;
-  }
-}
-
-
-
-
-
-
-.mdi {
-  margin-right: 0.5rem;
 }

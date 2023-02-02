@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SplitterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
@@ -27,6 +28,13 @@ class Splitter
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'splitters')]
     private Collection $members;
+
+    #[ORM\ManyToOne(inversedBy: 'splitters')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?SplitterCategory $category = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -82,6 +90,30 @@ class Splitter
     public function removeMember(User $member): self
     {
         $this->members->removeElement($member);
+
+        return $this;
+    }
+
+    public function getCategory(): ?SplitterCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?SplitterCategory $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

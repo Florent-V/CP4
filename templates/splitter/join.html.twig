@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Splitter{% endblock %}
+
+{% block body %}
+
+    <main class="container-md">
+
+        <h1>Entrer le code ci-dessous pour rejoindre un Splitter !</h1>
+
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="centerBtn">
+                <button class="btn btn-primary">{{ button_label|default('Partager le splitter') }}</button>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+
+
+
+    </main>
+
+
+
+{% endblock %}
