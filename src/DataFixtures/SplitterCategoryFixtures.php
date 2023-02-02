@@ -13,16 +13,14 @@ class SplitterCategoryFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        foreach (self::CATEGORIES as $categoryName){
+        foreach (self::CATEGORIES as $categoryName) {
             self::$splitterCategoryIndex++;
             $category = new SplitterCategory();
             $category->setName($categoryName);
             $manager->persist($category);
 
             $this->addReference('splitterCategory_' . self::$splitterCategoryIndex, $category);
-
         }
         $manager->flush();
     }
-
 }

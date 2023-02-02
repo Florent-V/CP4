@@ -16,7 +16,7 @@ class ExpenseCategoryFixtures extends Fixture implements DependentFixtureInterfa
 
     public function load(ObjectManager $manager): void
     {
-        foreach (self::CATEGORIES as $categoryName){
+        foreach (self::CATEGORIES as $categoryName) {
             self::$expenseCategoryIndex++;
             $category = new ExpenseCategory();
             $category->setName($categoryName);
@@ -25,7 +25,6 @@ class ExpenseCategoryFixtures extends Fixture implements DependentFixtureInterfa
 
             $manager->persist($category);
             $this->addReference('expenseCategory_' . self::$expenseCategoryIndex, $category);
-
         }
         $manager->flush();
     }

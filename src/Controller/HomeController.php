@@ -17,11 +17,10 @@ class HomeController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'app_home')]
     public function index(
-        Request            $request,
+        Request $request,
         SplitterRepository $splitterRepository,
         PaginatorInterface $paginator
-    ): Response
-    {
+    ): Response {
         /**
          * @var ?User $user
          */

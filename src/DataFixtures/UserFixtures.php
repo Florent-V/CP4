@@ -12,7 +12,7 @@ class UserFixtures extends Fixture
 {
     public static int $userIndex = 0;
 
-    public function __construct(private readonly  UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
 

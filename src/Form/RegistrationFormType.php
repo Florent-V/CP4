@@ -17,27 +17,27 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', null,[
+            ->add('pseudo', null, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'label' => 'Pseudo',
                 'attr' => ['placeholder' => 'pseudo']
             ])
-            ->add('firstName', null,[
+            ->add('firstName', null, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'label' => 'Prénom',
                 'attr' => ['placeholder' => 'Pierre...']
             ])
-            ->add('lastName', null,[
+            ->add('lastName', null, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'label' => 'Nom',
                 'attr' => ['placeholder' => 'Dupond...']
             ])
-            ->add('phone', null,[
+            ->add('phone', null, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'label' => 'Téléphone',
                 'attr' => ['placeholder' => '+33...']
             ])
-            ->add('email', null,[
+            ->add('email', null, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'label' => 'Email',
                 'attr' => ['placeholder' => 'name@example.fr']

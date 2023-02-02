@@ -16,7 +16,7 @@ class SplitterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', null,[
+            ->add('name', null, [
                 'row_attr' => ['class' => 'form-floating mb-3 text-dark'],
                 'label' => 'Nom du splitter',
                 'attr' => ['placeholder' => 'pseudo']

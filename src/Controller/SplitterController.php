@@ -24,8 +24,7 @@ class SplitterController extends AbstractController
     #[Route('/', name: 'app_splitter_index', methods: ['GET'])]
     public function index(
         SplitterRepository $splitterRepository
-    ): Response
-    {
+    ): Response {
         return $this->render('splitter/index.html.twig', [
             'splitters' => $splitterRepository->findAll(),
         ]);
@@ -33,10 +32,9 @@ class SplitterController extends AbstractController
 
     #[Route('/new', name: 'app_splitter_new', methods: ['GET', 'POST'])]
     public function new(
-        Request            $request,
+        Request $request,
         SplitterRepository $splitterRepository
-    ): Response
-    {
+    ): Response {
         $splitter = new Splitter();
         $form = $this->createForm(SplitterType::class, $splitter);
         $form->handleRequest($request);
@@ -50,7 +48,8 @@ class SplitterController extends AbstractController
             return $this->redirectToRoute(
                 'app_splitter_show',
                 ['id' => $splitter->getId()],
-                Response::HTTP_SEE_OTHER);
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('splitter/new.html.twig', [
@@ -85,7 +84,8 @@ class SplitterController extends AbstractController
             return $this->redirectToRoute(
                 'app_splitter_show',
                 ['id' => $splitter->getId()],
-                Response::HTTP_SEE_OTHER);
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('splitter/edit.html.twig', [
@@ -96,11 +96,10 @@ class SplitterController extends AbstractController
 
     #[Route('/{id}/share', name: 'app_splitter_share', methods: ['GET', 'POST'])]
     public function share(
-        Request         $request,
-        Splitter        $splitter,
+        Request $request,
+        Splitter $splitter,
         MailerInterface $mailer
-    ): Response
-    {
+    ): Response {
 
         /**
          * @var ?User $user
@@ -129,7 +128,8 @@ class SplitterController extends AbstractController
             return $this->redirectToRoute(
                 'app_splitter_show',
                 ['id' => $splitter->getId()],
-                Response::HTTP_SEE_OTHER);
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('splitter/share.html.twig', [
@@ -157,10 +157,11 @@ class SplitterController extends AbstractController
         return $this->redirectToRoute(
             'app_splitter_show',
             ['id' => $splitter->getId()],
-            Response::HTTP_SEE_OTHER);
+            Response::HTTP_SEE_OTHER
+        );
     }
 
-    #[Route('/joinbycode', name: 'app_splitter_join', methods: ['GET', 'POST'])]
+    #[Route('/joinbycode', name: 'app_splitter_join_by_code', methods: ['GET', 'POST'])]
     public function joinByCode(
         SplitterRepository $splitterRepository
     ): Response {
@@ -187,7 +188,8 @@ class SplitterController extends AbstractController
             return $this->redirectToRoute(
                 'app_splitter_show',
                 ['id' => $splitter->getId()],
-                Response::HTTP_SEE_OTHER);
+                Response::HTTP_SEE_OTHER
+            );
         }
         return $this->render('splitter/join.html.twig', [
             'form' => $form,
