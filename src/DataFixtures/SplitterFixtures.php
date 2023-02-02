@@ -11,10 +11,34 @@ use Faker\Factory;
 class SplitterFixtures extends Fixture implements DependentFixtureInterface
 {
     public static int $groupIndex = 0;
+    public static int $splitExpense = 0;
+
+    public const SPLITTERS = [
+        [2, 7, 9, 5],
+        [4, 6, 2, 8]
+    ];
 
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+
+        foreach (self::SPLITTERS as $splitter) {
+            self::$splitExpense++;
+            $group = new Splitter();
+            $group->setName('Expense Splitter N°' . self::$splitExpense);
+            $group->setDescription($faker->paragraph());
+            $group->setCategory($this->getReference(
+                'splitterCategory_' .
+                $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+            ));
+            $group->setOwnedBy($this->getReference('user_' . ($splitter[0] - 1)));
+            foreach ($splitter as $user) {
+                $group->addMember($this->getReference('user_' . ($user - 1)));
+            }
+            $manager->persist($group);
+            $this->addReference('splitter_' . self::$splitExpense, $group);
+        }
+
 
         for ($i = 0; $i <= 30; $i++) {
             self::$groupIndex++;
@@ -46,6 +70,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            SplitterCategoryFixtures::class,
         ];
     }
 }

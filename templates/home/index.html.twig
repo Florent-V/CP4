@@ -34,7 +34,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Membres :
                                 {% for user in split.members %}
-                                    {{ user.firstName ~ ' ' ~ user.lastName }},
+                                    {{ user.firstName ~ ' ' ~ user.lastName ~ ' (' ~ user.id ~ ')' }},
                                 {% endfor %}
                             </h6>
                         </div>

@@ -41,6 +41,7 @@ class SplitterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $splitter->setOwnedBy($this->getUser());
+            $splitter->addMember($this->getUser());
             $splitterRepository->save($splitter, true);
 
             $this->addFlash('success', '🙂 Votre Splitter a bien été crée !');

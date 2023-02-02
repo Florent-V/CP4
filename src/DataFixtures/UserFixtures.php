@@ -46,7 +46,7 @@ class UserFixtures extends Fixture
             $user->setPseudo($firstName . $faker->year());
             $user->setFirstName($firstName);
             $user->setLastName($faker->lastName());
-            $user->setEmail('user' . self::$userIndex . '@mail.fr');
+            $user->setEmail('user' . (self::$userIndex + 1) . '@mail.fr');
             $user->setPhone($faker->phoneNumber());
             $user->setIsVerified(true);
             $user->setRoles((array)'ROLE_USER');

@@ -36,9 +36,13 @@ class Splitter
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\OneToMany(mappedBy: 'splitter', targetEntity: Expense::class, orphanRemoval: true)]
+    private Collection $expenses;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -114,6 +118,36 @@ class Splitter
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Expense>
+     */
+    public function getExpenses(): Collection
+    {
+        return $this->expenses;
+    }
+
+    public function addExpense(Expense $expense): self
+    {
+        if (!$this->expenses->contains($expense)) {
+            $this->expenses->add($expense);
+            $expense->setSplitter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpense(Expense $expense): self
+    {
+        if ($this->expenses->removeElement($expense)) {
+            // set the owning side to null (unless already changed)
+            if ($expense->getSplitter() === $this) {
+                $expense->setSplitter(null);
+            }
+        }
 
         return $this;
     }
