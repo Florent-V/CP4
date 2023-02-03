@@ -42,7 +42,7 @@ class HomeController extends AbstractController
             6
         );
 
-        return $this->renderForm('home/index.html.twig', [
+        return $this->render('home/index.html.twig', [
             'form' => $form,
             'splitters' => $splitters,
 

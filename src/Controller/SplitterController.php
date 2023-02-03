@@ -43,6 +43,7 @@ class SplitterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $splitter->setOwnedBy($this->getUser());
             $splitter->addMember($this->getUser());
+            $splitter->setUniqueId(md5(uniqid(strval(time()), true)));
             $splitterRepository->save($splitter, true);
 
             $this->addFlash('success', '🙂 Votre Splitter a bien été crée !');
@@ -246,6 +247,6 @@ class SplitterController extends AbstractController
             $splitterRepository->remove($splitter, true);
         }
 
-        return $this->redirectToRoute('app_splitter_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 }

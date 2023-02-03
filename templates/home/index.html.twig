@@ -13,7 +13,7 @@
         <div class="splits row">
 
             {% for split in splitters %}
-                <div class="col-sm-4">
+                <div class="col-md-6 col-xxl-4">
                     <div class="card mb-4">
                         <div class="cardIcons">
                             {% if split.ownedBy == app.user %}
@@ -34,28 +34,28 @@
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Membres :
                                 {% for user in split.members %}
-                                    {{ user.firstName ~ ' ' ~ user.lastName ~ ' (' ~ user.id ~ ')' }},
+                                    {{ user.firstName ~ ' ' ~ user.lastName }},
                                 {% endfor %}
                             </h6>
                         </div>
                         <ul class="list-group list-group-flush">
                             {% for expense in split.expenses|sort((a,b) => b.madeAt <=> a.madeAt)|slice(0,3) %}
-                                <li class="list-group-item d-flex align-items-center gap-3">
+                                <li class="list-group-item expenseItemList">
                                     <div class="expenseDate">
                                         <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
                                         <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
                                     </div>
-                                    <div class="expenseDate flex-grow-1">
+                                    <div class="expenseInfos">
                                         <p>{{ expense.paidBy.firstName }} a payé pour {{ expense.name }}</p>
                                         <p><i class="bi bi-person-fill"></i>Bénéficiaire : comming soon</p>
                                     </div>
-                                    <div>
+                                    <div class="expenseAmount">
                                         <span>{{ expense.amount ~ expense.devise }}</span>
                                     </div>
                                 </li>
                             {% endfor %}
                         </ul>
-                        <a class="clickable-card" href="{{ path('app_splitter_show', {id: split.id}) }}"></a>
+                        <a class="link-card" href="{{ path('app_splitter_show', {id: split.id}) }}"></a>
                     </div>
 
                 </div>
@@ -66,7 +66,7 @@
 
         <div class="container d-flex justify-content-center">{{ knp_pagination_render(splitters) }}</div>
 
-        <div class="plus-icons">
+        <div id="addSplitterBtn" class="plus-icons">
             <a class="btn btn-primary rounded-circle" href="{{ path('app_splitter_new') }}"><i class="bi bi-plus-lg"></i></a>
         </div>
 

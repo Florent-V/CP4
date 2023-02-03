@@ -1,0 +1,23 @@
+.balanceItemList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    p {
+        margin: 0;
+    }
+
+    span {
+        font-size: 1rem;
+    }
+}
+
+
+.expenseItemList {
+    .linkExpense {
+        @include clickable-zone;
+    }
+
+}
+

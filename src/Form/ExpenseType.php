@@ -17,9 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ExpenseType extends AbstractType
 {
+    private Splitter $splitter;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $splitter = $options['splitter'];
+        $this->splitter = $options['splitter'];
 
         $builder
             ->add('name', null, [
@@ -37,17 +39,17 @@ class ExpenseType extends AbstractType
             ->add('amount', MoneyType::class, [
                 'row_attr' => ['class' => 'mb-3 text-light'],
                 'label' => 'Montant',
-                'attr' => ['placeholder' => 'pseudo']
+                'attr' => ['placeholder' => 'Montant']
             ])
             ->add('paidBy', EntityType::class, [
                 'class' => User::class,
                 'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
                 'label' => 'Payé par :',
-                'query_builder' => function (UserRepository $userRepository) use ($splitter) {
+                'query_builder' => function (UserRepository $userRepository) {
                     return $userRepository->createQueryBuilder('u')
                         ->innerJoin('u.splitters', 's')
                         ->where('s.uniqueId = :uniqueId')
-                        ->setParameter('uniqueId', $splitter->getUniqueId())
+                        ->setParameter('uniqueId', $this->splitter->getUniqueId())
                     ->orderBy('u.firstName', 'ASC');
                 },
                 'choice_label' => function (User $user) {

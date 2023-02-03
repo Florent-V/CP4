@@ -3,9 +3,19 @@
 {% block title %}New Expense{% endblock %}
 
 {% block body %}
-    <h1>Create new Expense</h1>
 
-    {{ include('expense/_form.html.twig') }}
+    <main class="container-md">
 
-    <a href="{{ path('app_expense_index') }}">back to list</a>
+        <h1>Ajouter une dépense</h1>
+
+        <div class="mb-2">
+            <a class="btn btn-primary" href="{{ path('app_splitter_show', {'id' : splitter.id }) }}"><i class="bi bi-arrow-return-left"></i>   Retour</a>
+        </div>
+
+        {{ include('expense/_form.html.twig') }}
+
+
+
+    </main>
+
 {% endblock %}
