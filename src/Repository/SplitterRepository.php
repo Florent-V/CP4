@@ -55,17 +55,18 @@ class SplitterRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
-    public function findSplitUserIn(User $user, string $search = ''): Query
+    public function findSplitter(string $search = ''): Query
     {
         $qb = $this->createQueryBuilder('s')
-            ->andWhere(':user MEMBER OF s.members');
+            ->orderBy('s.id', 'ASC');
 
         if ($search) {
-            $qb->andWhere($qb->expr()->like('s.name', ':search'))
+            $qb->where($qb->expr()->orX(
+                $qb->expr()->like('s.name', ':search'),
+                $qb->expr()->like('s.description', ':search'),
+            ))
                 ->setParameter('search', '%' . $search . '%');
         }
-        $qb->setParameter('user', $user);
-
         return $qb->getQuery();
     }
 

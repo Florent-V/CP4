@@ -22,15 +22,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/splitter')]
 class SplitterController extends AbstractController
 {
-    #[Route('/', name: 'app_splitter_index', methods: ['GET'])]
-    public function index(
-        SplitterRepository $splitterRepository
-    ): Response {
-        return $this->render('splitter/index.html.twig', [
-            'splitters' => $splitterRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_splitter_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
