@@ -26,9 +26,6 @@ class Splitter
     #[ORM\JoinColumn(nullable: false)]
     private ?User $ownedBy = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'splitters')]
-    private Collection $members;
-
     #[ORM\ManyToOne(inversedBy: 'splitters')]
     #[ORM\JoinColumn(nullable: false)]
     private ?SplitterCategory $category = null;
@@ -42,10 +39,17 @@ class Splitter
     #[ORM\Column(length: 255)]
     private ?string $uniqueId = null;
 
+    #[ORM\OneToMany(mappedBy: 'splitter', targetEntity: Member::class, orphanRemoval: true)]
+    private Collection $members;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoriteSplitters')]
+    private Collection $viewers;
+
     public function __construct()
     {
-        $this->members = new ArrayCollection();
         $this->expenses = new ArrayCollection();
+        $this->members = new ArrayCollection();
+        $this->viewers = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -73,30 +77,6 @@ class Splitter
     public function setOwnedBy(?User $ownedBy): self
     {
         $this->ownedBy = $ownedBy;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getMembers(): Collection
-    {
-        return $this->members;
-    }
-
-    public function addMember(User $member): self
-    {
-        if (!$this->members->contains($member)) {
-            $this->members->add($member);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(User $member): self
-    {
-        $this->members->removeElement($member);
 
         return $this;
     }
@@ -163,6 +143,60 @@ class Splitter
     public function setUniqueId(string $uniqueId): self
     {
         $this->uniqueId = $uniqueId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $member): static
+    {
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->setSplitter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(Member $member): static
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getSplitter() === $this) {
+                $member->setSplitter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getViewers(): Collection
+    {
+        return $this->viewers;
+    }
+
+    public function addViewer(User $viewer): static
+    {
+        if (!$this->viewers->contains($viewer)) {
+            $this->viewers->add($viewer);
+        }
+
+        return $this;
+    }
+
+    public function removeViewer(User $viewer): static
+    {
+        $this->viewers->removeElement($viewer);
 
         return $this;
     }

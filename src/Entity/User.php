@@ -52,9 +52,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'ownedBy', targetEntity: Splitter::class, orphanRemoval: true)]
     private Collection $splittersOwned;
 
-    #[ORM\ManyToMany(targetEntity: Splitter::class, mappedBy: 'members')]
-    private Collection $splitters;
-
     #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: ExpenseCategory::class, orphanRemoval: true)]
     private Collection $categories;
 
@@ -64,12 +61,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isActive = true;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Member::class, orphanRemoval: true)]
+    private Collection $members;
+
+    #[ORM\ManyToMany(targetEntity: Splitter::class, mappedBy: 'viewers')]
+    private Collection $favoriteSplitters;
+
     public function __construct()
     {
         $this->splittersOwned = new ArrayCollection();
-        $this->splitters = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->expenses = new ArrayCollection();
+        $this->members = new ArrayCollection();
+        $this->favoriteSplitters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -245,33 +249,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Splitter>
-     */
-    public function getSplitters(): Collection
-    {
-        return $this->splitters;
-    }
-
-    public function addSplitter(Splitter $splitter): self
-    {
-        if (!$this->splitters->contains($splitter)) {
-            $this->splitters->add($splitter);
-            $splitter->addMember($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSplitter(Splitter $splitter): self
-    {
-        if ($this->splitters->removeElement($splitter)) {
-            $splitter->removeMember($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, ExpenseCategory>
      */
     public function getCategories(): Collection
@@ -339,6 +316,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $member): static
+    {
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(Member $member): static
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getUser() === $this) {
+                $member->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Splitter>
+     */
+    public function getFavoriteSplitters(): Collection
+    {
+        return $this->favoriteSplitters;
+    }
+
+    public function addFavoriteSplitter(Splitter $favoriteSplitter): static
+    {
+        if (!$this->favoriteSplitters->contains($favoriteSplitter)) {
+            $this->favoriteSplitters->add($favoriteSplitter);
+            $favoriteSplitter->addViewer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteSplitter(Splitter $favoriteSplitter): static
+    {
+        if ($this->favoriteSplitters->removeElement($favoriteSplitter)) {
+            $favoriteSplitter->removeViewer($this);
+        }
 
         return $this;
     }
