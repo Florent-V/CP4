@@ -27,13 +27,13 @@ class SplitterController extends AbstractController
         Request $request,
         SplitterRepository $splitterRepository
     ): Response {
+
         $splitter = new Splitter();
         $form = $this->createForm(SplitterType::class, $splitter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $splitter->setOwnedBy($this->getUser());
-            $splitter->addMember($this->getUser());
             $splitter->setUniqueId(md5(uniqid(strval(time()), true)));
             $splitterRepository->save($splitter, true);
 

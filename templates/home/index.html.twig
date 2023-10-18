@@ -33,8 +33,8 @@
                             </h6>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Membres :
-                                {% for user in split.members %}
-                                    {{ user.firstName ~ ' ' ~ user.lastName }},
+                                {% for member in split.members %}
+                                    {{ member.nickname ~ ' ' }},
                                 {% endfor %}
                             </h6>
                         </div>
@@ -46,7 +46,7 @@
                                         <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
                                     </div>
                                     <div class="expenseInfos">
-                                        <p>{{ expense.paidBy.firstName }} a payé pour {{ expense.name }}</p>
+                                        <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
                                         <p><i class="bi bi-person-fill"></i>Bénéficiaire : comming soon</p>
                                     </div>
                                     <div class="expenseAmount">

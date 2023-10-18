@@ -34,15 +34,15 @@ class Expense
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $paidBy = null;
-
-    #[ORM\ManyToOne(inversedBy: 'expenses')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Splitter $splitter = null;
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ExpenseCategory $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'expenses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Member $paidBy = null;
 
     public function getId(): ?int
     {
@@ -121,18 +121,6 @@ class Expense
         return $this;
     }
 
-    public function getPaidBy(): ?User
-    {
-        return $this->paidBy;
-    }
-
-    public function setPaidBy(?User $paidBy): self
-    {
-        $this->paidBy = $paidBy;
-
-        return $this;
-    }
-
     public function getSplitter(): ?Splitter
     {
         return $this->splitter;
@@ -153,6 +141,18 @@ class Expense
     public function setCategory(?ExpenseCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPaidBy(): ?Member
+    {
+        return $this->paidBy;
+    }
+
+    public function setPaidBy(?Member $paidBy): static
+    {
+        $this->paidBy = $paidBy;
 
         return $this;
     }

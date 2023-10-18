@@ -43,8 +43,9 @@ class SplitterRepository extends ServiceEntityRepository
 
     public function findUserSplit(User $user, string $search = ''): Query
     {
+        // @TODO 1. Add splitter where user is member with join memberclass
         $qb = $this->createQueryBuilder('s')
-            ->where('s.ownedBy = :user OR :user MEMBER OF s.members');
+            ->where('s.ownedBy = :user');
 
         if ($search) {
             $qb->andWhere($qb->expr()->like('s.name', ':search'))

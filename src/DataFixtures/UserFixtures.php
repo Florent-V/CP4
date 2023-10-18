@@ -38,7 +38,7 @@ class UserFixtures extends Fixture
         $manager->persist($admin);
         $this->addReference('admin', $admin);
 
-        for ($i = 0; $i <= 15; $i++) {
+        for ($i = 1; $i <= 15; $i++) {
             self::$userIndex++;
             $user = new User();
 

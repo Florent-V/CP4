@@ -7,6 +7,7 @@ use App\Entity\SplitterCategory;
 use App\Repository\SplitterCategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -36,7 +37,11 @@ class SplitterType extends AbstractType
                 },
                 'choice_label' => 'name'
             ])
-
+            ->add('members', CollectionType::class, [
+                'entry_type' => MemberType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+            ])
         ;
     }
 

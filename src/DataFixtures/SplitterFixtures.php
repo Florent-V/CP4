@@ -16,38 +16,24 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
-
         for ($i = 1; $i <= UserFixtures::$userIndex; $i++) {
-            self::$splitExpense++;
-            $group = new Splitter();
-            $group->setName('Splitter N°' . self::$groupIndex);
-            $group->setDescription($faker->paragraph());
-            $group->setUniqueId(md5(uniqid(strval(time()), true)));
-            $group->setCategory($this->getReference(
-                'splitterCategory_' .
-                $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
-            ));
-            $group->setOwnedBy($this->getReference('user_' . $i));
-            $manager->persist($group);
-            $this->addReference('splitter_' . self::$groupIndex, $group);
+            for ($j = 1; $j <= 3; $j++) {
+                self::$splitExpense++;
+                $group = new Splitter();
+                $group->setName('Splitter N°' . self::$splitExpense);
+                $group->setDescription($faker->paragraph());
+                $group->setUniqueId(md5(uniqid(strval(time()), true)));
+                $group->setCategory($this->getReference(
+                    'splitterCategory_' .
+                    $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+                ));
+                $group->setOwnedBy($this->getReference('user_' . $i));
+                $manager->persist($group);
+                $this->addReference('splitter_' . self::$splitExpense, $group);
+            }
         }
 
-        foreach (self::SPLITTERS as $splitter) {
-            self::$splitExpense++;
-            $group = new Splitter();
-            $group->setName('Expense Splitter N°' . self::$splitExpense);
-            $group->setDescription($faker->paragraph());
-            $group->setUniqueId(md5(uniqid(strval(time()), true)));
-            $group->setCategory($this->getReference(
-                'splitterCategory_' .
-                $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
-            ));
-            $group->setOwnedBy($this->getReference('user_' . ($splitter[0] - 1)));
-            $manager->persist($group);
-            $this->addReference('splitter_' . self::$splitExpense, $group);
-        }
-
-        for ($i = 0; $i <= 30; $i++) {
+        for ($i = 0; $i <= 20; $i++) {
             self::$groupIndex++;
             $group = new Splitter();
             $group->setName('Splitter (bis) N°' . self::$groupIndex);
@@ -61,7 +47,6 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
                 'user_' .
                 $faker->unique()->numberBetween(1, UserFixtures::$userIndex)
             ));
-            $group->addMember($group->getOwnedBy());
             $faker->unique(true);
             $manager->persist($group);
         }
