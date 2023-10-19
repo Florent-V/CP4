@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Task{% endblock %}
+
+{% block body %}
+
+    <main class="container-md">
+
+        <h1 class="text-center my-4">Ajouter un nouveau task</h1>
+
+        <div {{ stimulus_controller('formCollection') }}>
+
+            {{ form_start(form) }}
+            {{ form_row(form.description) }}
+
+            <h3>Tags</h3>
+            {# the data-index attribute is required for the JavaScript code below #}
+
+
+            <ul class="tags"
+                data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
+                data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}"
+            >
+                {% for tag in form.tags %}
+                    <li>{{ form_row(tag.name) }}</li>
+                {% endfor %}
+            </ul>
+
+            <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
+
+            <div class="centerBtn">
+                <button class="btn btn-primary">{{ button_label|default('Ajouter une Task') }}</button>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+
+    </main>
+
+
+{% endblock %}
+
+
+

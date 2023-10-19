@@ -13,13 +13,16 @@ class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('description');
+        $builder
+            ->add('description')
 
-        $builder->add('tags', CollectionType::class, [
-            'entry_type' => TagType::class,
-            'allow_add' => true,
-            'by_reference' => false,
-            'entry_options' => ['label' => false],
+            ->add('tags', CollectionType::class, [
+                //'label' => false,
+                'entry_type' => TagType::class,
+                'by_reference' => false,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
         ]);
     }
 

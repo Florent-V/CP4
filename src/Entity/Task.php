@@ -18,7 +18,7 @@ class Task
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'task', targetEntity: Tag::class)]
+    #[ORM\OneToMany(mappedBy: 'task', targetEntity: Tag::class, cascade: ['persist'])]
     private Collection $tags;
 
     public function __construct()
@@ -36,7 +36,7 @@ class Task
         return $this->description;
     }
 
-    public function setDescription(?string $description): static
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
