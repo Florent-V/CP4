@@ -1,0 +1,19 @@
+{# templates/task/new.html.twig #}
+
+{# ... #}
+
+{{ form_start(form) }}
+    {{ form_row(form.description) }}
+
+<h3>Tags</h3>
+<ul class="tags"
+    data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
+    data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+    {% for tag in form.tags %}
+        <li>{{ form_row(tag.name) }}</li>
+    {% endfor %}
+</ul>
+<button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
+{{ form_end(form) }}
+
+{# ... #}
