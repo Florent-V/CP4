@@ -18,7 +18,7 @@ class Task
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'task', targetEntity: Tag::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'task', targetEntity: Tag::class, cascade: ['persist', 'remove'])]
     private Collection $tags;
 
     public function __construct()

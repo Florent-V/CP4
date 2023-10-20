@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Entity\Task;
 use App\Form\TaskType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,8 +37,60 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('app_member_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('task/new.html.twig', [
+        return $this->render('task/newUX.html.twig', [
             'form' => $form,
+            'task' => $task,
+        ]);
+    }
+
+    #[Route(
+        '/{id}/edit',
+        name: 'app_task_edit',
+        methods: ['GET', 'POST']
+    )]
+    public function edit(
+        Task $task,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $originalTags = new ArrayCollection();
+
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($task->getTags() as $tag) {
+            $originalTags->add($tag);
+        }
+
+        $editForm = $this->createForm(TaskType::class, $task);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            // remove the relationship between the tag and the Task
+
+            foreach ($originalTags as $tag) {
+                if (false === $task->getTags()->contains($tag)) {
+                    // remove the Task from the Tag
+                    //$tag->getTask()->removeElement($task);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    // $tag->setTask(null);
+
+                    //$entityManager->persist($tag);
+
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $entityManager->remove($tag);
+                }
+            }
+
+            $entityManager->persist($task);
+            $entityManager->flush();
+
+            // redirect back to some edit page
+            return $this->redirectToRoute('app_member_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        // ... render some form template
+        return $this->render('task/new.html.twig', [
+            'form' => $editForm,
         ]);
     }
 }

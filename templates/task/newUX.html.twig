@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Task{% endblock %}
+
+{% block body %}
+
+    <main class="container-md">
+
+        <h1 class="text-center my-4">Ajouter un nouveau task</h1>
+
+        {{ component('task_form', {
+            form: form,
+            task, task
+        }) }}
+
+    </main>
+
+
+{% endblock %}
+
+
+

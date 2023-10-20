@@ -3,10 +3,12 @@
 {# ... #}
 
 {{ form_start(form) }}
+
     {{ form_row(form.description) }}
 
 <h3>Tags</h3>
 {# the data-index attribute is required for the JavaScript code below #}
+{% do form.tags.setRendered %}
 
 
     <ul class="tags"
