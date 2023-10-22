@@ -17,8 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class TaskController extends AbstractController
 {
     #[Route('/new', name: 'app_task_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
         $task = new Task();
 // dummy code - add some example tags to the task
         // (otherwise, the template will render an empty list of tags)
@@ -41,6 +43,30 @@ class TaskController extends AbstractController
             'form' => $form,
             'task' => $task,
         ]);
+    }
+
+    #[Route('/new2', name: 'app_task_new2', methods: ['GET', 'POST'])]
+    public function new2(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+
+//        $task = new Task();
+//        $form = $this->createForm(TaskType::class, $task);
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            // ... do your form processing, like saving the Task and Tag entities
+//            $entityManager->persist($task);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('app_member_index', [], Response::HTTP_SEE_OTHER);
+//        }
+//
+//        return $this->render('task/newUX.html.twig', [
+//            'form' => $form,
+//            'task' => $task,
+//        ]);
+        return $this->render('task/newUX.html.twig');
     }
 
     #[Route(

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ToDoItem{% endblock %}
+
+{% block body %}
+    <h1>Create new ToDoItem</h1>
+
+    {{ include('to_do_item/_form.html.twig') }}
+
+    <a href="{{ path('app_to_do_item_index') }}">back to list</a>
+{% endblock %}

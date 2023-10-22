@@ -1,27 +1,37 @@
-<div{{ attributes }}>
-    {{ form_start(form) }}
-    {{ form_row(form.description) }}
+{#<div{{ attributes }}>#}
+{#    {{ form_start(form) }}#}
+{#    {{ form_row(form.description) }}#}
 
-    <h3>Comments:</h3>
-    {% for key, tag in form.tags %}
-        <button
-                data-action="live#action"
-                data-action-name="removeTag(index={{ key }})"
-                type="button"
-        >X</button>
+{#    <h3>Comments:</h3>#}
+{#    {% for key, tag in form.tags %}#}
+{#        <button#}
+{#                data-action="live#action"#}
+{#                data-action-name="removeTag(index={{ key }})"#}
+{#                type="button"#}
+{#        >X</button>#}
 
-        {{ form_widget(tag) }}
-    {% endfor %}
-</div>
+{#        {{ form_widget(tag) }}#}
+{#    {% endfor %}#}
+{#</div>#}
 
 {# avoid an extra label for this field #}
-        {% do form.tags.setRendered %}
+{#        {% do form.tags.setRendered %}#}
 
-<button
-        data-action="live#action"
-        data-action-name="addTag"
-        type="button"
->+ Add Comment</button>
+{#<button#}
+{#        data-action="live#action"#}
+{#        data-action-name="addTag"#}
+{#        type="button"#}
+{#>+ Add Comment</button>#}
 
-<button type="submit" >Save</button>
-{{ form_end(form) }}
+{#<button type="submit" >Save</button>#}
+{#{{ form_end(form) }}#}
+
+{# templates/components/PostForm.html.twig #}
+<div {{ attributes }}>
+    {{ form_start(form) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.tags) }}
+
+    <button>Save</button>
+    {{ form_end(form) }}
+</div>

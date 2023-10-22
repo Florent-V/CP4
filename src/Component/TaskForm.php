@@ -19,7 +19,7 @@ class TaskForm extends AbstractController
     use DefaultActionTrait;
     use LiveCollectionTrait;
 
-    #[LiveProp(fieldName: 'formValues')]
+    #[LiveProp]
     public ?Task $task = null;
 
     protected function instantiateForm(): FormInterface
@@ -30,21 +30,21 @@ class TaskForm extends AbstractController
         );
     }
 
-    #[LiveAction]
-    public function addTag()
-    {
-        // "formValues" represents the current data in the form
-        // this modifies the form to add an extra comment
-        // the result: another embedded comment form!
-        // change "comments" to the name of the field that uses CollectionType
-        var_dump($this->task);
-        var_dump($this->formValues);
-        $this->task['tags'][] = [];
-    }
-
-    #[LiveAction]
-    public function removeTag(#[LiveArg] int $index)
-    {
-        unset($this->task['tags'][$index]);
-    }
+//    #[LiveAction]
+//    public function addTag()
+//    {
+//        // "formValues" represents the current data in the form
+//        // this modifies the form to add an extra comment
+//        // the result: another embedded comment form!
+//        // change "comments" to the name of the field that uses CollectionType
+//        var_dump($this->task);
+//        var_dump($this->formValues);
+//        $this->task['tags'][] = [];
+//    }
+//
+//    #[LiveAction]
+//    public function removeTag(#[LiveArg] int $index)
+//    {
+//        unset($this->task['tags'][$index]);
+//    }
 }

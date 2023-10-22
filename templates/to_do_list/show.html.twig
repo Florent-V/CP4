@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ToDoList{% endblock %}
+
+{% block body %}
+    <h1>ToDoList</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ to_do_list.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ to_do_list.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ to_do_list.description }}</td>
+            </tr>
+            <tr>
+                <th>Items</th>
+                <td>
+                    <ul>
+                        {% for item in to_do_list.toDoItems %}
+                            <li>{{ item.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_to_do_list_index') }}">back to list</a>
+
+    <a href="{{ path('app_to_do_list_edit', {'id': to_do_list.id}) }}">edit</a>
+
+    {{ include('to_do_list/_delete_form.html.twig') }}
+{% endblock %}

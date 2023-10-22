@@ -17,7 +17,6 @@ class TaskType extends AbstractType
             ->add('description')
 
             ->add('tags', CollectionType::class, [
-                //'label' => false,
                 'entry_type' => TagType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

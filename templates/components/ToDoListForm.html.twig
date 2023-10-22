@@ -1,0 +1,12 @@
+{# templates/components/PostForm.html.twig #}
+<div {{ attributes }}>
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.toDoItems) }}
+
+    <div class="centerBtn">
+        <button class="btn btn-primary">{{ button_label|default('Créer la ToDoList') }}</button>
+    </div>
+    {{ form_end(form) }}
+</div>

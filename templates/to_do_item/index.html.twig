@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ToDoItem index{% endblock %}
+
+{% block body %}
+    <h1>ToDoItem index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for to_do_item in to_do_items %}
+            <tr>
+                <td>{{ to_do_item.id }}</td>
+                <td>{{ to_do_item.name }}</td>
+                <td>
+                    <a href="{{ path('app_to_do_item_show', {'id': to_do_item.id}) }}">show</a>
+                    <a href="{{ path('app_to_do_item_edit', {'id': to_do_item.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_to_do_item_new') }}">Create new</a>
+{% endblock %}
