@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ToDoItemRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ToDoItemRepository::class)]
 class ToDoItem
@@ -14,6 +15,12 @@ class ToDoItem
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'toDoItems')]

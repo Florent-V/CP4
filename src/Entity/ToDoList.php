@@ -6,6 +6,7 @@ use App\Repository\ToDoListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ToDoListRepository::class)]
 class ToDoList
@@ -16,9 +17,21 @@ class ToDoList
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Your todolist name must be at least {{ limit }} characters long',
+        maxMessage: 'Your todolist name cannot be longer than {{ limit }} characters',
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'Your todolist description must be at least {{ limit }} characters long',
+        maxMessage: 'Your todolist description cannot be longer than {{ limit }} characters',
+    )]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'toDoList', targetEntity: ToDoItem::class, orphanRemoval: true)]
