@@ -39,14 +39,14 @@ class ToDoListForm extends AbstractController
         $this->submitForm();
 
         /** @var ToDoList $toDoList */
-        $post = $this->getForm()->getData();
+        $toDoList = $this->getForm()->getData();
         $entityManager->persist($toDoList);
         $entityManager->flush();
 
         $this->addFlash('success', 'Post saved!');
 
-        return $this->redirectToRoute('app_post_show', [
-            'id' => $post->getId(),
+        return $this->redirectToRoute('app_to_do_list_show', [
+            'id' => $toDoList->getId(),
         ]);
     }
 }

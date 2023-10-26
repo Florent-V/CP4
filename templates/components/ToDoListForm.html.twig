@@ -1,6 +1,11 @@
 {# templates/components/PostForm.html.twig #}
 <div {{ attributes }}>
-    {{ form_start(form) }}
+    {{ form_start(form, {
+        attr: {
+            'data-action': 'live#action',
+            'data-action-name': 'prevent|save'
+        }
+    }) }}
     {{ form_row(form.title) }}
     {{ form_row(form.description) }}
     {{ form_row(form.toDoItems) }}
