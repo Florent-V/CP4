@@ -16,8 +16,8 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        foreach (SplitterFixtures::SPLITTERS as $key => $splitter) {
-            for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= SplitterFixtures::$splitExpense; $i++) {
+            for ($j = 1; $j <= 4; $j++) {
                 self::$expenseIndex++;
                 $expense = new Expense();
                 $expense->setName('Dépense N°' . self::$expenseIndex);
@@ -33,12 +33,11 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 $expense->setMadeAt($faker->dateTime);
                 $expense->setAmount($faker->randomFloat(2, 10, 100));
                 $expense->setDevise('€');
-                $expense->setPaidBy($this->getReference('user_' . ($faker->randomElement($splitter) - 1)));
-                $expense->setSplitter($this->getReference('splitter_' . ($key + 1)));
+                $expense->setPaidBy($this->getReference('member_' . ($faker->numberBetween(4 * $i - 3, 4 * $i))));
+                $expense->setSplitter($this->getReference('splitter_' . $i));
                 $manager->persist($expense);
             }
         }
-
         $manager->flush();
     }
 
