@@ -24,7 +24,7 @@
                             <a class="nav-link" aria-current="page" href="{{ path('app_splitter_show', { 'id': split.id }) }}">
                                 <span class="mdi mdi-format-list-bulleted">{{ split.name }}</span>
                             </a>
-                            {% if split.ownedBy == app.user %}
+                            {% if split.owner in app.user.members %}
                                 <a class="link-info" href="{{ path('app_splitter_edit', {'id': split.id}) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>

@@ -38,7 +38,7 @@ class UserFixtures extends Fixture
         $manager->persist($admin);
         $this->addReference('admin', $admin);
 
-        for ($i = 1; $i <= 15; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             self::$userIndex++;
             $user = new User();
 
@@ -58,7 +58,7 @@ class UserFixtures extends Fixture
             $user->setPassword($hashedPassword);
 
             $manager->persist($user);
-            $this->addReference('user_' . self::$userIndex, $user);
+            $this->addReference('user_' . $i, $user);
         }
         $manager->flush();
     }

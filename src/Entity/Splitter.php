@@ -22,10 +22,6 @@ class Splitter
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'splittersOwned')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $ownedBy = null;
-
     #[ORM\ManyToOne(inversedBy: 'splitters')]
     #[ORM\JoinColumn(nullable: false)]
     private ?SplitterCategory $category = null;
@@ -42,14 +38,15 @@ class Splitter
     #[ORM\OneToMany(mappedBy: 'splitter', targetEntity: Member::class, orphanRemoval: true)]
     private Collection $members;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoriteSplitters')]
-    private Collection $viewers;
+    #[ORM\OneToOne(inversedBy: 'owned', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Member $owner = null;
+
 
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
         $this->members = new ArrayCollection();
-        $this->viewers = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -65,18 +62,6 @@ class Splitter
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getOwnedBy(): ?User
-    {
-        return $this->ownedBy;
-    }
-
-    public function setOwnedBy(?User $ownedBy): self
-    {
-        $this->ownedBy = $ownedBy;
 
         return $this;
     }
@@ -177,26 +162,14 @@ class Splitter
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getViewers(): Collection
+    public function getOwner(): ?Member
     {
-        return $this->viewers;
+        return $this->owner;
     }
 
-    public function addViewer(User $viewer): static
+    public function setOwner(Member $owner): static
     {
-        if (!$this->viewers->contains($viewer)) {
-            $this->viewers->add($viewer);
-        }
-
-        return $this;
-    }
-
-    public function removeViewer(User $viewer): static
-    {
-        $this->viewers->removeElement($viewer);
+        $this->owner = $owner;
 
         return $this;
     }

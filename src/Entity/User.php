@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -20,6 +21,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email(
+        message: '{{ value }} n\'est pas un email valide.',
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -32,12 +36,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Le pseudo doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le pseudo ne doit pas dépasser {{ limit }} caractères',
+    )]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Le prénom doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le prénom ne doit pas dépasser {{ limit }} caractères',
+    )]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Le nom doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le nom ne doit pas dépasser {{ limit }} caractères',
+    )]
     private ?string $lastName = null;
 
     #[ORM\Column(type: 'boolean')]
@@ -49,14 +74,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
-    #[ORM\OneToMany(mappedBy: 'ownedBy', targetEntity: Splitter::class, orphanRemoval: true)]
-    private Collection $splittersOwned;
-
     #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: ExpenseCategory::class, orphanRemoval: true)]
     private Collection $categories;
-
-    #[ORM\OneToMany(mappedBy: 'paidBy', targetEntity: Expense::class, orphanRemoval: true)]
-    private Collection $expenses;
 
     #[ORM\Column]
     private ?bool $isActive = true;
@@ -64,16 +83,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Member::class, orphanRemoval: true)]
     private Collection $members;
 
-    #[ORM\ManyToMany(targetEntity: Splitter::class, mappedBy: 'viewers')]
-    private Collection $favoriteSplitters;
-
     public function __construct()
     {
-        $this->splittersOwned = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->expenses = new ArrayCollection();
         $this->members = new ArrayCollection();
-        $this->favoriteSplitters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,35 +231,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Splitter>
-     */
-    public function getSplittersOwned(): Collection
-    {
-        return $this->splittersOwned;
-    }
-
-    public function addSplittersOwned(Splitter $splittersOwned): self
-    {
-        if (!$this->splittersOwned->contains($splittersOwned)) {
-            $this->splittersOwned->add($splittersOwned);
-            $splittersOwned->setOwnedBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSplittersOwned(Splitter $splittersOwned): self
-    {
-        if ($this->splittersOwned->removeElement($splittersOwned)) {
-            // set the owning side to null (unless already changed)
-            if ($splittersOwned->getOwnedBy() === $this) {
-                $splittersOwned->setOwnedBy(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, ExpenseCategory>
@@ -272,36 +256,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($category->getAddedBy() === $this) {
                 $category->setAddedBy(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Expense>
-     */
-    public function getExpenses(): Collection
-    {
-        return $this->expenses;
-    }
-
-    public function addExpense(Expense $expense): self
-    {
-        if (!$this->expenses->contains($expense)) {
-            $this->expenses->add($expense);
-            $expense->setPaidBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeExpense(Expense $expense): self
-    {
-        if ($this->expenses->removeElement($expense)) {
-            // set the owning side to null (unless already changed)
-            if ($expense->getPaidBy() === $this) {
-                $expense->setPaidBy(null);
             }
         }
 
@@ -345,33 +299,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($member->getUser() === $this) {
                 $member->setUser(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Splitter>
-     */
-    public function getFavoriteSplitters(): Collection
-    {
-        return $this->favoriteSplitters;
-    }
-
-    public function addFavoriteSplitter(Splitter $favoriteSplitter): static
-    {
-        if (!$this->favoriteSplitters->contains($favoriteSplitter)) {
-            $this->favoriteSplitters->add($favoriteSplitter);
-            $favoriteSplitter->addViewer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavoriteSplitter(Splitter $favoriteSplitter): static
-    {
-        if ($this->favoriteSplitters->removeElement($favoriteSplitter)) {
-            $favoriteSplitter->removeViewer($this);
         }
 
         return $this;

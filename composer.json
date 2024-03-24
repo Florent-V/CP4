@@ -50,6 +50,7 @@
         "symfonycasts/reset-password-bundle": "^1.16",
         "symfonycasts/sass-bundle": "^0.6.0",
         "symfonycasts/verify-email-bundle": "^1.13",
+        "twbs/bootstrap": "^5.3",
         "twig/extra-bundle": "^3.8",
         "twig/intl-extra": "^3.5",
         "twig/twig": "^3.8"

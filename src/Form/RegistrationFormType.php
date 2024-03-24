@@ -17,44 +17,24 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', null, [
-                'row_attr' => ['class' => 'form-floating mb-3'],
-                'label' => 'Pseudo',
-                'attr' => ['placeholder' => 'pseudo']
-            ])
-            ->add('firstName', null, [
-                'row_attr' => ['class' => 'form-floating mb-3'],
-                'label' => 'Prénom',
-                'attr' => ['placeholder' => 'Pierre...']
-            ])
-            ->add('lastName', null, [
-                'row_attr' => ['class' => 'form-floating mb-3'],
-                'label' => 'Nom',
-                'attr' => ['placeholder' => 'Dupond...']
-            ])
-            ->add('phone', null, [
-                'row_attr' => ['class' => 'form-floating mb-3'],
-                'label' => 'Téléphone',
-                'attr' => ['placeholder' => '+33...']
-            ])
-            ->add('email', null, [
-                'row_attr' => ['class' => 'form-floating mb-3'],
-                'label' => 'Email',
-                'attr' => ['placeholder' => 'name@example.fr']
-            ])
-/*            ->add('agreeTerms', CheckboxType::class, [
+            ->add('pseudo')
+            ->add('firstName')
+            ->add('lastName')
+            ->add('phone')
+            ->add('email')
+            ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
-            ])*/
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'row_attr' => ['class' => 'form-floating mb-3'],
+                'always_empty' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'placeholder' => '*****'

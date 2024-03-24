@@ -13,8 +13,6 @@ class MemberType extends AbstractType
     {
         $builder
             ->add('nickname')
-            ->add('splitter')
-            ->add('user')
         ;
     }
 

@@ -1,4 +1,4 @@
-import './bootstrap.js';
+//import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -10,8 +10,9 @@ import './bootstrap.js';
 import './styles/app.scss';
 
 // start the Stimulus application
-import './bootstrap';
+import './bootstrap.js';
 //Icons From Bootstrap
-import 'bootstrap-icons/font/bootstrap-icons.css';
 //Bootstrap https://getbootstrap.com/
-require('bootstrap');
+import './vendor/bootstrap/bootstrap.index.js';
+
+console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

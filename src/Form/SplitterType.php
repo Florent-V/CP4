@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class SplitterType extends AbstractType
 {
@@ -35,6 +36,17 @@ class SplitterType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 },
                 'choice_label' => 'name'
+            ])
+            ->add('members', LiveCollectionType::class, [
+                'entry_type' => MemberType::class,
+                'entry_options' => ['label' => false],
+                'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
+                'label' => 'Membres',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'delete_empty' => true,
+                'prototype' => true,
+                'attr' => ['class' => 'splitter-members']
             ])
 
         ;

@@ -16,47 +16,64 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
-        for ($i = 1; $i <= UserFixtures::$userIndex; $i++) {
-            for ($j = 1; $j <= 3; $j++) {
-                self::$splitExpense++;
-                $group = new Splitter();
-                $group->setName('Splitter N°' . self::$splitExpense);
-                $group->setDescription($faker->paragraph());
-                $group->setUniqueId(md5(uniqid(strval(time()), true)));
-                $group->setCategory($this->getReference(
-                    'splitterCategory_' .
-                    $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
-                ));
-                $group->setOwnedBy($this->getReference('user_' . $i));
-                $manager->persist($group);
-                $this->addReference('splitter_' . self::$splitExpense, $group);
-            }
-        }
+        self::$splitExpense++;
+        $group = new Splitter();
+        $group->setName('Splitter N°' . self::$splitExpense);
+        $group->setDescription($faker->paragraph());
+        $group->setUniqueId(md5(uniqid(strval(time()), true)));
+        $group->setCategory($this->getReference(
+            'splitterCategory_' .
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+        ));
+        $group->setOwner($this->getReference('member_11'));
+        $group->addMember($this->getReference('member_11'));
+        $group->addMember($this->getReference('member_21'));
+        $group->addMember($this->getReference('member_31'));
+        $group->addMember($this->getReference('member_41'));
+        $manager->persist($group);
+        $this->addReference('splitter_' . self::$splitExpense, $group);
 
-        for ($i = 0; $i <= 20; $i++) {
-            self::$groupIndex++;
-            $group = new Splitter();
-            $group->setName('Splitter (bis) N°' . self::$groupIndex);
-            $group->setDescription($faker->paragraph());
-            $group->setUniqueId(md5(uniqid(strval(time()), true)));
-            $group->setCategory($this->getReference(
-                'splitterCategory_' .
-                $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
-            ));
-            $group->setOwnedBy($this->getReference(
-                'user_' .
-                $faker->unique()->numberBetween(1, UserFixtures::$userIndex)
-            ));
-            $faker->unique(true);
-            $manager->persist($group);
-        }
+        self::$splitExpense++;
+        $group = new Splitter();
+        $group->setName('Splitter N°' . self::$splitExpense);
+        $group->setDescription($faker->paragraph());
+        $group->setUniqueId(md5(uniqid(strval(time()), true)));
+        $group->setCategory($this->getReference(
+            'splitterCategory_' .
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+        ));
+        $group->setOwner($this->getReference('member_22'));
+        $group->addMember($this->getReference('member_12'));
+        $group->addMember($this->getReference('member_22'));
+        $group->addMember($this->getReference('member_51'));
+        $group->addMember($this->getReference('member_61'));
+        $manager->persist($group);
+        $this->addReference('splitter_' . self::$splitExpense, $group);
+
+        self::$splitExpense++;
+        $group = new Splitter();
+        $group->setName('Splitter N°' . self::$splitExpense);
+        $group->setDescription($faker->paragraph());
+        $group->setUniqueId(md5(uniqid(strval(time()), true)));
+        $group->setCategory($this->getReference(
+            'splitterCategory_' .
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+        ));
+        $group->setOwner($this->getReference('member_32'));
+        $group->addMember($this->getReference('member_42'));
+        $group->addMember($this->getReference('member_52'));
+        $group->addMember($this->getReference('member_62'));
+        $group->addMember($this->getReference('member_32'));
+        $manager->persist($group);
+        $this->addReference('splitter_' . self::$splitExpense, $group);
+
         $manager->flush();
     }
 
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class,
+            MemberFixtures::class,
             SplitterCategoryFixtures::class,
         ];
     }

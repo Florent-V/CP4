@@ -15,14 +15,15 @@ class MemberFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= SplitterFixtures::$splitExpense; $i++) {
-            for ($j = 1; $j <= 4; $j++) {
+        for ($i = 1; $i <= UserFixtures::$userIndex; $i++) {
+            for ($j = 1; $j <= 2; $j++) {
                 self::$memberIndex++;
                 $member = new Member();
-                $member->setNickname($faker->firstName());
-                $member->setSplitter($this->getReference('splitter_' . $i));
+                $member->setNickname($faker->firstName() . '_' . $i . $j);
+                $member->setUser($this->getReference('user_' . $i));
+                $member->setEditor($faker->boolean());
                 $manager->persist($member);
-                $this->addReference('member_' . self::$memberIndex, $member);
+                $this->addReference('member_' . $i . $j, $member);
             }
         }
         $manager->flush();
@@ -31,7 +32,7 @@ class MemberFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            SplitterFixtures::class
+            UserFixtures::class,
         ];
     }
 }

@@ -6,6 +6,7 @@ grumphp:
             project: '8.0'
         phpcpd:
             directory: [ 'src' ]
+            exclude: [ 'src/DataFixtures' ]
         phpcs:
             standard: ~
         phpstan:

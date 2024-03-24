@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Member;
 use App\Entity\Splitter;
 use App\Entity\User;
 use App\Form\JoinSplitterType;
@@ -9,7 +10,6 @@ use App\Form\ShareSplitterType;
 use App\Form\SplitterType;
 use App\Repository\SplitterRepository;
 use App\Service\BalanceCalculator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/splitter')]
@@ -32,7 +33,9 @@ class SplitterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $splitter->setOwnedBy($this->getUser());
+            $member = new Member();
+            $member->setUser($this->getUser());
+            $splitter->setOwner($this->getUser());
             $splitter->addMember($this->getUser());
             $splitter->setUniqueId(md5(uniqid(strval(time()), true)));
             $splitterRepository->save($splitter, true);

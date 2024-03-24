@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ExpenseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,15 +36,27 @@ class Expense
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $paidBy = null;
-
-    #[ORM\ManyToOne(inversedBy: 'expenses')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Splitter $splitter = null;
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ExpenseCategory $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'addedExpenses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Member $addedBy = null;
+
+    #[ORM\ManyToOne(inversedBy: 'paidExpenses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Member $paidBy = null;
+
+    #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'expenses')]
+    private Collection $beneficiaries;
+
+    public function __construct()
+    {
+        $this->beneficiaries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,18 +135,6 @@ class Expense
         return $this;
     }
 
-    public function getPaidBy(): ?User
-    {
-        return $this->paidBy;
-    }
-
-    public function setPaidBy(?User $paidBy): self
-    {
-        $this->paidBy = $paidBy;
-
-        return $this;
-    }
-
     public function getSplitter(): ?Splitter
     {
         return $this->splitter;
@@ -153,6 +155,54 @@ class Expense
     public function setCategory(?ExpenseCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAddedBy(): ?Member
+    {
+        return $this->addedBy;
+    }
+
+    public function setAddedBy(?Member $addedBy): static
+    {
+        $this->addedBy = $addedBy;
+
+        return $this;
+    }
+
+    public function getPaidBy(): ?Member
+    {
+        return $this->paidBy;
+    }
+
+    public function setPaidBy(?Member $paidBy): static
+    {
+        $this->paidBy = $paidBy;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getBeneficiaries(): Collection
+    {
+        return $this->beneficiaries;
+    }
+
+    public function addBeneficiary(Member $beneficiary): static
+    {
+        if (!$this->beneficiaries->contains($beneficiary)) {
+            $this->beneficiaries->add($beneficiary);
+        }
+
+        return $this;
+    }
+
+    public function removeBeneficiary(Member $beneficiary): static
+    {
+        $this->beneficiaries->removeElement($beneficiary);
 
         return $this;
     }

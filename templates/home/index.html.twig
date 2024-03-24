@@ -3,6 +3,7 @@
 {% block content %}
     <div class="overview">
 
+
         <div>
             {{ form_start(form) }}
             {{ form_widget(form) }}
@@ -16,7 +17,7 @@
                 <div class="col-md-6 col-xxl-4">
                     <div class="card mb-4">
                         <div class="cardIcons">
-                            {% if split.ownedBy == app.user %}
+                            {% if split.owner in app.user.members %}
                                 <a href="{{ path('app_splitter_edit', {'id' : split.id }) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
@@ -29,12 +30,12 @@
                             <h4 class="card-title text-dark">{{ split.name }}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Créé par :
-                                    {{ split.ownedBy.firstName ~ ' ' ~ split.ownedBy.lastName }},
+                                    {{ split.owner.nickname ~ ' ' ~ split.owner.nickname }},
                             </h6>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Membres :
-                                {% for user in split.members %}
-                                    {{ user.firstName ~ ' ' ~ user.lastName }},
+                                {% for member in split.members %}
+                                    {{ member.nickname }},
                                 {% endfor %}
                             </h6>
                         </div>
@@ -46,7 +47,7 @@
                                         <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
                                     </div>
                                     <div class="expenseInfos">
-                                        <p>{{ expense.paidBy.firstName }} a payé pour {{ expense.name }}</p>
+                                        <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
                                         <p><i class="bi bi-person-fill"></i>Bénéficiaire : comming soon</p>
                                     </div>
                                     <div class="expenseAmount">

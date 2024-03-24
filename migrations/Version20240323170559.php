@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230204165924 extends AbstractMigration
+final class Version20240323170559 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,12 @@ final class Version20230204165924 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_51A53B99E3C68343 ON splitter');
-        $this->addSql('ALTER TABLE user ADD is_active TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE `member` CHANGE splitter_id splitter_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\'');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user DROP is_active');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_51A53B99E3C68343 ON splitter (unique_id)');
+        $this->addSql('ALTER TABLE `member` CHANGE splitter_id splitter_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\'');
     }
 }
