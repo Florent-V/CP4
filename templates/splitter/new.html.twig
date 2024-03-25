@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <main class="container-md">
+    <main class="container-md splitterForm">
 
         <h1 class="text-center my-4">Ajouter un nouveau splitter</h1>
 
@@ -12,8 +12,8 @@
             <a class="btn btn-primary" href="{{ path('app_home') }}"><i class="bi bi-arrow-return-left"></i>   Retour</a>
         </div>
 
-
-        {{ include('splitter/_form.html.twig') }}
+        {{ component('Form:SplitterForm') }}
+{#        {{ include('splitter/_form.html.twig') }}#}
 
     </main>
 

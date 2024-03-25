@@ -33,11 +33,10 @@ class SplitterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $member = new Member();
-            $member->setUser($this->getUser());
-            $splitter->setOwner($this->getUser());
-            $splitter->addMember($this->getUser());
             $splitter->setUniqueId(md5(uniqid(strval(time()), true)));
+            $splitter->getMembers()[0]->setUser($this->getUser());
+            $splitter->setOwner($splitter->getMembers()[0]);
+            //dd($splitter);
             $splitterRepository->save($splitter, true);
 
             $this->addFlash('success', '🙂 Votre Splitter a bien été crée !');

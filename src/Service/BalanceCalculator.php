@@ -3,13 +3,14 @@
 namespace App\Service;
 
 use App\Entity\Splitter;
+use App\Repository\MemberRepository;
 use App\Repository\SplitterRepository;
 use App\Repository\UserRepository;
 
 class BalanceCalculator
 {
     public function __construct(
-        private readonly UserRepository $userRepository
+        private readonly MemberRepository $memberRepository
     ) {
     }
 
@@ -24,8 +25,15 @@ class BalanceCalculator
 
         //Calculate total amount by member
         foreach ($splitter->getExpenses() as $expense) {
-            $balancePerId[$expense->getPaidBy()->getId()] += $expense->getAmount();
-            $total += $expense->getAmount();
+            $amount = $expense->getAmount();
+            $payer = $expense->getPaidBy()->getId();
+            $balancePerId[$payer] += $amount;
+            $beneficiaries = $expense->getBeneficiaries();
+            $average = $amount / count($beneficiaries);
+            $memberIds = array_map(fn ($member) => $member->getId(), $beneficiaries->toArray());
+            foreach ($memberIds as $id) {
+                $balancePerId[$id] -= $average;
+            }
         }
 
         //Caculate balance
@@ -57,10 +65,10 @@ class BalanceCalculator
             $sortedBalance[$max] -= $delta;
 
             $transfers[] = [
-                'from' => $this->userRepository->findOneBy([
+                'from' => $this->memberRepository->findOneBy([
                     'id' => $sortedMembers[$min],
                 ]),
-                'to' => $this->userRepository->findOneBy([
+                'to' => $this->memberRepository->findOneBy([
                     'id' => $sortedMembers[$max],
                 ]),
                 'amount' => $delta,

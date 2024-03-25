@@ -40,13 +40,12 @@ class SplitterType extends AbstractType
             ->add('members', LiveCollectionType::class, [
                 'entry_type' => MemberType::class,
                 'entry_options' => ['label' => false],
-                'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
                 'label' => 'Membres',
                 'allow_add' => true,
                 'allow_delete' => true,
-                'delete_empty' => true,
-                'prototype' => true,
-                'attr' => ['class' => 'splitter-members']
+                //'delete_empty' => true,
+                //'prototype' => true,
+                'by_reference' => false,
             ])
 
         ;

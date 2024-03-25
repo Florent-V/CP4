@@ -35,7 +35,12 @@ class Splitter
     #[ORM\Column(length: 255)]
     private ?string $uniqueId = null;
 
-    #[ORM\OneToMany(mappedBy: 'splitter', targetEntity: Member::class, orphanRemoval: true)]
+    #[ORM\OneToMany(
+        mappedBy: 'splitter',
+        targetEntity: Member::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true
+    )]
     private Collection $members;
 
     #[ORM\OneToOne(inversedBy: 'owned', cascade: ['persist', 'remove'])]

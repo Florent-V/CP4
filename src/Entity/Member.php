@@ -6,6 +6,7 @@ use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 #[ORM\Table(name: '`member`')]
@@ -16,7 +17,13 @@ class Member
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 80)]
+    #[ORM\Column(length: 50)]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Le nom du membre doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le nom du membre ne doit pas dépasser {{ limit }} caractères',
+    )]
     private ?string $nickname = null;
 
     #[ORM\ManyToOne(inversedBy: 'members')]

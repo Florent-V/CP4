@@ -13,11 +13,15 @@
     }
 }
 
-
 .expenseItemList {
     .linkExpense {
         @include clickable-zone;
     }
+}
 
+.splitterForm {
+    .corbeille {
+        font-size: 1.5rem;
+    }
 }
 

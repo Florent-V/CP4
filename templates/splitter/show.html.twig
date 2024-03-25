@@ -10,7 +10,7 @@
             <div class="d-flex align-items-center gap-4">
                 <a class="nav-link" href="{{ path('app_expense_new', {'id': splitter.id}) }}" title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a>
                 <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}" title="partager le splitter"><i class="bi bi-share-fill"></i></a>
-                {% if splitter.ownedBy == app.user %}
+                {% if splitter.owner in app.user.members %}
                     <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" title="Editer le splitter"><i class="bi bi-pencil-square"></i></a>
                     {{ include('splitter/_delete_form.html.twig') }}
                 {% endif %}
@@ -35,8 +35,8 @@
                                 <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
                             </div>
                             <div class="expenseInfos flex-grow-1">
-                                <p>{{ expense.paidBy.firstName }} a payé pour {{ expense.name }}</p>
-                                <p><i class="bi bi-person-fill"></i>Bénéficiaire : comming soon</p>
+                                <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
+                                <p><i class="bi bi-person-fill"></i>Bénéficiaires : comming soon</p>
                             </div>
                             <div class="expenseAmount">
                                 <span>{{ expense.amount ~ expense.devise }}</span>
@@ -57,7 +57,7 @@
                     {% for member in splitter.members %}
                         <li class="list-group-item balanceItemList">
                             <div class="memberName">
-                                <p>{{ member.firstName ~ ' ' ~ member.lastName }}</p>
+                                <p>{{ member.nickname }}</p>
                             </div>
                             <div>
                                 <span class="badge {{ balancePerId[member.id] < 0 ? "bg-warning text-dark" : "bg-success" }}">{{ balancePerId[member.id]|round(2) }}€</span>
@@ -78,11 +78,11 @@
                         <li class="list-group-item d-flex align-items-center gap-3">
                             <div class="memberName py-1">
                                 <p class="m-0">
-                                    <span class="fw-bold">{{ transfer['from'].firstName }}</span>
+                                    <span class="fw-bold">{{ transfer['from'].nickname }}</span>
                                     doit
                                      <span class="text-decoration-underline">{{ transfer['amount']|round(2) }}€</span>
                                     à
-                                    <span class="fw-bold">{{ transfer['to'].firstName }}</span>
+                                    <span class="fw-bold">{{ transfer['to'].nickname }}</span>
                                 </p>
                             </div>
                         </li>
@@ -91,13 +91,5 @@
             </div>
         </div>
     </main>
-
-
-    {% if app.user in splitter.members %}
-        <p>YES !</p>
-
-    {% endif %}
-
-
 
 {% endblock %}
