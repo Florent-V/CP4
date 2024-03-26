@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Splitter{% endblock %}
+
+{% block body %}
+
+    <main class="splitterView container-md">
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <h1 class="m-0">{{ splitter.name }}</h1>
+            <div class="d-flex align-items-center gap-4">
+                <a class="nav-link" href="{{ path('app_expense_new', {'id': splitter.id}) }}" title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a>
+                <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}" title="partager le splitter"><i class="bi bi-share-fill"></i></a>
+                {% if splitter.owner in app.user.members %}
+                    <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" title="Editer le splitter"><i class="bi bi-pencil-square"></i></a>
+                    {{ include('splitter/_delete_form.html.twig') }}
+                {% endif %}
+                <a class="nav-link" href="{{ path('app_home') }}" title="Retour home"><i class="bi bi-arrow-return-left"></i></a>
+            </div>
+        </div>
+
+        <div class="expenseCard">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title text-dark">Dépenses</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                            {{ splitter.description }},
+                    </h6>
+
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for expense in splitter.expenses %}
+                        <li class="list-group-item expenseItemList">
+                            <div class="expenseDate">
+                                <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
+                                <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
+                            </div>
+                            <div class="expenseInfos flex-grow-1">
+                                <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
+                                <p><i class="bi bi-person-fill"></i>Bénéficiaires : comming soon</p>
+                            </div>
+                            <div class="expenseAmount">
+                                <span>{{ expense.amount ~ expense.devise }}</span>
+                            </div>
+                            <a class="linkExpense" href="{{ path('app_expense_edit', {'expense_id' : expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="balanceCard">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title text-dark my-2">Balances</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for member in splitter.members %}
+                        <li class="list-group-item balanceItemList">
+                            <div class="memberName">
+                                <p>{{ member.nickname }}</p>
+                            </div>
+                            <div>
+                                <span class="badge {{ balancePerId[member.id] < 0 ? "bg-warning text-dark" : "bg-success" }}">{{ balancePerId[member.id]|round(2) }}€</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="balanceCard">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title text-dark">Régler les dettes !</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for transfer in transfers %}
+                        <li class="list-group-item d-flex align-items-center gap-3">
+                            <div class="memberName py-1">
+                                <p class="m-0">
+                                    <span class="fw-bold">{{ transfer['from'].nickname }}</span>
+                                    doit
+                                     <span class="text-decoration-underline">{{ transfer['amount']|round(2) }}€</span>
+                                    à
+                                    <span class="fw-bold">{{ transfer['to'].nickname }}</span>
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

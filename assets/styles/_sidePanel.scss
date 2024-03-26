@@ -1,0 +1,42 @@
+.side-panel {
+  min-width: 250px;
+  img {
+    width: 100px;
+    height: auto;
+  }
+  h1 {
+    font-size: 2rem;
+    padding-top: 1rem;
+    text-align: center;
+  }
+  .btn.btn-primary {
+    box-shadow: 0 0 20px 1px #48abe0;
+  }
+
+  ul li {
+    font-size: 1rem;
+    text-align: center;
+  }
+  .info-user{
+    display: flex;
+    align-items: center;
+    color: $light;
+    width:auto;
+    i {
+      font-size: 2rem;
+    }
+  }
+  h2 {
+    font-size: 1.5rem;
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+.mdi {
+  margin-right: 0.5rem;
+}

@@ -1,0 +1,15 @@
+{
+  "build/app.css": "http://localhost:8080/build/app.css",
+  "build/app.js": "http://localhost:8080/build/app.js",
+  "build/runtime.js": "http://localhost:8080/build/runtime.js",
+  "build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_hostname_0_0_0_0_port_-05f373.js": "http://localhost:8080/build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_hostname_0_0_0_0_port_-05f373.js",
+  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-live-compo-045e91.css": "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-live-compo-045e91.css",
+  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-live-compo-045e91.js": "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-live-compo-045e91.js",
+  "build/images/login.gif": "http://localhost:8080/build/images/login.19f6cde5.gif",
+  "build/fonts/bootstrap-icons.woff?": "http://localhost:8080/build/fonts/bootstrap-icons.6959d0d9.woff",
+  "build/images/mainlogo1.png": "http://localhost:8080/build/images/mainlogo1.3384bbaa.png",
+  "build/fonts/bootstrap-icons.woff2?": "http://localhost:8080/build/fonts/bootstrap-icons.b2e5aab6.woff2",
+  "build/images/mainlogo.png": "http://localhost:8080/build/images/mainlogo.4face297.png",
+  "build/images/favicon.png": "http://localhost:8080/build/images/favicon.c3885541.png",
+  "build/images/profilePictureDefault.png": "http://localhost:8080/build/images/profilePictureDefault.78641a33.png"
+}

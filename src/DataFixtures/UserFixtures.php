@@ -12,7 +12,7 @@ class UserFixtures extends Fixture
 {
     public static int $userIndex = 0;
 
-    public function __construct(private readonly  UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
 
@@ -36,8 +36,9 @@ class UserFixtures extends Fixture
         $admin->setPassword($hashedPassword);
 
         $manager->persist($admin);
+        $this->addReference('admin', $admin);
 
-        for ($i = 0; $i <= 20; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             self::$userIndex++;
             $user = new User();
 
@@ -45,7 +46,7 @@ class UserFixtures extends Fixture
             $user->setPseudo($firstName . $faker->year());
             $user->setFirstName($firstName);
             $user->setLastName($faker->lastName());
-            $user->setEmail('user' . self::$userIndex . '@mail.fr');
+            $user->setEmail('user' . (self::$userIndex) . '@mail.fr');
             $user->setPhone($faker->phoneNumber());
             $user->setIsVerified(true);
             $user->setRoles((array)'ROLE_USER');
@@ -57,7 +58,7 @@ class UserFixtures extends Fixture
             $user->setPassword($hashedPassword);
 
             $manager->persist($user);
-            $this->addReference('user_' . self::$userIndex, $user);
+            $this->addReference('user_' . $i, $user);
         }
         $manager->flush();
     }

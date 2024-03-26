@@ -1,0 +1,69 @@
+<div
+        {{ attributes }}
+>
+    {{ form_start(form) }}
+
+
+    {{ form_row(form.name, {
+        label: 'Nom du splitter',
+        attr: {
+            placeholder: 'Voyage à ...'
+        },
+        row_attr: {
+            class: 'form-floating mb-3 text-dark'
+        }
+    }) }}
+
+    {{ form_row(form.description, {
+        label: 'Description du splitter',
+        attr: {
+            placeholder: 'Splitter pour le voyage à ...'
+        },
+        row_attr: {
+            class: 'form-floating mb-3 text-dark'
+        }
+    }) }}
+
+    {{ form_row(form.category, {
+        label: 'Catégorie',
+        row_attr: {
+            class: 'form-floating mb-3 text-dark'
+        }
+    }) }}
+
+    <p>Ajouter des membres</p>
+
+
+        {% for key, memberForm in form.members %}
+            {% set myLabel = (key == 0) ? 'Votre Nom' : 'Autre Participant' %}
+            <div class="d-flex gap-2 align-items-center">
+                {{ form_row(memberForm.nickname, {
+                    label: myLabel,
+                    row_attr: {
+                        class: 'form-floating mb-3 flex-grow-1'
+                    },
+                    attr: {
+                        placeholder: 'Pseudo'
+                    }
+                }) }}
+
+                {{ form_row(memberForm.vars.button_delete, {
+                    label: false,
+                    row_attr: {
+                        class: 'mb-3'
+                    },
+                    attr: {
+                        class: 'btn btn-danger p-2 corbeille bi bi-trash'
+                    }
+                }) }}
+
+            </div>
+
+        {% endfor %}
+
+
+    {{ form_widget(form.members.vars.button_add, {label: '+ Add Item', attr: {class: 'btn btn-outline-primary'}}) }}
+
+    <button type="submit" class="btn btn-success" formnovalidate>Save</button>
+    {{ form_end(form) }}
+</div>

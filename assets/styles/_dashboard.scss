@@ -1,0 +1,74 @@
+.overview {
+    padding-top: 2rem;
+
+    form {
+        display: flex;
+        justify-content: flex-end;
+
+        > div {
+            width: 50%;
+        }
+    }
+
+    .splits {
+        margin-top: 2rem;
+
+        .cardIcons {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 10;
+
+            i {
+                font-size: 1.4rem;
+                color: $primary;
+            }
+        }
+
+        .link-card {
+            @include clickable-zone;
+        }
+    }
+
+    #addSplitterBtn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 99;
+        cursor: pointer;
+        transition: transform 0.5s ease-in-out;
+
+        a {
+            box-shadow: 0 0 20px 1px #48abe0;
+        }
+
+        &:hover {
+            transform: scale(1.5);
+        }
+    }
+}
+
+.expenseItemList {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    p {
+        margin: 0;
+    }
+    .expenseDate {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .expenseInfos {
+        flex:1
+    }
+    .expenseAmount {
+
+    }
+
+}
+
