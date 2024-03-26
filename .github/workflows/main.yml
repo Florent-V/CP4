@@ -36,9 +36,6 @@ jobs:
       - name: Composer
         run: composer install
 
-      - name: Yarn
-        run: yarn --ignore-engines install
-
       - name: code_quality
         run: |
           ./vendor/bin/phpcs
