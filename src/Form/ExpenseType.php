@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Expense;
 use App\Entity\ExpenseCategory;
+use App\Entity\Member;
 use App\Entity\Splitter;
 use App\Entity\User;
 use App\Repository\CategoryRepository;
+use App\Repository\MemberRepository;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -42,18 +44,18 @@ class ExpenseType extends AbstractType
                 'attr' => ['placeholder' => 'Montant']
             ])
             ->add('paidBy', EntityType::class, [
-                'class' => User::class,
+                'class' => Member::class,
                 'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
                 'label' => 'Payé par :',
-                'query_builder' => function (UserRepository $userRepository) {
-                    return $userRepository->createQueryBuilder('u')
-                        ->innerJoin('u.splitters', 's')
+                'query_builder' => function (MemberRepository $memberRepository) {
+                    return $memberRepository->createQueryBuilder('m')
+                        ->innerJoin('m.splitter', 's')
                         ->where('s.uniqueId = :uniqueId')
                         ->setParameter('uniqueId', $this->splitter->getUniqueId())
-                    ->orderBy('u.firstName', 'ASC');
+                    ->orderBy('m.nickname', 'ASC');
                 },
-                'choice_label' => function (User $user) {
-                    return $user->getFirstName() . ' ' . $user->getLastName();
+                'choice_label' => function (Member $member) {
+                    return $member->getNickname();
                 }
             ])
             ->add('category', EntityType::class, [

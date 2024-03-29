@@ -6,11 +6,11 @@ use App\Entity\Expense;
 use App\Entity\Splitter;
 use App\Form\ExpenseType;
 use App\Repository\ExpenseRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use DateTime;
 
 #[Route('/expense')]
@@ -76,11 +76,11 @@ class ExpenseController extends AbstractController
         ],
         methods: ['GET', 'POST']
     )]
-    #[Entity('splitter', options: ['mapping' => ['splitter_id' => 'id']])]
-    #[Entity('expense', options: ['mapping' => ['expense_id' => 'id']])]
     public function edit(
         Request $request,
+        #[MapEntity(mapping: ['splitter_id' => 'id'])]
         Splitter $splitter,
+        #[MapEntity(mapping: ['expense_id' => 'id'])]
         Expense $expense,
         ExpenseRepository $expenseRepository
     ): Response {
