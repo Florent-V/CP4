@@ -1,4 +1,15 @@
 @import "variables";
-// the ~ allows you to reference things in node_modules
-@import "~bootstrap/scss/bootstrap";
-@import "test";
+/* Option 2: Import via CSS */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
+// bootstrap
+@import '../../vendor/twbs/bootstrap/scss/bootstrap';
+// custom styles
+@import "global";
+@import "signForm";
+@import "sidePanel";
+@import "navbar";
+@import "dashboard";
+@import "forms";
+@import "splitter";
+@import "userAccount";
+@import "admin";

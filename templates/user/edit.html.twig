@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon compte{% endblock %}
+
+{% block body %}
+
+    <main class="container-md">
+        <h1>Modifier mon compte</h1>
+
+        <div class="mb-2">
+            <a class="btn btn-primary" href="{{ path('app_user_account') }}"><i class="bi bi-arrow-return-left"></i>Home</a>
+        </div>
+
+        {{ include('user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    </main>
+
+{% endblock %}

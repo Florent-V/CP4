@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+    <main class="container-md">
+
+        <h1 class="text-center my-3">Mon compte</h1>
+
+        <div class="mb-2">
+            <a class="btn btn-primary" href="{{ path('app_home') }}"><i class="bi bi-arrow-return-left"></i> Home</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-primary" href="{{ path('admin_app_user_index') }}"><i class="bi bi-arrow-return-left"></i> Retour au tableau des Utilisateurs</a>
+            {% endif %}
+        </div>
+
+        <div class="showCard">
+            <div class="card">
+                {% if app.user == user %}
+                    <div class="cardIcons">
+                        <a href="{{ path('app_user_edit') }}" title="Editer mon profil">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="card-header">
+                    <h3 class="card-title text-dark">Informations du compte</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <p>Prénom et Nom</p>
+                        <p>{{ user.firstName ~ ' ' ~ user.lastName }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Pseudo</p>
+                        <p>{{ user.pseudo }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Email</p>
+                        <p>{{ user.email }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Téléphone</p>
+                        <p>{{ user.phone }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Nombre de Splitters :</p>
+                        <p>{{ user.splitters|length }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% if app.user == user %}
+            <div class="centerBtn">
+                {{ include('user/_delete_form.html.twig') }}
+            </div>
+        {% endif %}
+
+
+
+    </main>
+
+
+
+{% endblock %}

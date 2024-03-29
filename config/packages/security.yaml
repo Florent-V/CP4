@@ -21,6 +21,7 @@ security:
             lazy: true
             provider: app_user_provider
 
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
             form_login:
@@ -33,6 +34,7 @@ security:
                 path: app_logout
             pattern: ^/
             user_checker: App\Security\UserChecker
+            entry_point: App\Security\AuthenticationEntryPoint
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
@@ -41,7 +43,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

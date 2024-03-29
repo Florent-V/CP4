@@ -5,16 +5,13 @@
 {% block body %}
 
 
-    <main class="container-md">
-
-        <h1>Bienvenue !</h1>
-        <h2>Connectez-vous pour accéder à vos splitter !</h2>
+    <main class="container-lg sign">
 
         {% if error %}
             <div class="alert alert-warning" role="alert" aria-live="assertive">
                 {% if error.code == 2000 %}
                     &#9785;&#65039;  {{ error.messageKey|trans(error.messageData, 'security')|raw }}
-                {% elseif error.message == "The presented password is invalid." or error.message == "Bad credentials."%}
+                {% elseif error.message == "The presented password is invalid." or error.message == "Bad credentials." %}
                     &#9785;&#65039; Les identifiants sont incorrects. Veuillez les vérifier et réessayer.
                 {% else %}
                     {{ error.messageKey|trans(error.messageData, 'security')|raw }}
@@ -22,30 +19,46 @@
             </div>
         {% endif %}
 
-        <form action="{{ path('app_login') }}" method="post">
-            <label for="username">Email:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}">
+        <div class="sign_card">
+            <div class="sign_img">
+                <img src="{{ asset('images/login.gif') }}" alt="gif of donald with money"/>
+            </div>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password">
+            <div class="sign_form p-3">
+                <h1 class="text-center">Connectez-vous pour accéder à vos splitter !</h1>
+                <form action="{{ path('app_login') }}" method="post">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
+                        <label class="text-dark" for="username">Email:</label>
+                    </div>
 
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" name="_password" placeholder="password">
+                        <label class="text-dark" for="password">Mot de Passe:</label>
+                    </div>
 
-            {# If you want to control the URL the user is redirected to on success
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    {# If you want to control the URL the user is redirected to on success
         <input type="hidden" name="_target_path" value="/account"> #}
 
-            <button type="submit">login</button>
-        </form>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary" type="submit">Login</button>
+                    </div>
 
-        <div>
-            <p>Pas encore enregistré ? Créer un compte <a href="{{ path('app_register') }}">ici</a></p>
-            <p><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a></p>
+
+                </form>
+
+                <div>
+                    <div class="w-100 text-center">Pas encore enregistré ? Créer un compte <a href="{{ path('app_register') }}">ici</a></div>
+                    <div class="text-center"><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a></div>
+                </div>
+
+            </div>
+
+
         </div>
 
-
-
     </main>
-
-
 
 {% endblock %}

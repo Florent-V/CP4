@@ -1,0 +1,25 @@
+grumphp:
+    tasks:
+        composer:
+            file: ./composer.json
+        phpversion:
+            project: '8.0'
+        phpcpd:
+            directory: [ 'src' ]
+            exclude: [ 'src/DataFixtures' ]
+        phpcs:
+            standard: ~
+        phpstan:
+            configuration: ./phpstan.neon
+            level: 6
+#        phpmd:
+#            whitelist_patterns:
+#                - 'src'
+#            exclude:
+#                - '\src\Kernel.php'
+#                - '\src\Entity\Annonce.php'
+#            ruleset:
+#                - 'phpmd.xml'
+    fixer:
+        enabled: true
+        fix_by_default: true

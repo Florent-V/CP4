@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Splitter index{% endblock %}
+
+{% block body %}
+
+<main class="adminContainer">
+
+    <div class="head my-3">
+        <h1>Liste des Splitters. Total : {{ splitters.getTotalItemCount }}</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary" type="submit">Go !</button>
+        {{ form_end(form) }}
+
+    </div>
+
+    <table style="color: #FFFFFF" class="table">
+        <thead>
+        <tr>
+            <th>{{ knp_pagination_sortable(splitters, 'Id', 'u.id') }}</th>
+            <th{% if splitters.isSorted('s.name') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(splitters, 'Nom', 's.name') }}
+            </th>
+            <th{% if splitters.isSorted('s.description') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(splitters, 'Description', 's.description') }}
+            </th>
+            <th>Membres</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for splitter in splitters %}
+            <tr>
+                <td>{{ splitter.id }}</td>
+                <td>{{ splitter.name }}</td>
+                <td>{{ splitter.description }}</td>
+                <td>
+                    {% for member in splitter.members %}
+                        {{ member.pseudo }},
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}">show</a>
+                    <a href="{{ path('app_splitter_edit', {'id': splitter.id}) }}">edit</a>
+                    {{ include('admin/splitter/_delete_form.html.twig', {'button_label': 'Modifier'}) }}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</main>
+
+{% endblock %}

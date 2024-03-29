@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block navBar %}
+    {% include '_include/_navbar.html.twig' %}
+{% endblock %}
+
+
+{% block body %}
+    <main class="d-flex flex-column flex-lg-row">
+
+                {% block sidePanel %}
+                    {% include '_include/_sidePanel.html.twig' %}
+                {% endblock %}
+
+        <div class="container-fluid text-light min-vh-100">
+
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+
+    </main>
+
+
+{% endblock %}

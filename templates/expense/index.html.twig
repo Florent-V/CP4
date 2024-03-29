@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Expense index{% endblock %}
+
+{% block body %}
+    <h1>Expense index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>CreatedAt</th>
+                <th>MadeAt</th>
+                <th>Amount</th>
+                <th>Picture</th>
+                <th>Devise</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.id }}</td>
+                <td>{{ expense.name }}</td>
+                <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ expense.madeAt ? expense.madeAt|date('Y-m-d') : '' }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.picture }}</td>
+                <td>{{ expense.devise }}</td>
+                <td>
+                    <a href="{{ path('app_expense_show', {'id': expense.id}) }}">show</a>
+                    <a href="{{ path('app_expense_edit', {'id': expense.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_expense_new') }}">Create new</a>
+{% endblock %}

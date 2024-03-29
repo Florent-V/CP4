@@ -1,0 +1,81 @@
+<div
+        {{ attributes }}
+>
+    {{ form_start(form, {
+    attr: {
+        'data-action': 'live#action:prevent',
+        'data-live-action-param': 'save'
+    }
+    }) }}
+
+    {{ form_row(form.pseudo, {
+        label: 'Pseudo',
+        attr: {
+            placeholder: 'john59'
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.firstName, {
+        label: 'Prénom',
+        attr: {
+            placeholder: 'John'
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.lastName, {
+        label: 'Nom',
+        attr: {
+            placeholder: 'Doe'
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.phone, {
+        label: 'Numéro de téléphone',
+        attr: {
+            placeholder: '06...'
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.email, {
+        label: 'Email',
+        attr: {
+            placeholder: 'john59@doe.fr'
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.plainPassword, {
+        label: 'Password',
+        attr: {
+            placeholder: '********'
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.agreeTerms) }}
+
+    <div class="d-flex justify-content-center">
+        <button
+                type="submit"
+                class="btn btn-primary {{ this.hasValidationErrors ? 'disabled' : '' }}"
+        >{{ button_label|default('S\'enregistrer') }}</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

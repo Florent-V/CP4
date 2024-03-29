@@ -1,0 +1,9 @@
+<h1>Bonjour !</h1>
+
+<p>Vous venez d'être invité par {{ user.firstName ~ ' ' ~ user.lastName }} pour rejoindre un Splitter</p>
+
+<p>voici le code {{ splitter.id }}</p>
+
+<p>Vous pouvez le rejoindre en cliquant sur ce <a href="{{ url('app_splitter_join', {'id': splitter.id}) }}">lien</a></p>
+
+<p>Cheers!</p>
