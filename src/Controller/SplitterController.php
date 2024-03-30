@@ -8,8 +8,11 @@ use App\Entity\User;
 use App\Form\JoinSplitterType;
 use App\Form\ShareSplitterType;
 use App\Form\SplitterType;
+use App\Repository\MemberRepository;
 use App\Repository\SplitterRepository;
 use App\Service\BalanceCalculator;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Internal\TopologicalSort\CycleDetectedException;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +31,11 @@ class SplitterController extends AbstractController
         Request $request,
         SplitterRepository $splitterRepository
     ): Response {
+
         $splitter = new Splitter();
+        $member = new Member();
+        $splitter->addMember($member);
+
         $form = $this->createForm(SplitterType::class, $splitter);
         $form->handleRequest($request);
 
@@ -36,7 +43,6 @@ class SplitterController extends AbstractController
             $splitter->setUniqueId(md5(uniqid(strval(time()), true)));
             $splitter->getMembers()[0]->setUser($this->getUser());
             $splitter->setOwner($splitter->getMembers()[0]);
-            //dd($splitter);
             $splitterRepository->save($splitter, true);
 
             $this->addFlash('success', '🙂 Votre Splitter a bien été crée !');
@@ -49,8 +55,7 @@ class SplitterController extends AbstractController
         }
 
         return $this->render('splitter/new.html.twig', [
-            'splitter' => $splitter,
-            'form' => $form,
+            'splitter' => $splitter
         ]);
     }
 
@@ -70,6 +75,8 @@ class SplitterController extends AbstractController
         $balancePerId = $balanceCalculator->calculateIndividualBalance($splitter);
         $transfers = $balanceCalculator->calculateTransfer($balancePerId);
 
+//        $balancePerId = [];
+//        $transfers = [];
 
         return $this->render('splitter/show.html.twig', [
             'splitter' => $splitter,
@@ -107,8 +114,7 @@ class SplitterController extends AbstractController
         }
 
         return $this->render('splitter/edit.html.twig', [
-            'splitter' => $splitter,
-            'form' => $form,
+            'splitter' => $splitter
         ]);
     }
 
@@ -234,11 +240,27 @@ class SplitterController extends AbstractController
     public function delete(
         Request $request,
         Splitter $splitter,
-        SplitterRepository $splitterRepository
+        EntityManagerInterface $entityManager
     ): Response {
-        if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {
-            $splitterRepository->remove($splitter, true);
+
+        try {
+            if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {
+                $splitter->unsetOwner();
+                $entityManager->persist($splitter);
+                $entityManager->flush();
+                $entityManager->remove($splitter);
+                $entityManager->flush();
+            }
+        } catch (CycleDetectedException $e) {
+            $cycle = $e->getCycle();
+
+            // Affichez le cycle détecté
+            foreach ($cycle as $node) {
+                dd($node);
+            }
         }
+
+
 
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }

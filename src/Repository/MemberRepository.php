@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Member;
-use App\Entity\Splitter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

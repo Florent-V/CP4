@@ -33,7 +33,6 @@
 
     <p>Ajouter des membres</p>
 
-
         {% for key, memberForm in form.members %}
             {% set myLabel = (key == 0) ? 'Votre Nom' : 'Autre Participant' %}
             <div class="d-flex gap-2 align-items-center">
@@ -62,8 +61,8 @@
         {% endfor %}
 
 
-    {{ form_widget(form.members.vars.button_add, {label: '+ Add Item', attr: {class: 'btn btn-outline-primary'}}) }}
+    {{ form_widget(form.members.vars.button_add, {label: '+ Ajouter un membre', attr: {class: 'btn btn-outline-primary'}}) }}
 
-    <button type="submit" class="btn btn-success" formnovalidate>Save</button>
+    <button type="submit" class="btn btn-success" formnovalidate>{{ this.buttonLabel|default('Créer') }}</button>
     {{ form_end(form) }}
 </div>

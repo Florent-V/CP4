@@ -29,7 +29,12 @@ class Splitter
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'splitter', targetEntity: Expense::class, orphanRemoval: true)]
+    #[ORM\OneToMany(
+        mappedBy: 'splitter',
+        targetEntity: Expense::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true
+    )]
     private Collection $expenses;
 
     #[ORM\Column(length: 255)]
@@ -43,8 +48,8 @@ class Splitter
     )]
     private Collection $members;
 
-    #[ORM\OneToOne(inversedBy: 'owned', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'owned')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Member $owner = null;
 
 
@@ -175,6 +180,13 @@ class Splitter
     public function setOwner(Member $owner): static
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function unsetOwner(): static
+    {
+        $this->owner = null;
 
         return $this;
     }

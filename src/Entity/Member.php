@@ -37,7 +37,7 @@ class Member
     #[ORM\Column]
     private ?bool $editor = false;
 
-    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'owner')]
     private ?Splitter $owned = null;
 
     #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: Expense::class, orphanRemoval: true)]
