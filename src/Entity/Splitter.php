@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SplitterRepository::class)]
 class Splitter
@@ -19,14 +20,23 @@ class Splitter
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 5,
+        max: 50,
+        minMessage: 'Le nom doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le nom ne doit pas dépasser {{ limit }} caractères',
+    )]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'splitters')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Vous devez sélectionner une catégorie')]
+    #[Assert\Valid]
     private ?SplitterCategory $category = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\OneToMany(
@@ -45,6 +55,10 @@ class Splitter
         targetEntity: Member::class,
         cascade: ['persist', 'remove'],
         orphanRemoval: true
+    )]
+    #[Assert\Count(
+        min: 1,
+        minMessage: 'Vous devez avoir au moins un membre dans votre Splitter.'
     )]
     private Collection $members;
 

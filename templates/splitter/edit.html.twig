@@ -15,6 +15,7 @@
         {% set button_label = 'Modifier' %}
 
         {{ component('Form:SplitterForm', {
+            form: form,
             initialFormData: splitter,
             label: 'Modifier le Splitter',
         }) }}

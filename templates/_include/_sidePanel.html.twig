@@ -16,7 +16,11 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3 mb-2 gap-3">
                     <h2 class="m-0">Mes Splits </h2>
-                    <a class="btn btn-primary rounded-circle" href="{{ path('app_splitter_new') }}"><i class="bi bi-plus-lg"></i></a>
+                    <div id="sideAddSplitterBtn">
+                        <a class="btn btn-primary rounded-circle" href="{{ path('app_splitter_new') }}">
+                            <i class="bi bi-plus-lg"></i>
+                        </a>
+                    </div>
                 </div>
                 <ul class="navbar-nav flex-lg-column">
                     {% for split in splitters %}

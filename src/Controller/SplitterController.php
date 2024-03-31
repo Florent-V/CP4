@@ -55,6 +55,7 @@ class SplitterController extends AbstractController
         }
 
         return $this->render('splitter/new.html.twig', [
+            'form' => $form,
             'splitter' => $splitter
         ]);
     }
@@ -74,9 +75,6 @@ class SplitterController extends AbstractController
 
         $balancePerId = $balanceCalculator->calculateIndividualBalance($splitter);
         $transfers = $balanceCalculator->calculateTransfer($balancePerId);
-
-//        $balancePerId = [];
-//        $transfers = [];
 
         return $this->render('splitter/show.html.twig', [
             'splitter' => $splitter,
@@ -98,6 +96,7 @@ class SplitterController extends AbstractController
         Splitter $splitter,
         SplitterRepository $splitterRepository
     ): Response {
+
         $form = $this->createForm(SplitterType::class, $splitter);
         $form->handleRequest($request);
 
@@ -114,6 +113,7 @@ class SplitterController extends AbstractController
         }
 
         return $this->render('splitter/edit.html.twig', [
+            'form' => $form,
             'splitter' => $splitter
         ]);
     }
@@ -254,14 +254,10 @@ class SplitterController extends AbstractController
         } catch (CycleDetectedException $e) {
             $cycle = $e->getCycle();
 
-            // Affichez le cycle détecté
             foreach ($cycle as $node) {
                 dd($node);
             }
         }
-
-
-
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 }
