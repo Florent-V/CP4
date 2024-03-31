@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class SplitterType extends AbstractType
@@ -39,11 +40,13 @@ class SplitterType extends AbstractType
             ])
             ->add('members', LiveCollectionType::class, [
                 'entry_type' => MemberType::class,
-                'entry_options' => ['label' => false],
-                'label' => 'Membres',
+                'entry_options' => [
+                    'label' => false,
+                    'constraints' => new Valid()
+                ],
                 'allow_add' => true,
                 'allow_delete' => true,
-                //'delete_empty' => true,
+                'delete_empty' => true,
                 //'prototype' => true,
                 'by_reference' => false,
             ])

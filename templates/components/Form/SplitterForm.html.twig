@@ -3,6 +3,7 @@
 >
     {{ form_start(form) }}
 
+    {{ form_errors(form) }}
 
     {{ form_row(form.name, {
         label: 'Nom du splitter',
@@ -34,7 +35,17 @@
     <p>Ajouter des membres</p>
 
         {% for key, memberForm in form.members %}
-            {% set myLabel = (key == 0) ? 'Votre Nom' : 'Autre Participant' %}
+            {% set myLabel = (key == 0)
+                ? 'Votre Nom'
+                : 'Autre Participant'
+            %}
+            {% set nickname = (key == 0)
+                ? app.user.firstName
+                : (memberForm.vars.value
+                    ? memberForm.vars.value.nickname
+                    : '')
+            %}
+
             <div class="d-flex gap-2 align-items-center">
                 {{ form_row(memberForm.nickname, {
                     label: myLabel,
@@ -42,25 +53,28 @@
                         class: 'form-floating mb-3 flex-grow-1'
                     },
                     attr: {
-                        placeholder: 'Pseudo'
+                        placeholder: 'Pseudo',
+                        value: nickname
                     }
                 }) }}
 
-                {{ form_row(memberForm.vars.button_delete, {
-                    label: false,
-                    row_attr: {
-                        class: 'mb-3'
-                    },
-                    attr: {
-                        class: 'btn btn-danger p-2 corbeille bi bi-trash'
-                    }
-                }) }}
+                {%  if myLabel != 'Votre Nom' %}
+                    {{ form_row(memberForm.vars.button_delete, {
+                        label: false,
+                        row_attr: {
+                            class: 'mb-3'
+                        },
+                        attr: {
+                            class: 'btn btn-danger p-2 corbeille bi bi-trash',
+                        }
+                    }) }}
+                {% endif %}
 
             </div>
 
         {% endfor %}
 
-
+    {{ form_errors(form.members) }}
     {{ form_widget(form.members.vars.button_add, {label: '+ Ajouter un membre', attr: {class: 'btn btn-outline-primary'}}) }}
 
     <button type="submit" class="btn btn-success" formnovalidate>{{ this.buttonLabel|default('Créer') }}</button>

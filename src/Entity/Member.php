@@ -17,7 +17,8 @@ class Member
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\NotBlank]
     #[Assert\Length(
         min: 2,
         max: 50,
@@ -66,7 +67,7 @@ class Member
         return $this->nickname;
     }
 
-    public function setNickname(string $nickname): static
+    public function setNickname(?string $nickname): static
     {
         $this->nickname = $nickname;
 
