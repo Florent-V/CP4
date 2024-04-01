@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,16 +31,19 @@ class LoginController extends AbstractController
     #[Route('/redirectAfterLogin', name: 'app_login_redirect', methods: ['GET'])]
     public function redirectAfterLogin(): Response
     {
-//        if ($this->isGranted('ROLE_ADMIN')) {
-//            return $this->redirectToRoute('admin_app_dashboard');
-//        }
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin_app_splitter_index');
+        }
         return $this->redirectToRoute('app_home');
     }
 
+    /**
+     * @throws Exception
+     */
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
     public function logout(): void
     {
         // controller can be blank: it will never be called!
-        throw new \Exception('Don\'t forget to activate logout in security.yaml');
+        throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
 }
