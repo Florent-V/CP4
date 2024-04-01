@@ -16,7 +16,7 @@ class DeleteForm
         return match ($this->entity) {
             'splitter' => 'app_splitter_delete',
             'expense' => 'app_expense_delete',
-            default => 'résultat par défaut',
+            default => '',
         };
     }
 
