@@ -7,15 +7,20 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Faker\Generator;
 
 class ExpenseFixtures extends Fixture implements DependentFixtureInterface
 {
     public static int $expenseIndex = 0;
 
-    public function load(ObjectManager $manager): void
-    {
-        $faker = Factory::create('fr_FR');
+    // ajouter un constructor
+//    public function __construct()
+//    {
+//        self::$expenseIndex = 0;
+//    }
 
+    public function createExpense1(Generator $faker, ObjectManager $manager): void
+    {
         self::$expenseIndex++;
         $expense = new Expense();
         $expense->setName('Dépense N°' . self::$expenseIndex);
@@ -38,7 +43,11 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->addBeneficiary($this->getReference('member_21'));
         $expense->addBeneficiary($this->getReference('member_31'));
         $manager->persist($expense);
+    }
 
+    public function createExpense2(Generator $faker, ObjectManager $manager): void
+    {
+        self::$expenseIndex++;
         $expense = new Expense();
         $expense->setName('Dépense N°' . self::$expenseIndex);
         $expense->setCategory(
@@ -60,7 +69,11 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->addBeneficiary($this->getReference('member_21'));
         $expense->addBeneficiary($this->getReference('member_41'));
         $manager->persist($expense);
+    }
 
+    public function createExpense3(Generator $faker, ObjectManager $manager): void
+    {
+        self::$expenseIndex++;
         $expense = new Expense();
         $expense->setName('Dépense N°' . self::$expenseIndex);
         $expense->setCategory(
@@ -82,7 +95,11 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->addBeneficiary($this->getReference('member_51'));
         $expense->addBeneficiary($this->getReference('member_61'));
         $manager->persist($expense);
+    }
 
+    public function createExpense4(Generator $faker, ObjectManager $manager): void
+    {
+        self::$expenseIndex++;
         $expense = new Expense();
         $expense->setName('Dépense N°' . self::$expenseIndex);
         $expense->setCategory(
@@ -104,7 +121,11 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->addBeneficiary($this->getReference('member_12'));
         $expense->addBeneficiary($this->getReference('member_61'));
         $manager->persist($expense);
+    }
 
+    public function createExpense5(Generator $faker, ObjectManager $manager): void
+    {
+        self::$expenseIndex++;
         $expense = new Expense();
         $expense->setName('Dépense N°' . self::$expenseIndex);
         $expense->setCategory(
@@ -126,7 +147,16 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->addBeneficiary($this->getReference('member_22'));
         $expense->addBeneficiary($this->getReference('member_51'));
         $manager->persist($expense);
+    }
 
+
+
+
+
+
+    public function createExpense6(Generator $faker, ObjectManager $manager): void
+    {
+        self::$expenseIndex++;
         $expense = new Expense();
         $expense->setName('Dépense N°' . self::$expenseIndex);
         $expense->setCategory(
@@ -148,7 +178,11 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->addBeneficiary($this->getReference('member_42'));
         $expense->addBeneficiary($this->getReference('member_52'));
         $manager->persist($expense);
+    }
 
+    public function createExpense7(Generator $faker, ObjectManager $manager): void
+    {
+        self::$expenseIndex++;
         $expense = new Expense();
         $expense->setName('Dépense N°' . self::$expenseIndex);
         $expense->setCategory(
@@ -170,6 +204,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->addBeneficiary($this->getReference('member_62'));
         $expense->addBeneficiary($this->getReference('member_32'));
         $manager->persist($expense);
+    }
+
+
+    public function load(ObjectManager $manager): void
+    {
+        $faker = Factory::create('fr_FR');
+
+        $this->createExpense1($faker, $manager);
+        $this->createExpense2($faker, $manager);
+        $this->createExpense3($faker, $manager);
+        $this->createExpense4($faker, $manager);
+        $this->createExpense5($faker, $manager);
+        $this->createExpense6($faker, $manager);
+        $this->createExpense7($faker, $manager);
 
         $manager->flush();
     }

@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
@@ -96,6 +97,15 @@ class SplitterController extends AbstractController
         Splitter $splitter,
         SplitterRepository $splitterRepository
     ): Response {
+
+        /* @var ?User $user */
+        $user = $this->getUser();
+        $members = $user->getMembers();
+        if (!$members->contains($splitter->getOwner()) && !$this->isGranted('ROLE_ADMIN')) {
+//            $this->addFlash('danger', '🤨 Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
+//            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            throw new AccessDeniedException('Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
+        }
 
         $form = $this->createForm(SplitterType::class, $splitter);
         $form->handleRequest($request);
@@ -242,6 +252,15 @@ class SplitterController extends AbstractController
         Splitter $splitter,
         EntityManagerInterface $entityManager
     ): Response {
+
+        /* @var ?User $user */
+        $user = $this->getUser();
+        $members = $user->getMembers();
+        if (!$members->contains($splitter->getOwner()) && !$this->isGranted('ROLE_ADMIN')) {
+//            $this->addFlash('danger', '🤨 Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
+//            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            throw new AccessDeniedException('Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
+        }
 
         try {
             if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {

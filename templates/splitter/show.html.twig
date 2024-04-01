@@ -12,7 +12,11 @@
                 <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}" title="partager le splitter"><i class="bi bi-share-fill"></i></a>
                 {% if splitter.owner in app.user.members %}
                     <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" title="Editer le splitter"><i class="bi bi-pencil-square"></i></a>
-                    {{ include('splitter/_delete_form.html.twig') }}
+                    <twig:Form:DeleteForm
+                            entity='splitter'
+                            id='{{ splitter.id }}'
+                            title="Supprimer le splitter"
+                    />
                 {% endif %}
                 <a class="nav-link" href="{{ path('app_home') }}" title="Retour home"><i class="bi bi-arrow-return-left"></i></a>
             </div>

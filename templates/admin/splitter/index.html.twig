@@ -38,14 +38,17 @@
                 <td>{{ splitter.description }}</td>
                 <td>
                     {% for member in splitter.members %}
-                        {{ member.pseudo }},
+                        {{ member.nickname }},
                     {% endfor %}
                 </td>
                 <td>
                     <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}">show</a>
                     <a href="{{ path('app_splitter_edit', {'id': splitter.id}) }}">edit</a>
-                    {{ include('admin/splitter/_delete_form.html.twig', {'button_label': 'Modifier'}) }}
-
+                    <twig:Form:DeleteForm
+                            entity='splitter'
+                            id='{{ splitter.id }}'
+                            title="Supprimer le splitter"
+                    />
                 </td>
             </tr>
         {% else %}
