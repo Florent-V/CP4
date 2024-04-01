@@ -23,7 +23,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
             'splitterCategory_' .
-            $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex)
         ));
         $group->setOwner($this->getReference('member_11'));
         $group->addMember($this->getReference('member_11'));
@@ -40,7 +40,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
             'splitterCategory_' .
-            $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex)
         ));
         $group->setOwner($this->getReference('member_22'));
         $group->addMember($this->getReference('member_12'));
@@ -57,7 +57,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
             'splitterCategory_' .
-            $faker->numberBetween(1, SplitterCategoryFixtures::$splitterCategoryIndex)
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex)
         ));
         $group->setOwner($this->getReference('member_32'));
         $group->addMember($this->getReference('member_42'));
