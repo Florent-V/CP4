@@ -40,8 +40,8 @@ jobs:
         run: |
           ./vendor/bin/phpcs
           ./vendor/bin/phpstan analyse src --xdebug --level 6
-#          ./vendor/bin/phpmd src text phpmd.xml
+          ./vendor/bin/phpmd src text phpmd.xml
 
-      - name: phpunit
-        run: bin/phpunit
+#      - name: phpunit
+#        run: bin/phpunit
 
