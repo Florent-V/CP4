@@ -1,6 +1,6 @@
 <nav class="side-panel navbar navbar-dark navbar-expand-lg bg-dark py-4 align-items-lg-start">
     <div class="container-fluid flex-lg-column">
-        <img src="{{ asset('build/images/mainlogo1.png') }}" alt="">
+        <img src="{{ asset('/images/mainlogo1.png') }}" alt="">
         <a class="navbar-brand m-0" href="{{ path('app_home') }}"><h1>Splitter !</h1></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,7 +28,7 @@
                             <a class="nav-link" aria-current="page" href="{{ path('app_splitter_show', { 'id': split.id }) }}">
                                 <span class="mdi mdi-format-list-bulleted">{{ split.name }}</span>
                             </a>
-                            {% if split.owner in app.user.members %}
+                            {% if split.owner == app.user.appUser %}
                                 <a class="link-info" href="{{ path('app_splitter_edit', {'id': split.id}) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>

@@ -28,7 +28,10 @@
     {% block navBar %}
     {% endblock %}
 </header>
-<body {{ stimulus_controller('deleteAlert') }}>
+<body
+        data-bs-theme=dark
+        {{ stimulus_controller('deleteAlert') }}
+>
 {% block body %}{% endblock %}
 </body>
 </html>

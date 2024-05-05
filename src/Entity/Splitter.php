@@ -62,15 +62,19 @@ class Splitter
     )]
     private Collection $members;
 
-    #[ORM\OneToOne(inversedBy: 'owned')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Member $owner = null;
+    #[ORM\ManyToMany(targetEntity: AppUser::class, mappedBy: 'favoriteSplitters')]
+    private Collection $favoritedByUsers;
+
+    #[ORM\ManyToOne(inversedBy: 'ownedSplitters')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?AppUser $owner = null;
 
 
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
         $this->members = new ArrayCollection();
+        $this->favoritedByUsers = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -186,21 +190,41 @@ class Splitter
         return $this;
     }
 
-    public function getOwner(): ?Member
+    /**
+     * @return Collection<int, AppUser>
+     */
+    public function getFavoritedByUsers(): Collection
     {
-        return $this->owner;
+        return $this->favoritedByUsers;
     }
 
-    public function setOwner(Member $owner): static
+    public function addFavoritedByUser(AppUser $favoritedByUser): static
     {
-        $this->owner = $owner;
+        if (!$this->favoritedByUsers->contains($favoritedByUser)) {
+            $this->favoritedByUsers->add($favoritedByUser);
+            $favoritedByUser->addFavoriteSplitter($this);
+        }
 
         return $this;
     }
 
-    public function unsetOwner(): static
+    public function removeFavoritedByUser(AppUser $favoritedByUser): static
     {
-        $this->owner = null;
+        if ($this->favoritedByUsers->removeElement($favoritedByUser)) {
+            $favoritedByUser->removeFavoriteSplitter($this);
+        }
+
+        return $this;
+    }
+
+    public function getOwner(): ?AppUser
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?AppUser $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }

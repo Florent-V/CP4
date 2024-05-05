@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExpenseRepository::class)]
 class Expense
@@ -43,7 +44,7 @@ class Expense
     private ?ExpenseCategory $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'addedExpenses')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Member $addedBy = null;
 
     #[ORM\ManyToOne(inversedBy: 'paidExpenses')]
@@ -51,6 +52,10 @@ class Expense
     private ?Member $paidBy = null;
 
     #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'expenses')]
+    #[Assert\Count(
+        min: 1,
+        minMessage: 'Vous devez avoir au moins un bénéficiare pour la dépense.'
+    )]
     private Collection $beneficiaries;
 
     public function __construct()

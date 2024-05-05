@@ -20,7 +20,6 @@ class ExpenseCategoryFixtures extends Fixture implements DependentFixtureInterfa
             self::$expenseCategoryIndex++;
             $category = new ExpenseCategory();
             $category->setName($categoryName);
-            $category->setAddedBy($this->getReference('admin'));
             $category->setType('Catégories Prédéfinies');
 
             $manager->persist($category);

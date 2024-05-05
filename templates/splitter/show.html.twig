@@ -5,27 +5,72 @@
 {% block body %}
 
     <main class="splitterView container-md">
+
         <div class="d-flex justify-content-between align-items-center my-3">
             <h1 class="m-0">{{ splitter.name }}</h1>
+
             <div class="d-flex align-items-center gap-4">
-                <a class="nav-link" href="{{ path('app_expense_new', {'id': splitter.id}) }}" title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a>
-                <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}" title="partager le splitter"><i class="bi bi-share-fill"></i></a>
-                {% if splitter.owner in app.user.members %}
-                    <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" title="Editer le splitter"><i class="bi bi-pencil-square"></i></a>
-                    <twig:Form:DeleteForm
-                            entity='splitter'
-                            id='{{ splitter.id }}'
-                            title="Supprimer le splitter"
-                    />
+                {% if not app.user or (splitter not in app.user.appUser.favoriteSplitters)  %}
+                    <div>
+                        <button type="button" class="btn btn-info">
+                            <a class="nav-link" href="{{ path('app_splitter_join', {'id': splitter.id}) }}" title="Rejoindre">Rejoindre</a>
+                        </button>
+                    </div>
                 {% endif %}
-                <a class="nav-link" href="{{ path('app_home') }}" title="Retour home"><i class="bi bi-arrow-return-left"></i></a>
+                {% if app.user %}
+                    {% if splitter in app.user.appUser.favoriteSplitters %}
+                        <a class="nav-link" href="{{ path('app_splitter_leave', {'id': splitter.id}) }}" title="Quitter le Splitter"><i class="bi bi-box-arrow-right"></i></a>
+                    {% endif %}
+
+                    <a class="nav-link" href="{{ path('app_expense_new', {'id': splitter.id}) }}" title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a>
+
+                    <div style="cursor:pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="bi bi-share-fill"></i>
+                    </div>
+
+                    {% if splitter.owner == app.user.appUser %}
+                        <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" title="Editer le splitter"><i class="bi bi-pencil-square"></i></a>
+                        <twig:Form:DeleteForm
+                                entity='splitter'
+                                id='{{ splitter.id }}'
+                                title="Supprimer le splitter"
+                        />
+                    {% endif %}
+                    <a class="nav-link" href="{{ path('app_home') }}" title="Retour home"><i class="bi bi-arrow-return-left"></i></a>
+
+                {% endif %}
             </div>
+
         </div>
+
+        {% if app.user %}
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div id="modal" class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Partagez votre Splitter</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                        </div>
+                        <div class="modal-body d-flex flex-column justify-content-between gap-2" data-controller="clipboard" data-clipboard-success-content-value="Copié !">
+                            <input class="form-control" type="text" value="{{ url('app_splitter_guest_show', {'id': splitter.id, 'unique_id': splitter.uniqueId}) }}" data-clipboard-target="source" readonly>
+                            <button type="button" class="btn btn-primary align-self-center" data-action="clipboard#copy" data-clipboard-target="button">Copier</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary">
+                                <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}" title="Partager par mail">Partager par Mail</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
         <div class="expenseCard">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title text-dark">Dépenses</h3>
+                    <h3 class="card-title">Dépenses</h3>
                     <h6 class="card-subtitle mb-2 text-muted">
                             {{ splitter.description }},
                     </h6>
@@ -55,7 +100,7 @@
         <div class="balanceCard">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title text-dark my-2">Balances</h3>
+                    <h3 class="card-title my-2">Balances</h3>
                 </div>
                 <ul class="list-group list-group-flush">
                     {% for member in splitter.members %}
@@ -75,7 +120,7 @@
         <div class="balanceCard">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title text-dark">Régler les dettes !</h3>
+                    <h3 class="card-title">Régler les dettes !</h3>
                 </div>
                 <ul class="list-group list-group-flush">
                     {% for transfer in transfers %}

@@ -74,20 +74,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
-    #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: ExpenseCategory::class, orphanRemoval: true)]
-    private Collection $categories;
-
     #[ORM\Column]
     private ?bool $isActive = true;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Member::class, orphanRemoval: true)]
-    private Collection $members;
-
-    public function __construct()
-    {
-        $this->categories = new ArrayCollection();
-        $this->members = new ArrayCollection();
-    }
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?AppUser $appUser = null;
 
     public function getId(): ?int
     {
@@ -231,37 +222,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-    /**
-     * @return Collection<int, ExpenseCategory>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(ExpenseCategory $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->setAddedBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(ExpenseCategory $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getAddedBy() === $this) {
-                $category->setAddedBy(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function isIsActive(): ?bool
     {
         return $this->isActive;
@@ -274,32 +234,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Member>
-     */
-    public function getMembers(): Collection
+    public function getAppUser(): ?AppUser
     {
-        return $this->members;
+        return $this->appUser;
     }
 
-    public function addMember(Member $member): static
+    public function setAppUser(AppUser $appUser): static
     {
-        if (!$this->members->contains($member)) {
-            $this->members->add($member);
-            $member->setUser($this);
+        // set the owning side of the relation if necessary
+        if ($appUser->getUser() !== $this) {
+            $appUser->setUser($this);
         }
 
-        return $this;
-    }
-
-    public function removeMember(Member $member): static
-    {
-        if ($this->members->removeElement($member)) {
-            // set the owning side to null (unless already changed)
-            if ($member->getUser() === $this) {
-                $member->setUser(null);
-            }
-        }
+        $this->appUser = $appUser;
 
         return $this;
     }

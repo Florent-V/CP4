@@ -20,7 +20,6 @@ class MemberFixtures extends Fixture implements DependentFixtureInterface
                 self::$memberIndex++;
                 $member = new Member();
                 $member->setNickname($faker->firstName() . '_' . $i . $j);
-                $member->setUser($this->getReference('user_' . $i));
                 $member->setEditor($faker->boolean());
                 $manager->persist($member);
                 $this->addReference('member_' . $i . $j, $member);

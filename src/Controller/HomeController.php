@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Member;
 use App\Entity\User;
 use App\Form\SearchBarType;
-use App\Repository\MemberRepository;
 use App\Repository\SplitterRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,22 +19,22 @@ class HomeController extends AbstractController
     public function index(
         Request $request,
         SplitterRepository $splitterRepository,
-        MemberRepository $memberRepository,
         PaginatorInterface $paginator
     ): Response {
         /**
          * @var ?User $user
          */
         $user = $this->getUser();
+        $appUser = $user->getAppUser();
 
         $form = $this->createForm(SearchBarType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $querySplitters = $splitterRepository->findUserSplit($user, $data['search']);
+            $querySplitters = $splitterRepository->findAppUserSplit($appUser, $data['search']);
         } else {
-            $querySplitters = $splitterRepository->findUserSplit($user);
+            $querySplitters = $splitterRepository->findAppUserSplit($appUser);
         }
 
         $splitters = $paginator->paginate(
