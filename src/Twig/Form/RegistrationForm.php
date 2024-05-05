@@ -2,6 +2,7 @@
 
 namespace App\Twig\Form;
 
+use App\Entity\AppUser;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
@@ -55,14 +56,18 @@ class RegistrationForm extends AbstractController
 
         /** @var User $user */
         $user = $this->getForm()->getData();
+        $appUser = new AppUser();
         $user->setPassword(
             $userPasswordHasher->hashPassword(
                 $user,
                 $this->getForm()->get('plainPassword')->getData()
             )
         );
+        $user->setAppUser($appUser);
+        $user->setRoles((array)'ROLE_USER');
         $this->resetForm();
         $entityManager->persist($user);
+        $entityManager->persist($appUser);
         $entityManager->flush();
 
         $this->isSuccessful = true;

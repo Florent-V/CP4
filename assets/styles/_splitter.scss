@@ -1,27 +1,28 @@
-.balanceItemList {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
+.splitterView {
+    .balanceItemList {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
 
-    p {
-        margin: 0;
+        p {
+            margin: 0;
+        }
+
+        span {
+            font-size: 1rem;
+        }
     }
-
-    span {
-        font-size: 1rem;
+    .expenseItemList {
+        .linkExpense {
+            @include clickable-zone;
+        }
+    }
+    .splitterForm {
+        .corbeille {
+            font-size: 1.5rem;
+        }
     }
 }
 
-.expenseItemList {
-    .linkExpense {
-        @include clickable-zone;
-    }
-}
-
-.splitterForm {
-    .corbeille {
-        font-size: 1.5rem;
-    }
-}
 

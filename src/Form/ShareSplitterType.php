@@ -14,7 +14,7 @@ class ShareSplitterType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                     'label' => '@',
-                    'attr' => ['placeholder' => 'rechercher...'],
+                    'attr' => ['placeholder' => 'name@mail.fr'],
                     'row_attr' => ['class' => 'input-group'],
             ])
         ;

@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\AppUser;
 use App\Entity\Member;
 use App\Entity\Splitter;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,10 +45,8 @@ class SplitterRepository extends ServiceEntityRepository
         }
     }
 
-    public function findUserSplit(User $user, string $search = ''): ?Query
+    public function findUserSplit(Collection $members, string $search = ''): ?Query
     {
-        $members = $user->getMembers();
-
         $qb = $this->createQueryBuilder('s');
 
         if (!count($members)) {
@@ -56,6 +56,27 @@ class SplitterRepository extends ServiceEntityRepository
         foreach ($members as $key => $member) {
             $qb->orWhere(':member' . $key . ' MEMBER OF s.members')
                 ->setParameter('member' . $key, $member);
+        }
+
+        return $qb->getQuery();
+    }
+
+    public function findAppUserSplit(AppUser $appUser, string $search = ''): ?Query
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->where(':appUser MEMBER OF s.favoritedByUsers')
+            ->setParameter('appUser', $appUser);
+
+        // recherche également appUser dans le champ s.owner
+        $qb->orWhere(':appUser = s.owner')
+            ->setParameter('appUser', $appUser);
+
+        if ($search) {
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->like('s.name', ':search'),
+                $qb->expr()->like('s.description', ':search')
+            ))
+                ->setParameter('search', '%' . $search . '%');
         }
 
         return $qb->getQuery();

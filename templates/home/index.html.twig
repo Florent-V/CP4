@@ -17,7 +17,7 @@
                 <div class="col-md-6 col-xxl-4">
                     <div class="card mb-4">
                         <div class="cardIcons">
-                            {% if split.owner in app.user.members %}
+                            {% if split.owner == app.user.appUser %}
                                 <a href="{{ path('app_splitter_edit', {'id' : split.id }) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
@@ -27,10 +27,10 @@
                             </a>
                         </div>
                         <div class="card-header">
-                            <h4 class="card-title text-dark">{{ split.name }}</h4>
+                            <h4 class="card-title">{{ split.name }}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Créé par :
-                                    {{ split.owner.nickname ~ ' ' ~ split.owner.nickname }},
+                                    {{ split.owner.user.firstname ~ ' ' ~ split.owner.user.lastname }},
                             </h6>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Membres :

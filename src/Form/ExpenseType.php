@@ -69,6 +69,23 @@ class ExpenseType extends AbstractType
                 },
                 'choice_label' => 'name'
             ])
+            ->add('beneficiaries', EntityType::class, [
+                'class' => Member::class,
+                'row_attr' => ['class' => 'mb-3  text-white'],
+                'label' => 'Bénéficiaires :',
+                'query_builder' => function (MemberRepository $memberRepository) {
+                    return $memberRepository->createQueryBuilder('m')
+                        ->innerJoin('m.splitter', 's')
+                        ->where('s.uniqueId = :uniqueId')
+                        ->setParameter('uniqueId', $this->splitter->getUniqueId())
+                    ->orderBy('m.nickname', 'ASC');
+                },
+                'choice_label' => function (Member $member) {
+                    return $member->getNickname();
+                },
+                'multiple' => true,
+                'expanded' => true,
+            ])
         ;
     }
 

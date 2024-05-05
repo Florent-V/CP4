@@ -39,4 +39,7 @@ return [
     'bootstrap' => [
         'version' => '5.3.3',
     ],
+    '@stimulus-components/clipboard' => [
+        'version' => '5.0.0',
+    ],
 ];

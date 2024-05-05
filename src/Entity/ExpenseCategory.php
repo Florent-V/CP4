@@ -18,10 +18,6 @@ class ExpenseCategory
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'categories')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $addedBy = null;
-
     #[ORM\Column(length: 100)]
     private ?string $type = null;
 
@@ -46,18 +42,6 @@ class ExpenseCategory
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAddedBy(): ?User
-    {
-        return $this->addedBy;
-    }
-
-    public function setAddedBy(?User $addedBy): self
-    {
-        $this->addedBy = $addedBy;
 
         return $this;
     }

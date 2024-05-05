@@ -27,19 +27,15 @@ class Member
     )]
     private ?string $nickname = null;
 
-    #[ORM\ManyToOne(inversedBy: 'members')]
+    #[ORM\ManyToOne(
+        cascade: ['persist', 'remove'],
+        inversedBy: 'members'
+    )]
     #[ORM\JoinColumn(nullable: true)]
     private ?Splitter $splitter = null;
 
-    #[ORM\ManyToOne(inversedBy: 'members')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?User $user = null;
-
     #[ORM\Column]
     private ?bool $editor = false;
-
-    #[ORM\OneToOne(mappedBy: 'owner')]
-    private ?Splitter $owned = null;
 
     #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: Expense::class, orphanRemoval: true)]
     private Collection $addedExpenses;
@@ -86,18 +82,6 @@ class Member
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function isEditor(): ?bool
     {
         return $this->editor;
@@ -106,23 +90,6 @@ class Member
     public function setEditor(bool $editor): static
     {
         $this->editor = $editor;
-
-        return $this;
-    }
-
-    public function getOwned(): ?Splitter
-    {
-        return $this->owned;
-    }
-
-    public function setOwned(Splitter $owned): static
-    {
-        // set the owning side of the relation if necessary
-        if ($owned->getOwner() !== $this) {
-            $owned->setOwner($this);
-        }
-
-        $this->owned = $owned;
 
         return $this;
     }

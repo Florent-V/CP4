@@ -8,10 +8,11 @@
     {{ form_row(form.name, {
         label: 'Nom du splitter',
         attr: {
-            placeholder: 'Voyage à ...'
+            placeholder: 'Voyage à ...',
+            class: 'text-light'
         },
         row_attr: {
-            class: 'form-floating mb-3 text-dark'
+            class: 'form-floating mb-3 text-light'
         }
     }) }}
 
@@ -21,14 +22,14 @@
             placeholder: 'Splitter pour le voyage à ...'
         },
         row_attr: {
-            class: 'form-floating mb-3 text-dark'
+            class: 'form-floating mb-3 text-light'
         }
     }) }}
 
     {{ form_row(form.category, {
         label: 'Catégorie',
         row_attr: {
-            class: 'form-floating mb-3 text-dark'
+            class: 'form-floating mb-3 text-light'
         }
     }) }}
 

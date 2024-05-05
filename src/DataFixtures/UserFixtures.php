@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AppUser;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -41,6 +42,7 @@ class UserFixtures extends Fixture
         for ($i = 1; $i <= 6; $i++) {
             self::$userIndex++;
             $user = new User();
+            $appUser = new AppUser();
 
             $firstName = $faker->firstName();
             $user->setPseudo($firstName . $faker->year());
@@ -50,6 +52,7 @@ class UserFixtures extends Fixture
             $user->setPhone($faker->phoneNumber());
             $user->setIsVerified(true);
             $user->setRoles((array)'ROLE_USER');
+            $user->setAppUser($appUser);
 
             $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
@@ -58,7 +61,8 @@ class UserFixtures extends Fixture
             $user->setPassword($hashedPassword);
 
             $manager->persist($user);
-            $this->addReference('user_' . $i, $user);
+            $manager->persist($appUser);
+            $this->addReference('appUser_' . $i, $appUser);
         }
         $manager->flush();
     }

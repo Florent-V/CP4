@@ -8,7 +8,6 @@ use App\Entity\User;
 use App\Form\JoinSplitterType;
 use App\Form\ShareSplitterType;
 use App\Form\SplitterType;
-use App\Repository\MemberRepository;
 use App\Repository\SplitterRepository;
 use App\Service\BalanceCalculator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,9 +40,13 @@ class SplitterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var ?User $user
+             */
+            $user = $this->getUser();
             $splitter->setUniqueId(md5(uniqid(strval(time()), true)));
-            $splitter->getMembers()[0]->setUser($this->getUser());
-            $splitter->setOwner($splitter->getMembers()[0]);
+            $splitter->setOwner($user->getAppUser());
+            $splitter->addFavoritedByUser($user->getAppUser());
             $splitterRepository->save($splitter, true);
 
             $this->addFlash('success', '🙂 Votre Splitter a bien été crée !');
@@ -100,8 +103,9 @@ class SplitterController extends AbstractController
 
         /* @var ?User $user */
         $user = $this->getUser();
-        $members = $user->getMembers();
-        if (!$members->contains($splitter->getOwner()) && !$this->isGranted('ROLE_ADMIN')) {
+        //dd($splitter->getOwner(), $user->getAppUser());
+
+        if ($splitter->getOwner() !== $user->getAppUser() && !$this->isGranted('ROLE_ADMIN')) {
 //            $this->addFlash('danger', '🤨 Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
 //            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
             throw new AccessDeniedException('Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
@@ -196,11 +200,40 @@ class SplitterController extends AbstractController
          * @var ?User $user
          */
         $user = $this->getUser();
-
-        $splitter->addMember($user);
+        $user->getAppUser()->addFavoriteSplitter($splitter);
         $splitterRepository->save($splitter, true);
 
         $this->addFlash('success', '🙂 Vous avez bien rejoint le Splitter !');
+
+        return $this->redirectToRoute(
+            'app_splitter_show',
+            ['id' => $splitter->getId()],
+            Response::HTTP_SEE_OTHER
+        );
+    }
+
+    // supprimer un splitter des favoris
+    #[Route(
+        '/{id}/leave',
+        name: 'app_splitter_leave',
+        requirements: [
+            'page' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        ],
+        methods: ['GET']
+    )]
+    public function leave(
+        Splitter $splitter,
+        SplitterRepository $splitterRepository
+    ): Response {
+
+        /**
+         * @var ?User $user
+         */
+        $user = $this->getUser();
+        $user->getAppUser()->removeFavoriteSplitter($splitter);
+        $splitterRepository->save($splitter, true);
+
+        $this->addFlash('success', '🙂 Vous avez bien quitté le Splitter !');
 
         return $this->redirectToRoute(
             'app_splitter_show',
@@ -230,7 +263,7 @@ class SplitterController extends AbstractController
                 'id' => $data['code']
             ]);
 
-            $splitter->addMember($user);
+            $splitter->addFavoritedByUser($user->getAppUser());
             $splitterRepository->save($splitter, true);
 
             $this->addFlash('success', '🙂 Vous avez bien rejoint le Splitter !');
@@ -255,8 +288,7 @@ class SplitterController extends AbstractController
 
         /* @var ?User $user */
         $user = $this->getUser();
-        $members = $user->getMembers();
-        if (!$members->contains($splitter->getOwner()) && !$this->isGranted('ROLE_ADMIN')) {
+        if ($splitter->getOwner() !== $user->getAppUser() && !$this->isGranted('ROLE_ADMIN')) {
 //            $this->addFlash('danger', '🤨 Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
 //            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
             throw new AccessDeniedException('Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
@@ -264,9 +296,9 @@ class SplitterController extends AbstractController
 
         try {
             if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {
-                $splitter->unsetOwner();
-                $entityManager->persist($splitter);
-                $entityManager->flush();
+//                $splitter->unsetOwner();
+//                $entityManager->persist($splitter);
+//                $entityManager->flush();
                 $entityManager->remove($splitter);
                 $entityManager->flush();
             }

@@ -28,13 +28,13 @@
                 <h1 class="text-center">Connectez-vous pour accéder à vos splitter !</h1>
                 <form action="{{ path('app_login') }}" method="post">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
-                        <label class="text-dark" for="username">Email:</label>
+                        <input type="text" class="form-control" id="username" name="_username" placeholder="abc@def.fr" value="{{ last_username }}">
+                        <label class="" for="username">Email:</label>
                     </div>
 
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="password" name="_password" placeholder="password">
-                        <label class="text-dark" for="password">Mot de Passe:</label>
+                        <label class="" for="password">Mot de Passe:</label>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
