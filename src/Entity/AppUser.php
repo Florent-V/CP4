@@ -25,10 +25,14 @@ class AppUser
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Splitter::class, orphanRemoval: true)]
     private Collection $ownedSplitters;
 
+    #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: Expense::class)]
+    private Collection $expenses;
+
     public function __construct()
     {
         $this->favoriteSplitters = new ArrayCollection();
         $this->ownedSplitters = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +100,36 @@ class AppUser
             // set the owning side to null (unless already changed)
             if ($ownedSplitter->getOwner() === $this) {
                 $ownedSplitter->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Expense>
+     */
+    public function getExpenses(): Collection
+    {
+        return $this->expenses;
+    }
+
+    public function addExpense(Expense $expense): static
+    {
+        if (!$this->expenses->contains($expense)) {
+            $this->expenses->add($expense);
+            $expense->setAddedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpense(Expense $expense): static
+    {
+        if ($this->expenses->removeElement($expense)) {
+            // set the owning side to null (unless already changed)
+            if ($expense->getAddedBy() === $this) {
+                $expense->setAddedBy(null);
             }
         }
 

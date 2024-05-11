@@ -1,46 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Expense{% endblock %}
+{% block title %}Depense {{ expense.name }}{% endblock %}
 
 {% block body %}
-    <h1>Expense</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ expense.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ expense.name }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>MadeAt</th>
-                <td>{{ expense.madeAt ? expense.madeAt|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Amount</th>
-                <td>{{ expense.amount }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ expense.picture }}</td>
-            </tr>
-            <tr>
-                <th>Devise</th>
-                <td>{{ expense.devise }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <main class="expenseView container-md">
 
-    <a href="{{ path('app_expense_index') }}">back to list</a>
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <h1>{{ expense.name }}</h1>
 
-    <a href="{{ path('app_expense_edit', {'id': expense.id}) }}">edit</a>
+            <div class="d-flex align-items-center gap-4">
+                {% if splitter.owner == app.user.appUser or expense.addedBy == app.user.appUser %}
+                    <a class="nav-link" href="{{ path('app_expense_edit', {'expense_id' : expense.id, 'splitter_id': splitter.id}) }}" title="Editer le splitter"><i class="bi bi-pencil-square"></i></a>
+                    <twig:Form:DeleteForm
+                            entity='splitter'
+                            id='{{ splitter.id }}'
+                            title="Supprimer le splitter"
+                    />
+                {% endif %}
 
-    {{ include('expense/_delete_form.html.twig') }}
+                <a class="nav-link" href="{{ path('app_splitter_show', {'id' : splitter.id }) }}" title="Retour">
+                    <i class="bi bi-arrow-return-left"></i>
+                </a>
+
+            </div>
+        </div>
+
+
+        <div class="expenseCard">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Informations de la dépense</h2>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <p>Payé par :</p>
+                        <p>{{ expense.paidBy.nickname }}</p>
+                    </div>
+                    <div class="list-group-item">
+                        <p>Le :</p>
+                        <p>{{ expense.madeAt|date("d/m/Y") }}</p>
+                    </div>
+                    <div class="list-group-item">
+                        <p>Catégorie :</p>
+                        <p>{{ expense.category.name }}</p>
+                    </div>
+                    <div class="list-group-item">
+                        <p>Montant :</p>
+                        <p>{{ expense.amount ~ ' ' ~ expense.devise }}</p>
+                    </div>
+                    <div class="list-group-item">
+                        <p><i class="bi bi-person-fill"></i> Bénéficiaires :</p>
+                        <p>
+                            {% for beneficiary in expense.beneficiaries %}
+                                <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
 {% endblock %}

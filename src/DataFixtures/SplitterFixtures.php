@@ -54,7 +54,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $group->addFavoritedByUser($this->getReference('appUser_2'));
         $group->addFavoritedByUser($this->getReference('appUser_5'));
         $group->addFavoritedByUser($this->getReference('appUser_6'));
-        $group->setOwner($this->getReference('appUser_1'));
+        $group->setOwner($this->getReference('appUser_2'));
         $manager->persist($group);
         $this->addReference('splitter_' . self::$splitExpense, $group);
 

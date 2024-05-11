@@ -14,17 +14,11 @@
         margin-top: 2rem;
 
         .cardIcons {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 10;
+            @include absolute-icons;
 
             i {
                 font-size: 1.4rem;
-                color: $primary;
+                color: $light;
             }
         }
 

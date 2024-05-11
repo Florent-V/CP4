@@ -13,27 +13,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use DateTime;
 
-#[Route('/expense')]
+#[Route('/splitter/{splitter_id}/expense', name: 'app_expense_')]
 class ExpenseController extends AbstractController
 {
-    #[Route('/', name: 'app_expense_index', methods: ['GET'])]
-    public function index(ExpenseRepository $expenseRepository): Response
-    {
-        return $this->render('expense/index.html.twig', [
-            'expenses' => $expenseRepository->findAll(),
-        ]);
-    }
-
     #[Route(
-        '/splitter/{id}/new',
-        name: 'app_expense_new',
+        '/new',
+        name: 'new',
         requirements: [
-            'id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+            'splitter_id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
         ],
         methods: ['GET', 'POST']
     )]
     public function new(
         Request $request,
+        #[MapEntity(mapping: ['splitter_id' => 'id'])]
         Splitter $splitter,
         ExpenseRepository $expenseRepository
     ): Response {
@@ -59,17 +52,30 @@ class ExpenseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_expense_show', methods: ['GET'])]
-    public function show(Expense $expense): Response
-    {
+    #[Route(
+        '/{expense_id}',
+        name: 'show',
+        requirements: [
+            'splitter_id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$',
+            'expense_id' => '\d+'
+        ],
+        methods: ['GET']
+    )]
+    public function show(
+        #[MapEntity(mapping: ['splitter_id' => 'id'])]
+        Splitter $splitter,
+        #[MapEntity(mapping: ['expense_id' => 'id'])]
+        Expense $expense,
+    ): Response {
         return $this->render('expense/show.html.twig', [
             'expense' => $expense,
+            'splitter' => $splitter,
         ]);
     }
 
     #[Route(
-        '/splitter/{splitter_id}/edit/{expense_id}',
-        name: 'app_expense_edit',
+        '/{expense_id}/edit',
+        name: 'edit',
         requirements: [
             'splitter_id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$',
             'expense_id' => '\d+'
@@ -106,9 +112,13 @@ class ExpenseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_expense_delete', methods: ['POST'])]
-    public function delete(Request $request, Expense $expense, ExpenseRepository $expenseRepository): Response
-    {
+    #[Route('/{expense_id}', name: 'delete', methods: ['POST'])]
+    public function delete(
+        Request $request,
+        #[MapEntity(mapping: ['expense_id' => 'id'])]
+        Expense $expense,
+        ExpenseRepository $expenseRepository
+    ): Response {
         if ($this->isCsrfTokenValid('delete' . $expense->getId(), $request->request->get('_token'))) {
             $expenseRepository->remove($expense, true);
         }

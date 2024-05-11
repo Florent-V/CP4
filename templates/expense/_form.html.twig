@@ -1,5 +1,66 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    {{ form_row(form.name, {
+        label: 'Titre',
+        attr: {
+            placeholder: 'Dépense pour',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.madeAt, {
+        label: 'Date',
+        attr: {
+            placeholder: '2023-12-31',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.amount, {
+        label: 'Montant',
+        attr: {
+            placeholder: '0.00',
+        },
+        row_attr: {
+            class: 'mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.paidBy, {
+        label: 'Payé par :',
+        attr: {
+            placeholder: 'John Doe',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.category, {
+        label: 'Catégorie',
+        attr: {
+            placeholder: 'Alimentaiton',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.beneficiaries, {
+        label: 'Bénéficiaires :',
+        attr: {
+            placeholder: 'Alimentaiton',
+        },
+        row_attr: {
+            class: 'mb-3'
+        }
+    }) }}
+
+
     <div class="centerBtn">
         <button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
     </div>

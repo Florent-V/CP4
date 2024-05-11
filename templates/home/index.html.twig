@@ -22,7 +22,7 @@
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                             {% endif %}
-                            <a href="{{ path('app_expense_new', {'id' : split.id }) }}">
+                            <a href="{{ path('app_expense_new', {'splitter_id' : split.id }) }}">
                                 <i class="bi bi-plus-lg"></i>
                             </a>
                         </div>
@@ -30,12 +30,15 @@
                             <h4 class="card-title">{{ split.name }}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Créé par :
-                                    {{ split.owner.user.firstname ~ ' ' ~ split.owner.user.lastname }},
+                                    {{ split.owner.user.firstname ~ ' ' ~ split.owner.user.lastname }}
                             </h6>
-                            <h6 class="card-subtitle mb-2 text-muted">
+                            <h6 class="card-subtitle mb-2 text-muted one-line-text">
+                                {{ split.description ?? 'Pas de description' }}
+                            </h6>
+                            <h6 class="card-subtitle mb-2 text-muted one-line-text">
                                 Membres :
                                 {% for member in split.members %}
-                                    {{ member.nickname }},
+                                    {{ member.nickname }}{% if not loop.last %}, {% endif %}
                                 {% endfor %}
                             </h6>
                         </div>

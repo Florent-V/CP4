@@ -10,11 +10,11 @@
   .sign_card {
     margin: auto;
     background-color: darken($dark, 5%);
-    width: 1000px;
-    display: flex;
     box-shadow: 0 -1px 40px rgba(0,0,0, .12);
+    width: 100%;
     .sign_img {
-      width:50%;
+      min-width: 50%;
+      max-width: 50%;
       img {
         height: 100%;
         width: 100%;
@@ -22,18 +22,11 @@
       }
     }
     .sign_form {
-      width: 50%;
+      flex-grow: 1;
+      gap: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-    }
-  }
-}
-.register {
-  form {
-    color: $light;
-    label {
-      color: $dark;
     }
   }
 }
@@ -41,8 +34,5 @@
 .sign.register {
   .sign_card {
     flex-direction: row-reverse;
-  }
-  .sign_form {
-    gap: 1rem;
   }
 }
