@@ -3,23 +3,26 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+
     <main class="container-lg sign register">
+
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
 
-        <div class="sign_card">
-            <div class="sign_img">
+        <div class="sign_card d-flex">
+
+            <div class="sign_img d-none d-lg-block">
                 <img src="{{ asset('images/login.gif') }}" alt="gif of donald with money"/>
             </div>
 
-            <div class="sign_form p-3" {{ stimulus_controller('disableSubmitButton') }}>
+            <div class="sign_form p-4" {{ stimulus_controller('disableSubmitButton') }}>
 
-                <h1 class="text-center">Inscrivez-vous</h1>
+                <h1 class="text-center mb-4">Inscrivez-vous</h1>
 
-                    {{ component('Form:RegistrationForm') }}
+                {{ component('Form:RegistrationForm') }}
 
-                <div>
+                <div class="mt-4">
                     <div class="w-100 text-center">Déjà un compte ?<a href="{{ path('app_login') }}">Connectez vous</a></div>
                 </div>
             </div>

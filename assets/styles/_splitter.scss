@@ -23,6 +23,42 @@
             font-size: 1.5rem;
         }
     }
+    #myTab {
+        //border-bottom: 0;
+        h3 {
+            color: $light;
+        }
+        .card-header {
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+        }
+        a.active {
+            background-color: var(--bs-card-cap-bg);
+        }
+        a:not(.active) {
+            //background-color: blue;
+        }
+        li {
+            flex-basis: 50%;
+            border: none;
+            border-radius: 0;
+        }
+        a {
+
+        }
+    }
+    #myTabContent {
+        .expenseCard .card, .balanceCard:first-of-type .card {
+            border-top: none;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            //border-color: var(--bs-nav-tabs-link-active-border-color);
+        }
+        //div {
+        //    border-radius: 0;
+        //}
+    }
 }
 
 

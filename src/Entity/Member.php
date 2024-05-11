@@ -37,9 +37,6 @@ class Member
     #[ORM\Column]
     private ?bool $editor = false;
 
-    #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: Expense::class, orphanRemoval: true)]
-    private Collection $addedExpenses;
-
     #[ORM\OneToMany(mappedBy: 'paidBy', targetEntity: Expense::class, orphanRemoval: true)]
     private Collection $paidExpenses;
 
@@ -48,7 +45,6 @@ class Member
 
     public function __construct()
     {
-        $this->addedExpenses = new ArrayCollection();
         $this->paidExpenses = new ArrayCollection();
         $this->expenses = new ArrayCollection();
     }
@@ -90,36 +86,6 @@ class Member
     public function setEditor(bool $editor): static
     {
         $this->editor = $editor;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Expense>
-     */
-    public function getAddedExpenses(): Collection
-    {
-        return $this->addedExpenses;
-    }
-
-    public function addAddedExpense(Expense $addedExpense): static
-    {
-        if (!$this->addedExpenses->contains($addedExpense)) {
-            $this->addedExpenses->add($addedExpense);
-            $addedExpense->setAddedBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAddedExpense(Expense $addedExpense): static
-    {
-        if ($this->addedExpenses->removeElement($addedExpense)) {
-            // set the owning side to null (unless already changed)
-            if ($addedExpense->getAddedBy() === $this) {
-                $addedExpense->setAddedBy(null);
-            }
-        }
 
         return $this;
     }

@@ -5,7 +5,7 @@
 {% block body %}
 
     <main class="splitterView container-md">
-
+        <!-- Header : title + icons -->
         <div class="d-flex justify-content-between align-items-center my-3">
             <h1 class="m-0">{{ splitter.name }}</h1>
 
@@ -22,7 +22,7 @@
                         <a class="nav-link" href="{{ path('app_splitter_leave', {'id': splitter.id}) }}" title="Quitter le Splitter"><i class="bi bi-box-arrow-right"></i></a>
                     {% endif %}
 
-                    <a class="nav-link" href="{{ path('app_expense_new', {'id': splitter.id}) }}" title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a>
+                    <a class="nav-link" href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}" title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a>
 
                     <div style="cursor:pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="bi bi-share-fill"></i>
@@ -36,7 +36,9 @@
                                 title="Supprimer le splitter"
                         />
                     {% endif %}
-                    <a class="nav-link" href="{{ path('app_home') }}" title="Retour home"><i class="bi bi-arrow-return-left"></i></a>
+                    <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
+                        <i class="bi bi-arrow-return-left"></i>
+                    </a>
 
                 {% endif %}
             </div>
@@ -44,7 +46,7 @@
         </div>
 
         {% if app.user %}
-            <!-- Modal -->
+            <!-- Modal pour partage du splitter -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div id="modal" class="modal-content">
@@ -67,78 +69,105 @@
             </div>
         {% endif %}
 
-        <div class="expenseCard">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Dépenses</h3>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                            {{ splitter.description }},
-                    </h6>
+        <p>
+            Membres :
+            {% for member in splitter.members %}
+                {{ member.nickname }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
 
+        <p>Description : {{  splitter.description }}</p>
+
+
+        <ul class="nav nav-tabs d-flex" id="myTab" role="tablist">
+            <li class="card nav-item" role="presentation">
+                <a class="nav-link active p-0" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">
+                    <div class="card-header">
+                        <h3 class="card-title">Dépenses</h3>
+                    </div>
+                </a>
+            </li>
+            <li class="card nav-item" role="presentation">
+                <a class="nav-link p-0" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">
+                    <div class="card-header">
+                        <h3 class="card-title">Balance</h3>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                <div class="expenseCard">
+                    <div class="card mb-4">
+                        <ul class="list-group list-group-flush">
+                            {% for expense in splitter.expenses %}
+                                <li class="list-group-item expenseItemList">
+                                    <div class="expenseDate">
+                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
+                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
+                                    </div>
+                                    <div class="expenseInfos flex-grow-1">
+                                        <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
+                                        <p>
+                                            <i class="bi bi-person-fill"></i>Bénéficiaires :
+                                            {% for beneficiary in expense.beneficiaries %}
+                                                <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                    <div class="expenseAmount">
+                                        <span>{{ expense.amount ~ expense.devise }}</span>
+                                    </div>
+                                    <a class="linkExpense" href="{{ path(('app_expense_show'), {'expense_id' : expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    {% for expense in splitter.expenses %}
-                        <li class="list-group-item expenseItemList">
-                            <div class="expenseDate">
-                                <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
-                                <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
-                            </div>
-                            <div class="expenseInfos flex-grow-1">
-                                <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
-                                <p><i class="bi bi-person-fill"></i>Bénéficiaires : comming soon</p>
-                            </div>
-                            <div class="expenseAmount">
-                                <span>{{ expense.amount ~ expense.devise }}</span>
-                            </div>
-                            <a class="linkExpense" href="{{ path('app_expense_edit', {'expense_id' : expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>
-                        </li>
-                    {% endfor %}
-                </ul>
+            </div>
+
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                <div class="balanceCard">
+                    <div class="card mb-4">
+                        <ul class="list-group list-group-flush">
+                            {% for member in splitter.members %}
+                                <li class="list-group-item balanceItemList">
+                                    <div class="memberName">
+                                        <p>{{ member.nickname }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="badge {{ balancePerId[member.id] < 0 ? "bg-warning text-dark" : "bg-success" }}">{{ balancePerId[member.id]|round(2) }}€</span>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="balanceCard">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Régler les dettes !</h3>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {% for transfer in transfers %}
+                                <li class="list-group-item d-flex align-items-center gap-3">
+                                    <div class="memberName py-1">
+                                        <p class="m-0">
+                                            <span class="fw-bold">{{ transfer['from'].nickname }}</span>
+                                            doit
+                                            <span class="text-decoration-underline">{{ transfer['amount']|round(2) }}€</span>
+                                            à
+                                            <span class="fw-bold">{{ transfer['to'].nickname }}</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="balanceCard">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title my-2">Balances</h3>
-                </div>
-                <ul class="list-group list-group-flush">
-                    {% for member in splitter.members %}
-                        <li class="list-group-item balanceItemList">
-                            <div class="memberName">
-                                <p>{{ member.nickname }}</p>
-                            </div>
-                            <div>
-                                <span class="badge {{ balancePerId[member.id] < 0 ? "bg-warning text-dark" : "bg-success" }}">{{ balancePerId[member.id]|round(2) }}€</span>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-        <div class="balanceCard">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Régler les dettes !</h3>
-                </div>
-                <ul class="list-group list-group-flush">
-                    {% for transfer in transfers %}
-                        <li class="list-group-item d-flex align-items-center gap-3">
-                            <div class="memberName py-1">
-                                <p class="m-0">
-                                    <span class="fw-bold">{{ transfer['from'].nickname }}</span>
-                                    doit
-                                     <span class="text-decoration-underline">{{ transfer['amount']|round(2) }}€</span>
-                                    à
-                                    <span class="fw-bold">{{ transfer['to'].nickname }}</span>
-                                </p>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </main>
 
 {% endblock %}

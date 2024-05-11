@@ -43,10 +43,6 @@ class Expense
     #[ORM\JoinColumn(nullable: false)]
     private ?ExpenseCategory $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'addedExpenses')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Member $addedBy = null;
-
     #[ORM\ManyToOne(inversedBy: 'paidExpenses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Member $paidBy = null;
@@ -57,6 +53,9 @@ class Expense
         minMessage: 'Vous devez avoir au moins un bénéficiare pour la dépense.'
     )]
     private Collection $beneficiaries;
+
+    #[ORM\ManyToOne(inversedBy: 'expenses')]
+    private ?AppUser $addedBy = null;
 
     public function __construct()
     {
@@ -164,18 +163,6 @@ class Expense
         return $this;
     }
 
-    public function getAddedBy(): ?Member
-    {
-        return $this->addedBy;
-    }
-
-    public function setAddedBy(?Member $addedBy): static
-    {
-        $this->addedBy = $addedBy;
-
-        return $this;
-    }
-
     public function getPaidBy(): ?Member
     {
         return $this->paidBy;
@@ -208,6 +195,18 @@ class Expense
     public function removeBeneficiary(Member $beneficiary): static
     {
         $this->beneficiaries->removeElement($beneficiary);
+
+        return $this;
+    }
+
+    public function getAddedBy(): ?AppUser
+    {
+        return $this->addedBy;
+    }
+
+    public function setAddedBy(?AppUser $addedBy): static
+    {
+        $this->addedBy = $addedBy;
 
         return $this;
     }

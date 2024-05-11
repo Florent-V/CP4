@@ -37,7 +37,7 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
         $expense->setPaidBy($this->getReference('member_11'));
-        $expense->setAddedBy($this->getReference('member_11'));
+        $expense->setAddedBy($this->getReference('appUser_1'));
         $expense->setSplitter($this->getReference('splitter_1'));
         $expense->addBeneficiary($this->getReference('member_11'));
         $expense->addBeneficiary($this->getReference('member_21'));
@@ -63,7 +63,7 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
         $expense->setPaidBy($this->getReference('member_21'));
-        $expense->setAddedBy($this->getReference('member_21'));
+        $expense->setAddedBy($this->getReference('appUser_2'));
         $expense->setSplitter($this->getReference('splitter_1'));
         $expense->addBeneficiary($this->getReference('member_11'));
         $expense->addBeneficiary($this->getReference('member_21'));
@@ -89,7 +89,7 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
         $expense->setPaidBy($this->getReference('member_12'));
-        $expense->setAddedBy($this->getReference('member_12'));
+        $expense->setAddedBy($this->getReference('appUser_1'));
         $expense->setSplitter($this->getReference('splitter_2'));
         $expense->addBeneficiary($this->getReference('member_12'));
         $expense->addBeneficiary($this->getReference('member_51'));
@@ -115,7 +115,7 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
         $expense->setPaidBy($this->getReference('member_22'));
-        $expense->setAddedBy($this->getReference('member_22'));
+        $expense->setAddedBy($this->getReference('appUser_2'));
         $expense->setSplitter($this->getReference('splitter_2'));
         $expense->addBeneficiary($this->getReference('member_22'));
         $expense->addBeneficiary($this->getReference('member_12'));
@@ -141,7 +141,7 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
         $expense->setPaidBy($this->getReference('member_12'));
-        $expense->setAddedBy($this->getReference('member_12'));
+        $expense->setAddedBy($this->getReference('appUser_1'));
         $expense->setSplitter($this->getReference('splitter_2'));
         $expense->addBeneficiary($this->getReference('member_12'));
         $expense->addBeneficiary($this->getReference('member_22'));
@@ -172,7 +172,7 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
         $expense->setPaidBy($this->getReference('member_32'));
-        $expense->setAddedBy($this->getReference('member_32'));
+        $expense->setAddedBy($this->getReference('appUser_3'));
         $expense->setSplitter($this->getReference('splitter_3'));
         $expense->addBeneficiary($this->getReference('member_32'));
         $expense->addBeneficiary($this->getReference('member_42'));
@@ -198,7 +198,7 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
         $expense->setPaidBy($this->getReference('member_52'));
-        $expense->setAddedBy($this->getReference('member_52'));
+        $expense->setAddedBy($this->getReference('appUser_5'));
         $expense->setSplitter($this->getReference('splitter_3'));
         $expense->addBeneficiary($this->getReference('member_52'));
         $expense->addBeneficiary($this->getReference('member_62'));
