@@ -50,17 +50,4 @@ class SplitterController extends AbstractController
             'form' => $form
         ]);
     }
-
-    #[Route('/{id}', name: 'app_splitter_delete', methods: ['POST'])]
-    public function delete(
-        Request $request,
-        Splitter $splitter,
-        SplitterRepository $splitterRepository
-    ): Response {
-        if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {
-            $splitterRepository->remove($splitter, true);
-        }
-
-        return $this->redirectToRoute('admin_app_splitter_index', [], Response::HTTP_SEE_OTHER);
-    }
 }

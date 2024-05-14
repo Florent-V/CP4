@@ -16,6 +16,9 @@
             {% for split in splitters %}
                 <div class="col-md-6 col-xxl-4">
                     <div class="card mb-4">
+
+                        <a class="link-card" href="{{ path('app_splitter_show', {id: split.id}) }}"></a>
+
                         <div class="cardIcons">
                             {% if split.owner == app.user.appUser %}
                                 <a href="{{ path('app_splitter_edit', {'id' : split.id }) }}">
@@ -26,6 +29,7 @@
                                 <i class="bi bi-plus-lg"></i>
                             </a>
                         </div>
+
                         <div class="card-header">
                             <h4 class="card-title">{{ split.name }}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">
@@ -42,6 +46,7 @@
                                 {% endfor %}
                             </h6>
                         </div>
+
                         <ul class="list-group list-group-flush">
                             {% for expense in split.expenses|sort((a,b) => b.madeAt <=> a.madeAt)|slice(0,3) %}
                                 <li class="list-group-item expenseItemList">
@@ -59,7 +64,7 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                        <a class="link-card" href="{{ path('app_splitter_show', {id: split.id}) }}"></a>
+
                     </div>
 
                 </div>

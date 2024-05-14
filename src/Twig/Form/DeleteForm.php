@@ -9,6 +9,7 @@ class DeleteForm
 {
     public string $entity;
     public string $id;
+    public ?string $id2 = null;
     public string $title;
 
     public function getRoute(): string
@@ -27,5 +28,15 @@ class DeleteForm
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getId2(): string
+    {
+        return $this->id2;
+    }
+
+    public function setId2(string $id2): void
+    {
+        $this->id2 = $id2;
     }
 }

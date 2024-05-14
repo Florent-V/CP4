@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Expense;
 use App\Entity\Splitter;
+use App\Entity\User;
 use App\Form\ExpenseType;
 use App\Repository\ExpenseRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -12,10 +13,48 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use DateTime;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('/splitter/{splitter_id}/expense', name: 'app_expense_')]
 class ExpenseController extends AbstractController
 {
+    /**
+     * Vérifie si l'utilisateur actuel a accès à la ressource splitter.
+     *
+     * @param Splitter $splitter
+     * @param Expense $expense
+     */
+    private function rejectIfNotAdmin(Splitter $splitter, Expense $expense): void
+    {
+        /**
+         * @var ?User $user
+         */
+        $user = $this->getUser();
+        if (
+            $splitter->getOwner() !== $user->getAppUser()
+            && $expense->getAddedBy() !== $user->getAppUser()
+            && !$this->isGranted('ROLE_ADMIN')
+        ) {
+            throw new AccessDeniedException('Accès non autorisé à cette ressource.');
+        }
+    }
+
+    /**
+     * Vérifie si l'utilisateur actuel a accès à la ressource splitter.
+     *
+     * @param Splitter $splitter
+     * @throws AccessDeniedException Si l'utilisateur n'a pas accès
+     */
+    private function rejectIfNotMember(Splitter $splitter): void
+    {
+        /**
+         * @var ?User $user
+         */
+        $user = $this->getUser();
+        if (!$user->getAppUser()->getFavoriteSplitters()->contains($splitter) && !$this->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException('Accès non autorisé à cette ressource.');
+        }
+    }
     #[Route(
         '/new',
         name: 'new',
@@ -31,6 +70,7 @@ class ExpenseController extends AbstractController
         ExpenseRepository $expenseRepository
     ): Response {
 
+        $this->rejectIfNotMember($splitter);
         $expense = new Expense();
         $form = $this->createForm(ExpenseType::class, $expense, [
             'splitter' => $splitter
@@ -67,6 +107,9 @@ class ExpenseController extends AbstractController
         #[MapEntity(mapping: ['expense_id' => 'id'])]
         Expense $expense,
     ): Response {
+
+        $this->rejectIfNotMember($splitter);
+
         return $this->render('expense/show.html.twig', [
             'expense' => $expense,
             'splitter' => $splitter,
@@ -90,6 +133,9 @@ class ExpenseController extends AbstractController
         Expense $expense,
         ExpenseRepository $expenseRepository
     ): Response {
+
+        $this->rejectIfNotAdmin($splitter, $expense);
+
         $form = $this->createForm(ExpenseType::class, $expense, [
             'splitter' => $splitter
         ]);
@@ -115,14 +161,25 @@ class ExpenseController extends AbstractController
     #[Route('/{expense_id}', name: 'delete', methods: ['POST'])]
     public function delete(
         Request $request,
+        #[MapEntity(mapping: ['splitter_id' => 'id'])]
+        Splitter $splitter,
         #[MapEntity(mapping: ['expense_id' => 'id'])]
         Expense $expense,
         ExpenseRepository $expenseRepository
     ): Response {
-        if ($this->isCsrfTokenValid('delete' . $expense->getId(), $request->request->get('_token'))) {
+
+        $this->rejectIfNotAdmin($splitter, $expense);
+
+        if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {
             $expenseRepository->remove($expense, true);
         }
 
-        return $this->redirectToRoute('app_expense_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute(
+            'app_splitter_show',
+            [
+                'id' => $splitter->getId(),
+            ],
+            Response::HTTP_SEE_OTHER
+        );
     }
 }
