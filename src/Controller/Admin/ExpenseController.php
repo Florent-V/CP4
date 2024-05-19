@@ -19,7 +19,7 @@ class ExpenseController extends AbstractController
     #[Route('/', name: 'app_expense_index', methods: ['GET'])]
     public function index(ExpenseRepository $expenseRepository): Response
     {
-        return $this->render('expense/index.html.twig', [
+        return $this->render('admin/expense/index.html.twig', [
             'expenses' => $expenseRepository->findAll(),
         ]);
     }

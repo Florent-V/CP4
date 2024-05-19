@@ -22,6 +22,7 @@ class UserFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         $admin = new User();
+        $appUser = new AppUser();
         $admin->setPseudo('FloV5');
         $admin->setFirstName('Florent');
         $admin->setLastName('Vasseur');
@@ -29,6 +30,7 @@ class UserFixtures extends Fixture
         $admin->setPhone($faker->phoneNumber());
         $admin->setIsVerified(true);
         $admin->setRoles((array)'ROLE_ADMIN');
+        $admin->setAppUser($appUser);
 
         $hashedPassword = $this->passwordHasher->hashPassword(
             $admin,

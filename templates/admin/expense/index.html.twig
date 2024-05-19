@@ -29,8 +29,14 @@
                 <td>{{ expense.picture }}</td>
                 <td>{{ expense.devise }}</td>
                 <td>
-                    <a href="{{ path('app_expense_show', {'id': expense.id}) }}">show</a>
-                    <a href="{{ path('app_expense_edit', {'id': expense.id}) }}">edit</a>
+                    <a href="{{ path('app_expense_show', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}">show</a>
+                    <a href="{{ path('app_expense_edit', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}">edit</a>
+                    <twig:Form:DeleteForm
+                            entity='expense'
+                            id='{{ expense.splitter.id }}'
+                            id2='{{ expense.id }}'
+                            title="Supprimer la dépense"
+                    />
                 </td>
             </tr>
         {% else %}
@@ -40,6 +46,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_expense_new') }}">Create new</a>
 {% endblock %}
