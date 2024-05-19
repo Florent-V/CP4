@@ -44,6 +44,7 @@
                 <td>
                     <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}">show</a>
                     <a href="{{ path('app_splitter_edit', {'id': splitter.id}) }}">edit</a>
+                    <a href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}">Add Expense</a>
                     <twig:Form:DeleteForm
                             entity='splitter'
                             id='{{ splitter.id }}'
