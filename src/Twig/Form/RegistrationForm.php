@@ -77,7 +77,6 @@ class RegistrationForm extends AbstractController
             'app_verify_email',
             $user,
             (new TemplatedEmail())
-                ->from(new Address('no-reply@splitter.fr', 'Splitter Bot'))
                 ->to($user->getEmail())
                 ->from(new Address('florent@f5t.fr', 'Florent Vasseur'))
                 ->subject('Please Confirm your Email')
