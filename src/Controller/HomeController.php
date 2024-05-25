@@ -44,6 +44,7 @@ class HomeController extends AbstractController
         );
 
         return $this->render('home/index.html.twig', [
+            'user' => $user,
             'form' => $form,
             'splitters' => $splitters
         ]);

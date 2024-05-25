@@ -8,11 +8,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="d-flex flex-column align-items-center">
                 <div class="info-user my-2">
-                    <a class="nav-link" href="{{ path('app_user_account') }}" title="Accéder à mon compte"><i class="bi bi-person-fill mx-2"></i></a>
+                    <img src="{{ user.picture ? vich_uploader_asset(user, 'pictureFile') : asset('images/profil/Default_Profile_Picture.png') }}" alt="{% if user.picture %}Photo de profil{% else %}Photo de profil par défaut{% endif %}">
 
                     <p class="text-center m-0 mx-2" >Bienvenue <br>
-                        {{ app.user.pseudo ?? "Admin" }}
+                        {{ user.pseudo ?? "Admin" }}
                     </p>
+                    <a class="nav-link link-profile" href="{{ path('app_user_account') }}" title="Accéder à mon compte"></a>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3 mb-2 gap-3">
                     <h2 class="m-0">Mes Splits </h2>
@@ -28,7 +29,7 @@
                             <a class="nav-link" aria-current="page" href="{{ path('app_splitter_show', { 'id': split.id }) }}">
                                 <span class="mdi mdi-format-list-bulleted">{{ split.name }}</span>
                             </a>
-                            {% if split.owner == app.user.appUser %}
+                            {% if split.owner == user.appUser %}
                                 <a class="link-info" href="{{ path('app_splitter_edit', {'id': split.id}) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
