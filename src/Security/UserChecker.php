@@ -32,7 +32,7 @@ class UserChecker implements UserCheckerInterface
                 (new TemplatedEmail())
                     ->from(new Address('florent@f5t.fr', 'Kopeck Bot'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Kopeck : Confirmez votre Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             throw new CustomUserMessageAccountStatusException(
