@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ExpenseType extends AbstractType
 {
@@ -27,6 +28,13 @@ class ExpenseType extends AbstractType
 
         $builder
             ->add('name')
+            ->add('pictureFile', VichFileType::class, [
+                'label' => 'Photo',
+                'attr' => ['placeholder' => 'photo'],
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => true,
+            ])
             ->add('madeAt', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
