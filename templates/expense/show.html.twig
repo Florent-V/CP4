@@ -59,6 +59,14 @@
                             {% endfor %}
                         </p>
                     </div>
+                    {% if expense.picture %}
+                        <div class="list-group-item">
+                            <p>Photo :</p>
+                            <p>
+                                <img src="{{ vich_uploader_asset(expense, 'pictureFile') }}" alt="Photo de la dépense">
+                            </p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 

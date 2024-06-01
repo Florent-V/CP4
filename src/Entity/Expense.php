@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\ExpenseRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ExpenseRepository::class)]
+#[Vich\Uploadable]
 class Expense
 {
     #[ORM\Id]
@@ -31,6 +35,16 @@ class Expense
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
+
+    #[Vich\UploadableField(mapping: 'expense_picture', fileNameProperty: 'picture')]
+    #[Assert\File(
+        maxSize: '10M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    )]
+    private ?File $pictureFile = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?Datetime $updatedAt = null;
 
     #[ORM\Column(length: 5)]
     private ?string $devise = null;
@@ -65,6 +79,31 @@ class Expense
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    public function setPictureFile(?File $pictureFile): Expense
+    {
+        $this->pictureFile = $pictureFile;
+        if ($pictureFile) {
+            $this->updatedAt = new DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?Datetime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?Datetime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
     }
 
     public function getName(): ?string
