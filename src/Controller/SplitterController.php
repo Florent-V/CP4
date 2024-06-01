@@ -189,7 +189,7 @@ class SplitterController extends AbstractController
             $data = $form->getData();
 
             $email = (new TemplatedEmail())
-                ->from(new Address('no-reply@f5t.fr', 'Splitter Bot'))
+                ->from(new Address('no-reply@f5t.fr', 'Kopeck Bot'))
                 ->to($data['email'])
                 ->subject('On vous invite dans un Splitter !')
                 ->htmlTemplate('splitter/shareEmail.html.twig')
