@@ -10,6 +10,16 @@
         }
     }) }}
 
+    {{ form_row(form.pictureFile, {
+        label: 'Photo',
+        attr: {
+            placeholder: 'Dépense pour',
+        },
+        row_attr: {
+            class: 'mb-3'
+        }
+    }) }}
+
     {{ form_row(form.madeAt, {
         label: 'Date',
         attr: {

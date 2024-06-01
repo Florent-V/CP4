@@ -1,4 +1,4 @@
-.showCard {
+.account {
     .card {
         box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     }
@@ -29,5 +29,9 @@
             font-size: 1.2rem;
             color: $light;
         }
+    }
+    img {
+        width: 200px;
+        height: auto;
     }
 }

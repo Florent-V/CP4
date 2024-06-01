@@ -78,6 +78,7 @@ class RegistrationForm extends AbstractController
             $user,
             (new TemplatedEmail())
                 ->to($user->getEmail())
+                ->from(new Address('florent@f5t.fr', 'Florent Vasseur'))
                 ->subject('Please Confirm your Email')
                 ->htmlTemplate('registration/confirmation_email.html.twig')
         );

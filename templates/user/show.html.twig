@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <main class="container-md">
+    <main class="account container-md">
 
         <div class="d-flex justify-content-between align-items-center my-3">
             <h1>Mon compte</h1>
@@ -36,6 +36,12 @@
                     <li class="list-group-item">
                         <p>Prénom et Nom</p>
                         <p>{{ user.firstName ~ ' ' ~ user.lastName }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Photo de Profil</p>
+                        <p>
+                            <img src="{{ user.picture ? vich_uploader_asset(user, 'pictureFile') : asset('images/profil/Default_Profile_Picture.png') }}" alt="{% if user.picture %}Photo de profil{% else %}Photo de profil par défaut{% endif %}">
+                        </p>
                     </li>
                     <li class="list-group-item">
                         <p>Pseudo</p>

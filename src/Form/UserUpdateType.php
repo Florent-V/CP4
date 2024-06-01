@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserUpdateType extends AbstractType
 {
@@ -38,8 +39,13 @@ class UserUpdateType extends AbstractType
                 'label' => 'Téléphone',
                 'attr' => ['placeholder' => '+33...']
             ])
-
-//            ->add('picture')
+            ->add('pictureFile', VichFileType::class, [
+                'label' => 'Photo',
+                'attr' => ['placeholder' => 'photo'],
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => true,
+            ])
         ;
     }
 
