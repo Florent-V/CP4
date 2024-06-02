@@ -1,26 +1,24 @@
-name: deploy
+name: Deploy to VPS
+
 on:
   push:
-    branches: [ main ]
+    branches:
+      - prod
+  pull_request:
+    branches:
+      - prod
 
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout the repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v2
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
         with:
-          node-version: '19'
-
-      - name: Install caprover
-        run: npm install -g caprover
-
-      - name: Caprover Deploy
-        run: caprover deploy -h '${{ secrets.CAPROVER_SERVER }}' -p '${{ secrets.CAPROVER_PASSWORD }}' -b 'main' -a '${{ secrets.CAPROVER_APP_NAME }}'
-
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: cd ${{ secrets.PROJECT_PATH }} && git pull && composer install && symfony console asset-map:compile
