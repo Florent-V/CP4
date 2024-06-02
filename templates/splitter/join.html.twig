@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Splitter{% endblock %}
+{% block title %}Kopeck : Rejoindre un groupe{% endblock %}
 
 {% block body %}
 
     <main class="container-md">
 
-        <h1>Entrer le code ci-dessous pour rejoindre un Splitter !</h1>
+        <h1>Entrer le code ci-dessous pour rejoindre un groupe sur Kopeck !</h1>
 
         <div>
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <div class="centerBtn">
-                <button class="btn btn-primary">{{ button_label|default('Partager le splitter') }}</button>
+                <button class="btn btn-primary">{{ button_label|default('Partager le groupe') }}</button>
             </div>
 
             {{ form_end(form) }}

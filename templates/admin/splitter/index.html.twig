@@ -7,7 +7,7 @@
 <main class="adminContainer">
 
     <div class="head my-3">
-        <h1>Liste des Splitters. Total : {{ splitters.getTotalItemCount }}</h1>
+        <h1>Liste des groupes. Total : {{ splitters.getTotalItemCount }}</h1>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -48,7 +48,7 @@
                     <twig:Form:DeleteForm
                             entity='splitter'
                             id='{{ splitter.id }}'
-                            title="Supprimer le splitter"
+                            title="Supprimer le groupe"
                     />
                 </td>
             </tr>
