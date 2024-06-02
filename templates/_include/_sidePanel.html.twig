@@ -1,7 +1,7 @@
 <nav class="side-panel navbar navbar-dark navbar-expand-lg bg-dark py-4 align-items-lg-start">
     <div class="container-fluid flex-lg-column">
         <img src="{{ asset('/images/mainlogo1.png') }}" alt="">
-        <a class="navbar-brand m-0" href="{{ path('app_home') }}"><h1>Splitter !</h1></a>
+        <a class="navbar-brand m-0" href="{{ path('app_home') }}"><h1>Kopeck !</h1></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,7 +16,7 @@
                     <a class="nav-link link-profile" href="{{ path('app_user_account') }}" title="Accéder à mon compte"></a>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3 mb-2 gap-3">
-                    <h2 class="m-0">Mes Splits </h2>
+                    <h2 class="m-0">Mes groupes </h2>
                     <div id="sideAddSplitterBtn">
                         <a class="btn btn-primary rounded-circle" href="{{ path('app_splitter_new') }}">
                             <i class="bi bi-plus-lg"></i>
@@ -37,7 +37,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a class="nav-link my-3" href="{{ path('app_splitter_join_by_code') }}">Rejoindre un Splitter<i class="bi bi-box-arrow-in-right"></i></a>
+                <a class="nav-link my-3" href="{{ path('app_splitter_join_by_code') }}">Rejoindre un groupe<i class="bi bi-box-arrow-in-right"></i></a>
             </div>
 
         </div>

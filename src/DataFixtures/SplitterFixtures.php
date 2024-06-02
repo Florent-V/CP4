@@ -18,7 +18,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         self::$splitExpense++;
         $group = new Splitter();
-        $group->setName('Splitter N°' . self::$splitExpense);
+        $group->setName('Groupe N°' . self::$splitExpense);
         $group->setDescription($faker->paragraph());
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
@@ -39,7 +39,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
 
         self::$splitExpense++;
         $group = new Splitter();
-        $group->setName('Splitter N°' . self::$splitExpense);
+        $group->setName('Groupe N°' . self::$splitExpense);
         $group->setDescription($faker->paragraph());
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
@@ -60,7 +60,7 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
 
         self::$splitExpense++;
         $group = new Splitter();
-        $group->setName('Splitter N°' . self::$splitExpense);
+        $group->setName('Groupe N°' . self::$splitExpense);
         $group->setDescription($faker->paragraph());
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(

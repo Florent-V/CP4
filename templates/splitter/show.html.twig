@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Splitter{% endblock %}
+{% block title %}Kopeck - Détail du groupe{% endblock %}
 
 {% block body %}
 
@@ -33,7 +33,7 @@
                         <twig:Form:DeleteForm
                                 entity='splitter'
                                 id='{{ splitter.id }}'
-                                title="Supprimer le splitter"
+                                title="Supprimer le groupe"
                         />
                     {% endif %}
                     <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
@@ -46,12 +46,12 @@
         </div>
 
         {% if app.user %}
-            <!-- Modal pour partage du splitter -->
+            <!-- Modal pour partage du groupe -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div id="modal" class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Partagez votre Splitter</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Partagez votre groupe</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                         </div>
                         <div class="modal-body d-flex flex-column justify-content-between gap-2" data-controller="clipboard" data-clipboard-success-content-value="Copié !">

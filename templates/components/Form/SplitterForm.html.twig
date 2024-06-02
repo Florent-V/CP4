@@ -6,7 +6,7 @@
     {{ form_errors(form) }}
 
     {{ form_row(form.name, {
-        label: 'Nom du splitter',
+        label: 'Nom du groupe',
         attr: {
             placeholder: 'Voyage à ...',
             class: 'text-light'
@@ -17,9 +17,9 @@
     }) }}
 
     {{ form_row(form.description, {
-        label: 'Description du splitter',
+        label: 'Description du groupe',
         attr: {
-            placeholder: 'Splitter pour le voyage à ...'
+            placeholder: 'Groupe pour le voyage à ...'
         },
         row_attr: {
             class: 'form-floating mb-3 text-light'
