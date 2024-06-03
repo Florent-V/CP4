@@ -3,23 +3,30 @@ grumphp:
         composer:
             file: ./composer.json
         phpversion:
-            project: '8.0'
+            project: '8.2'
         phpcpd:
             directory: [ 'src' ]
-            exclude: [ 'src/DataFixtures' ]
+            exclude: [ 'src/DataFixtures', 'vendor' ]
         phpcs:
             standard: ~
         phpstan:
             configuration: ./phpstan.neon
             level: 6
-#        phpmd:
-#            whitelist_patterns:
-#                - 'src'
-#            exclude:
-#                - '\src\Kernel.php'
-#                - '\src\Entity\Annonce.php'
-#            ruleset:
-#                - 'phpmd.xml'
+        phpmd:
+            whitelist_patterns:
+                - 'src'
+            exclude:
+                - '\src\Kernel.php'
+                - '\src\Entity\Annonce.php'
+            ruleset:
+                - 'phpmd.xml'
+        twigcs:
+            path: '.'
+            severity: 'warning'
+            display: 'all'
+            ruleset: 'FriendsOfTwig\Twigcs\Ruleset\Official'
+            triggered_by: [ 'twig' ]
+            exclude: [ ]
     fixer:
         enabled: true
         fix_by_default: true
