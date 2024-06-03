@@ -26,7 +26,7 @@ grumphp:
             display: 'all'
             ruleset: 'FriendsOfTwig\Twigcs\Ruleset\Official'
             triggered_by: [ 'twig' ]
-            exclude: [ ]
+            exclude: [ 'vendor' ]
     fixer:
         enabled: true
         fix_by_default: true
