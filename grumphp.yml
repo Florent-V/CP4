@@ -8,7 +8,7 @@ grumphp:
             directory: [ 'src' ]
             exclude: [ 'src/DataFixtures', 'vendor' ]
         phpcs:
-            standard: ~
+            standard: PSR12
         phpstan:
             configuration: ./phpstan.neon
             level: 6
