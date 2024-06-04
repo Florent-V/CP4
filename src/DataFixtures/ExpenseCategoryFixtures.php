@@ -10,7 +10,6 @@ use Doctrine\Persistence\ObjectManager;
 class ExpenseCategoryFixtures extends Fixture implements DependentFixtureInterface
 {
     public static int $expenseCategoryIndex = 0;
-
     public const CATEGORIES = ['Alimentation', 'Assurance', 'Bar', 'Charges', 'Divertissement', 'Logement', 'Loyer',
         'Parking', 'Restaurant', 'Shopping', 'Santé', 'Transport', 'Autre'];
 
