@@ -9,6 +9,7 @@ grumphp:
             exclude: [ 'src/DataFixtures', 'vendor' ]
         phpcs:
             standard: PSR12
+            ignore_patterns: [ 'migrations']
         phpstan:
             configuration: ./phpstan.neon
             level: 6
