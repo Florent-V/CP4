@@ -76,7 +76,7 @@
             {% endfor %}
         </p>
 
-        <p>Description : {{  splitter.description }}</p>
+        <p>Description : {{ splitter.description }}</p>
 
 
         <ul class="nav nav-tabs d-flex" id="myTab" role="tablist">
@@ -119,7 +119,7 @@
                                     <div class="expenseAmount">
                                         <span>{{ expense.amount ~ expense.devise }}</span>
                                     </div>
-                                    <a class="linkExpense" href="{{ path(('app_expense_show'), {'expense_id' : expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>
+                                    <a class="linkExpense" href="{{ path(('app_expense_show'), {'expense_id': expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>
                                 </li>
                             {% endfor %}
                         </ul>
