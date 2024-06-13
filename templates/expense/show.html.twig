@@ -11,7 +11,7 @@
 
             <div class="d-flex align-items-center gap-4">
                 {% if splitter.owner == app.user.appUser or expense.addedBy == app.user.appUser %}
-                    <a class="nav-link" href="{{ path('app_expense_edit', {'expense_id' : expense.id, 'splitter_id': splitter.id}) }}" title="Editer le groupe"><i class="bi bi-pencil-square"></i></a>
+                    <a class="nav-link" href="{{ path('app_expense_edit', {'expense_id': expense.id, 'splitter_id': splitter.id}) }}" title="Editer le groupe"><i class="bi bi-pencil-square"></i></a>
 
                     <twig:Form:DeleteForm
                             entity='expense'
@@ -21,7 +21,7 @@
                     />
                 {% endif %}
 
-                <a class="nav-link" href="{{ path('app_splitter_show', {'id' : splitter.id }) }}" title="Retour">
+                <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour">
                     <i class="bi bi-arrow-return-left"></i>
                 </a>
 

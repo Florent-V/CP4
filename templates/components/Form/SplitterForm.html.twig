@@ -35,21 +35,13 @@
 
     <p>Ajouter des membres</p>
 
-        {% for key, memberForm in form.members %}
-            {% set myLabel = (key == 0)
-                ? 'Votre Nom'
-                : 'Autre Participant'
-            %}
-            {% set nickname = (key == 0)
-                ? app.user.firstName
-                : (memberForm.vars.value
-                    ? memberForm.vars.value.nickname
-                    : '')
-            %}
+        {% for key, member_form in form.members %}
+            {% set my_label = (key == 0) ? 'Votre Nom' : 'Autre Participant' %}
+            {% set nickname = (key == 0) ? app.user.firstName : (member_form.vars.value ? member_form.vars.value.nickname : '') %}
 
             <div class="d-flex gap-2 align-items-center">
-                {{ form_row(memberForm.nickname, {
-                    label: myLabel,
+                {{ form_row(member_form.nickname, {
+                    label: my_label,
                     row_attr: {
                         class: 'form-floating mb-3 flex-grow-1'
                     },
@@ -59,8 +51,8 @@
                     }
                 }) }}
 
-                {%  if myLabel != 'Votre Nom' %}
-                    {{ form_row(memberForm.vars.button_delete, {
+                {%  if my_label != 'Votre Nom' %}
+                    {{ form_row(member_form.vars.button_delete, {
                         label: false,
                         row_attr: {
                             class: 'mb-3'
