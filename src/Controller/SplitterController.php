@@ -321,10 +321,8 @@ class SplitterController extends AbstractController
 
         $this->checkEditAccess($splitter);
 
-
         /* @var ?User $user */
         $user = $this->getUser();
-        //dd($splitter->getOwner(), $user->getAppUser(), $this->isGranted('ROLE_ADMIN'));
         if ($splitter->getOwner() !== $user->getAppUser() && !$this->isGranted('ROLE_ADMIN')) {
 //            $this->addFlash('danger', '🤨 Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
 //            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
