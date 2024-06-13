@@ -38,7 +38,9 @@
     text-align: center;
   }
   .info-user{
+    position: relative;
     display: flex;
+    gap: 1rem;
     align-items: center;
     color: $light;
     width:auto;
