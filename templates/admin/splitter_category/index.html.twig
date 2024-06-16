@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SplitterCategory index{% endblock %}
+
+{% block body %}
+
+    <main class="container-xl">
+        <h1>SplitterCategory index</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for splitter_category in splitter_categories %}
+                <tr>
+                    <td>{{ splitter_category.id }}</td>
+                    <td>{{ splitter_category.name }}</td>
+                    <td>
+                        <a href="{{ path('admin_app_splitter_category_show', {'id': splitter_category.id}) }}">show</a>
+                        <a href="{{ path('admin_app_splitter_category_edit', {'id': splitter_category.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('admin_app_splitter_category_new') }}">Create new</a>
+
+
+
+    </main>
+
+{% endblock %}
