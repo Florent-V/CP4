@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SplitterCategory{% endblock %}
+
+{% block body %}
+
+    <main class="container-xl">
+        <h1>Create new SplitterCategory</h1>
+
+        {{ include('admin/splitter_category/_form.html.twig') }}
+
+        <a href="{{ path('admin_app_splitter_category_index') }}">back to list</a>
+    </main>
+{% endblock %}

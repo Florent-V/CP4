@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SplitterCategory{% endblock %}
+
+{% block body %}
+    <main class="container-md">
+        <h1>Edit SplitterCategory</h1>
+
+        {{ include('admin/splitter_category/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('admin_app_splitter_category_index') }}">back to list</a>
+
+        {{ include('admin/splitter_category/_delete_form.html.twig') }}
+    </main>
+
+{% endblock %}
