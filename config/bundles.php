@@ -20,4 +20,5 @@ return [
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
     Symfonycasts\SassBundle\SymfonycastsSassBundle::class => ['all' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
+    SpomkyLabs\PwaBundle\SpomkyLabsPwaBundle::class => ['all' => true],
 ];

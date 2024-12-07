@@ -67,6 +67,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "spomky-labs/pwa-bundle": {
+        "version": "1.2.4"
+    },
     "squizlabs/php_codesniffer": {
         "version": "3.7",
         "recipe": {

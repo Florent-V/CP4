@@ -41,6 +41,25 @@ class UserFixtures extends Fixture
         $manager->persist($admin);
         $this->addReference('admin', $admin);
 
+        $admin = new User();
+        $appUser = new AppUser();
+        $admin->setPseudo('Flo');
+        $admin->setFirstName('Florent');
+        $admin->setLastName('Vasseur');
+        $admin->setEmail('vasseurflorent@gmail.com');
+        $admin->setPhone($faker->phoneNumber());
+        $admin->setIsVerified(true);
+        $admin->setRoles((array)'ROLE_USER');
+        $admin->setAppUser($appUser);
+
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $admin,
+            'password'
+        );
+        $admin->setPassword($hashedPassword);
+
+        $manager->persist($admin);
+
         for ($i = 1; $i <= 6; $i++) {
             self::$userIndex++;
             $user = new User();

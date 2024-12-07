@@ -45,7 +45,7 @@ class ExpenseController extends AbstractController
      * @param Splitter $splitter
      * @throws AccessDeniedException Si l'utilisateur n'a pas accès
      */
-    private function rejectIfNotMember(Splitter $splitter): void
+    private function rejectIfNotMember(Splitter $splitter): ?User
     {
         /**
          * @var ?User $user
@@ -54,6 +54,7 @@ class ExpenseController extends AbstractController
         if (!$user->getAppUser()->getFavoriteSplitters()->contains($splitter) && !$this->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException('Accès non autorisé à cette ressource.');
         }
+        return $user;
     }
     #[Route(
         '/new',
@@ -70,7 +71,7 @@ class ExpenseController extends AbstractController
         ExpenseRepository $expenseRepository
     ): Response {
 
-        $this->rejectIfNotMember($splitter);
+        $user = $this->rejectIfNotMember($splitter);
         $expense = new Expense();
         $form = $this->createForm(ExpenseType::class, $expense, [
             'splitter' => $splitter
@@ -78,6 +79,7 @@ class ExpenseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $expense->setAddedBy($user->getAppUser());
             $expense->setSplitter($splitter);
             $expense->setCreatedAt(new DateTime('now'));
             $expense->setDevise('€');
