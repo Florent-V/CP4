@@ -12,7 +12,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - 3308:3306
+      - 3307:3306
     networks:
       - symfony_app
   php:
@@ -34,7 +34,7 @@ services:
       - symfony_app_var:/var/www/symfony/var
       - symfony_app_vendor:/var/www/symfony/vendor
     ports:
-      - 8080:80
+      - 80:80
     networks:
       - symfony_app
     env_file:

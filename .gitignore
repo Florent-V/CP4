@@ -36,3 +36,9 @@ phpstan.neon
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> symfony/pwa ###
+/public/site.webmanifest
+/public/sw.js
+/public/workbox/
+###< symfony/pwa ###
