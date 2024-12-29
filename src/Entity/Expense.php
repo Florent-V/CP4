@@ -61,7 +61,7 @@ class Expense
     #[ORM\JoinColumn(nullable: false)]
     private ?Member $paidBy = null;
 
-    #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'expenses')]
+    #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'expenses', fetch: 'EAGER')]
     #[Assert\Count(
         min: 1,
         minMessage: 'Vous devez avoir au moins un bénéficiare pour la dépense.'
