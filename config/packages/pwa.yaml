@@ -4,9 +4,9 @@ pwa:
     enabled: true
     background_color: "#c026d3"
     theme_color: "#c026d3"
-    name: 'MVP Office Supplies'
+    name: 'Kopeck'
     short_name: 'mvp-office'
-    description: 'SymfonyCast Stimulus Tutorial as a PWA '
+    description: 'Systeme de gestion de compte entre proches'
     orientation: "any"
     display: "standalone"
     scope: "/"
