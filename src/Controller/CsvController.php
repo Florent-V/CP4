@@ -92,8 +92,8 @@ class CsvController extends AbstractController
 //            }
         }
 
-        dump('type of jsonResult', gettype($jsonResult));
-        dump('type of jsonResultString', gettype($jsonResultString));
+        // dump('type of jsonResult', gettype($jsonResult));
+        // dump('type of jsonResultString', gettype($jsonResultString));
 
         return $this->render('csv/upload.html.twig', [
             'jsonResult' => $jsonResultString,
