@@ -26,6 +26,7 @@ class Expense
     use TimestampableEntity;
     use BlameableEntity;
     use SoftDeleteableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
