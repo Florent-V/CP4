@@ -6,6 +6,8 @@ stof_doctrine_extensions:
         default:
             timestampable: true
             blameable: true
+            loggable: true
             softdeleteable: true
     class:
         blameable: Gedmo\Blameable\BlameableListener
+        loggable: Gedmo\Loggable\LoggableListener

@@ -81,7 +81,6 @@ class ExpenseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $expense->setAddedBy($user->getAppUser());
             $expense->setSplitter($splitter);
-            $expense->setCreatedAt(new DateTime('now'));
             $expense->setDevise('€');
             $expenseRepository->save($expense, true);
 

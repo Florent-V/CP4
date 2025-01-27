@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\BlameableEntity;
 use App\Repository\ExpenseRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,26 +12,34 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Mapping\Annotation\SoftDeleteable;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: ExpenseRepository::class)]
+#[Gedmo\Loggable]
+#[SoftDeleteable]
 #[Vich\Uploadable]
 class Expense
 {
+    use TimestampableEntity;
+    use BlameableEntity;
+    use SoftDeleteableEntity;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Gedmo\Versioned]
     private ?string $name = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $createdAt = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $madeAt = null;
 
     #[ORM\Column]
+    #[Gedmo\Versioned]
     private ?float $amount = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -42,9 +51,6 @@ class Expense
         mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
     )]
     private ?File $pictureFile = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?Datetime $updatedAt = null;
 
     #[ORM\Column(length: 5)]
     private ?string $devise = null;
