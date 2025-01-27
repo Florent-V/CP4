@@ -19,8 +19,8 @@
                                     <strong>{{ key }}:</strong>
                                     {% if value is iterable %}
                                         <ul>
-                                            {% for subKey, subValue in value %}
-                                                <li><strong>{{ subKey }}:</strong> {{ subValue }}</li>
+                                            {% for sub_key, sub_value in value %}
+                                                <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
                                             {% endfor %}
                                         </ul>
                                     {% else %}
@@ -49,8 +49,8 @@
                                     <strong>{{ key }}:</strong>
                                     {% if value is iterable %}
                                         <ul>
-                                            {% for subKey, subValue in value %}
-                                                <li><strong>{{ subKey }}:</strong> {{ subValue }}</li>
+                                            {% for sub_key, sub_value in value %}
+                                                <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
                                             {% endfor %}
                                         </ul>
                                     {% else %}
@@ -66,8 +66,6 @@
         {% else %}
             <p>Aucun historique pour les expenses associées.</p>
         {% endif %}
-
-
 
         <a href="{{ path('app_splitter_show', { id: splitter.id }) }}">Retour au Splitter</a>
     </main>
