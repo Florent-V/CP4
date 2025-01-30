@@ -81,6 +81,8 @@ class Expense
     public function __construct()
     {
         $this->beneficiaries = new ArrayCollection();
+        $this->setCreatedAt(new DateTime());
+        $this->setUpdatedAt(new DateTime());
     }
 
     public function getId(): ?int
@@ -102,17 +104,6 @@ class Expense
         return $this;
     }
 
-    public function getUpdatedAt(): ?Datetime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?Datetime $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -121,18 +112,6 @@ class Expense
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTime $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
