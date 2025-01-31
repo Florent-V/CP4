@@ -10,6 +10,7 @@
             <h1 class="m-0">{{ splitter.name }}</h1>
 
             <div class="d-flex align-items-center gap-4">
+
                 {% if not app.user or (splitter not in app.user.appUser.favoriteSplitters)  %}
                     <div>
                         <button type="button" class="btn btn-info">
@@ -36,6 +37,10 @@
                                 title="Supprimer le groupe"
                         />
                     {% endif %}
+                    <a class="nav-link" href="{{ path('app_splitter_show_history', {'id': splitter.id}) }}" title="Voir historique">
+                        {{ ux_icon('material-symbols:history', {height: '1.3rem', width: '1.3rem', 'aria-hidden': true}) }}
+                    </a>
+
                     <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
                         <i class="bi bi-arrow-return-left"></i>
                     </a>
