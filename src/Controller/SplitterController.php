@@ -126,7 +126,6 @@ class SplitterController extends AbstractController
         ]);
     }
 
-
     #[Route(
         '/{id}/history',
         name: 'app_splitter_show_history',
