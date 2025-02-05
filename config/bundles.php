@@ -22,4 +22,5 @@ return [
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     SpomkyLabs\PwaBundle\SpomkyLabsPwaBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
+    Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
 ];
