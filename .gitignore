@@ -1,8 +1,10 @@
 ###> symfony/framework-bundle ###
+/.env
 /.env.local
 /.env.prod
 /.env.local.php
 /.env.*.local
+/docker/.env
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /public/images/profil/
@@ -35,3 +37,9 @@ phpstan.neon
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> symfony/pwa ###
+/public/site.webmanifest
+/public/sw.js
+/public/workbox/
+###< symfony/pwa ###

@@ -1,0 +1,28 @@
+{# templates/csv/upload.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Charger un fichier CSV{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Charger un fichier CSV</h1>
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+
+        <form method="post" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label for="csv_file" class="form-label">Fichier CSV</label>
+                <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Charger</button>
+        </form>
+
+        {% if jsonResult %}
+            <h2 class="mt-4">Résultat JSON</h2>
+            <pre class="p-3 border rounded">{{ jsonResult }}</pre>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique de {{ splitter.name }}{% endblock %}
+
+{% block body %}
+
+    <main class="splitterView container-xl">
+        <h1>Historique de {{ splitter.name }}</h1>
+
+        <h2>Historique du groupe :</h2>
+        {% if splitterLogs is not empty %}
+            <ul>
+                {% for log in splitterLogs %}
+                    <li>
+                        <strong>{{ log.action }}</strong> ({{ log.loggedAt|date('d/m/Y H:i') }}) :
+                        <ul>
+                            {% for key, value in log.data %}
+                                <li>
+                                    <strong>{{ key }}:</strong>
+                                    {% if value is iterable %}
+                                        <ul>
+                                            {% for sub_key, sub_value in value %}
+                                                <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        {{ value }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun log pour ce splitter.</p>
+        {% endif %}
+
+        <h2>Historique des dépenses associées</h2>
+        {% if expenseLogs is not empty %}
+            <ul>
+                {% for log in expenseLogs %}
+                    <li>
+                        <strong>{{ log.action }}</strong> ({{ log.loggedAt|date('d/m/Y H:i') }}) :
+                        dépense : {{ log.expenseName }} ({{ log.expenseAmount ~ log.expenseDevise }})
+                        <ul>
+                            {% for key, value in log.data %}
+                                <li>
+                                    <strong>{{ key }}:</strong>
+                                    {% if value is iterable %}
+                                        <ul>
+                                            {% for sub_key, sub_value in value %}
+                                                <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        {{ value }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun historique pour les expenses associées.</p>
+        {% endif %}
+
+        <a href="{{ path('app_splitter_show', {id: splitter.id}) }}">Retour au Splitter</a>
+    </main>
+
+{% endblock %}

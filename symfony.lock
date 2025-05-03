@@ -67,6 +67,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "spomky-labs/pwa-bundle": {
+        "version": "1.2.4"
+    },
     "squizlabs/php_codesniffer": {
         "version": "3.7",
         "recipe": {
@@ -77,6 +80,18 @@
         },
         "files": [
             "phpcs.xml.dist"
+        ]
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.13",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.2",
+            "ref": "e805aba9eff5372e2d149a9ff56566769e22819d"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
     "symfony/asset-mapper": {
@@ -305,6 +320,18 @@
             "ref": "0df5844274d871b37fc3816c57a768ffc60a43a5"
         },
         "files": []
+    },
+    "symfony/ux-icons": {
+        "version": "2.22",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.17",
+            "ref": "803a3bbd5893f9584969ab8670290cdfb6a0a5b5"
+        },
+        "files": [
+            "assets/icons/symfony.svg"
+        ]
     },
     "symfony/ux-live-component": {
         "version": "2.12",

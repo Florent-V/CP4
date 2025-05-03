@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Expense;
 use App\Entity\Member;
 use App\Entity\Splitter;
 use App\Entity\User;
 use App\Form\JoinSplitterType;
 use App\Form\ShareSplitterType;
 use App\Form\SplitterType;
+use App\Repository\LogEntryRepository;
 use App\Repository\SplitterRepository;
 use App\Service\BalanceCalculator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -121,6 +123,35 @@ class SplitterController extends AbstractController
             'splitter' => $splitter,
             'balancePerId' => $balancePerId,
             'transfers' => $transfers,
+        ]);
+    }
+
+    #[Route(
+        '/{id}/history',
+        name: 'app_splitter_show_history',
+        requirements: [
+            'id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        ],
+        methods: ['GET']
+    )]
+    public function showHistory(
+        Splitter $splitter,
+        LogEntryRepository $logEntryRepository,
+    ): Response {
+
+        $this->checkReadAccess($splitter);
+
+        // Récupérer les logs du Splitter
+        $splitterLogs = $logEntryRepository->findLogsWithUserInfoBySplitterId($splitter->getId());
+
+        // Récupérer les logs des Expenses associées
+        $expenseIds = $splitter->getExpenses()->map(fn($expense) => $expense->getId())->toArray();
+        $expenseLogs = $logEntryRepository->findLogsForMultipleEntities(Expense::class, $expenseIds);
+
+        return $this->render('splitter/history.html.twig', [
+            'splitter' => $splitter,
+            'splitterLogs' => $splitterLogs,
+            'expenseLogs' => $expenseLogs
         ]);
     }
 

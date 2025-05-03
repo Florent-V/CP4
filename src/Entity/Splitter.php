@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\BlameableEntity;
 use App\Repository\SplitterRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -11,10 +13,20 @@ use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Mapping\Annotation\SoftDeleteable;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: SplitterRepository::class)]
+#[Gedmo\Loggable]
+#[SoftDeleteable]
 class Splitter
 {
+    use TimestampableEntity;
+    use BlameableEntity;
+    use SoftDeleteableEntity;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -22,6 +34,7 @@ class Splitter
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Gedmo\Versioned]
     #[Assert\NotBlank]
     #[Assert\Length(
         min: 5,
@@ -38,6 +51,7 @@ class Splitter
     private ?SplitterCategory $category = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Versioned]
     private ?string $description = null;
 
     #[ORM\OneToMany(
@@ -70,12 +84,13 @@ class Splitter
     #[ORM\JoinColumn(nullable: false)]
     private ?AppUser $owner = null;
 
-
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
         $this->members = new ArrayCollection();
         $this->favoritedByUsers = new ArrayCollection();
+        $this->setCreatedAt(new DateTime());
+        $this->setUpdatedAt(new DateTime());
     }
 
     public function getId(): ?Uuid
