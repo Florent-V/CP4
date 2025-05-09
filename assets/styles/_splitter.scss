@@ -26,7 +26,7 @@
     #myTab {
         //border-bottom: 0;
         h3 {
-            color: $light;
+            color: var(--color-text);;
         }
         .card-header {
             background-color: transparent;

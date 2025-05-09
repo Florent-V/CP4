@@ -13,6 +13,7 @@ class SplitterCategoryType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('icon')
         ;
     }
 

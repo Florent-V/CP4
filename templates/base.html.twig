@@ -16,6 +16,7 @@
         {% endblock %}
         {{ pwa() }}
     {% endblock %}
+
 </head>
 <header>
     {# Flash Message #}
@@ -31,7 +32,6 @@
     {% endblock %}
 </header>
 <body
-        data-bs-theme=dark
         {{ stimulus_controller('deleteAlert') }}
 >
 {% block body %}{% endblock %}

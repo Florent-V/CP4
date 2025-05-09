@@ -14,5 +14,6 @@ import './bootstrap.js';
 //Icons From Bootstrap
 //Bootstrap https://getbootstrap.com/
 import './vendor/bootstrap/bootstrap.index.js';
+import './ui-toggles.js';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

@@ -1,4 +1,35 @@
 // customize some Bootstrap variables
 
-$dark: #212121;
-$light: #DDDDDD;
+// Thèmes modernes avec accents de couleur
+:root {
+  /* Light Theme */
+  --color-bg: #f7f9fb;
+  --color-bg-alt: #e4ecfa;
+  --color-text: #23272f;
+  --color-primary: #3a8dde;
+  --color-primary-hover: #256bb5;
+  --color-secondary: #38c6a6;
+  --color-secondary-hover: #2a9c82;
+  --color-accent: #f7b32b;
+  --color-card: #ffffff;
+  --color-border: #dbeafe;
+  --color-navbar: #f7f9fb;
+  --color-navbar-text: #23272f;
+}
+[data-theme="dark"] {
+  --color-bg: #1a2233;
+  --color-bg-alt: #232c43;
+  --color-text: #e2e6ee;
+  --color-primary: #7c5fff;
+  --color-primary-hover: #5736b5;
+  --color-secondary: #3a8dde;
+  --color-secondary-hover: #256bb5;
+  --color-accent: #f7b32b;
+  --color-card: #232c43;
+  --color-border: #343d5b;
+  --color-navbar: #232c43;
+  --color-navbar-text: #e2e6ee;
+}
+[data-theme="light"] {
+  /* Pour forcer le light si besoin */
+}
