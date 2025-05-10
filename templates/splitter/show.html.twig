@@ -4,10 +4,38 @@
 
 {% block body %}
 
-    <main class="splitterView container-md">
+    <main
+            {{ stimulus_controller('splitterTabs') }}
+            class="splitterView container-md"
+    >
         <!-- Header : title + icons -->
         <div class="d-flex justify-content-between align-items-center my-3">
             <h1 class="m-0">{{ splitter.name }}</h1>
+            <div class="splitter-header d-flex justify-content-between align-items-center mb-4">
+                <h1 class="splitter-title">{{ splitter.name }}</h1>
+                <div class="dropdown action-menu">
+                    <button class="btn btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical fs-3"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="#">
+                                <i class="bi bi-pencil"></i> <span>Modifier</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="#">
+                                <i class="bi bi-people"></i> <span>Gérer les membres</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="#">
+                                <i class="bi bi-trash"></i> <span>Supprimer</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
             <div class="d-flex align-items-center gap-4">
 
@@ -75,7 +103,7 @@
         {% endif %}
 
         <p>
-            Membres :
+            XMembres :
             {% for member in splitter.members %}
                 {{ member.nickname }}{% if not loop.last %}, {% endif %}
             {% endfor %}
@@ -84,95 +112,157 @@
         <p>Description : {{ splitter.description }}</p>
 
 
-        <ul class="nav nav-tabs d-flex" id="myTab" role="tablist">
-            <li class="card nav-item" role="presentation">
-                <a class="nav-link active p-0" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">
-                    <div class="card-header">
-                        <h3 class="card-title">Dépenses</h3>
-                    </div>
-                </a>
-            </li>
-            <li class="card nav-item" role="presentation">
-                <a class="nav-link p-0" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">
-                    <div class="card-header">
-                        <h3 class="card-title">Balance</h3>
-                    </div>
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
+{#        <ul class="nav nav-tabs d-flex" id="myTab" role="tablist">#}
+{#            <li class="card nav-item" role="presentation">#}
+{#                <a class="nav-link active p-0" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">#}
+{#                    <div class="card-header">#}
+{#                        <h3 class="card-title">Dépenses</h3>#}
+{#                    </div>#}
+{#                </a>#}
+{#            </li>#}
+{#            <li class="card nav-item" role="presentation">#}
+{#                <a class="nav-link p-0" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">#}
+{#                    <div class="card-header">#}
+{#                        <h3 class="card-title">Balance</h3>#}
+{#                    </div>#}
+{#                </a>#}
+{#            </li>#}
+{#        </ul>#}
+{#        <div class="tab-content" id="myTabContent">#}
 
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                <div class="expenseCard">
-                    <div class="card mb-4">
-                        <ul class="list-group list-group-flush">
-                            {% for expense in splitter.expenses|sort((a, b) => b.madeAt <=> a.madeAt) %}
-                                <li class="list-group-item expenseItemList">
-                                    <div class="expenseDate">
-                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
-                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
-                                    </div>
-                                    <div class="expenseInfos flex-grow-1">
-                                        <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
-                                        <p>
-                                            <i class="bi bi-person-fill"></i>Bénéficiaires :
-                                            {% for beneficiary in expense.beneficiaries %}
-                                                <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}
-                                            {% endfor %}
-                                        </p>
-                                    </div>
-                                    <div class="expenseAmount">
-                                        <span>{{ expense.amount ~ expense.devise }}</span>
-                                    </div>
-                                    <a class="linkExpense" href="{{ path(('app_expense_show'), {'expense_id': expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+{#            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">#}
+{#                <div class="expenseCard">#}
+{#                    <div class="card mb-4">#}
+{#                        <ul class="list-group list-group-flush">#}
+{#                            {% for expense in splitter.expenses|sort((a, b) => b.madeAt <=> a.madeAt) %}#}
+{#                                <li class="list-group-item expenseItemList">#}
+{#                                    <div class="expenseDate">#}
+{#                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>#}
+{#                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>#}
+{#                                    </div>#}
+{#                                    <div class="expenseInfos flex-grow-1">#}
+{#                                        <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>#}
+{#                                        <p>#}
+{#                                            <i class="bi bi-person-fill"></i>Bénéficiaires :#}
+{#                                            {% for beneficiary in expense.beneficiaries %}#}
+{#                                                <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                        </p>#}
+{#                                    </div>#}
+{#                                    <div class="expenseAmount">#}
+{#                                        <span>{{ expense.amount ~ expense.devise }}</span>#}
+{#                                    </div>#}
+{#                                    <a class="linkExpense" href="{{ path(('app_expense_show'), {'expense_id': expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>#}
+{#                                </li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+
+{#            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">#}
+{#                <div class="balanceCard">#}
+{#                    <div class="card mb-4">#}
+{#                        <ul class="list-group list-group-flush">#}
+{#                            {% for member in splitter.members %}#}
+{#                                <li class="list-group-item balanceItemList">#}
+{#                                    <div class="memberName">#}
+{#                                        <p>{{ member.nickname }}</p>#}
+{#                                    </div>#}
+{#                                    <div>#}
+{#                                        <span class="badge {{ balancePerId[member.id] < 0 ? "bg-warning text-dark" : "bg-success" }}">{{ balancePerId[member.id]|round(2) }}€</span>#}
+{#                                    </div>#}
+{#                                </li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+
+{#                <div class="balanceCard">#}
+{#                    <div class="card mb-4">#}
+{#                        <div class="card-header">#}
+{#                            <h3 class="card-title">Régler les dettes !</h3>#}
+{#                        </div>#}
+{#                        <ul class="list-group list-group-flush">#}
+{#                            {% for transfer in transfers %}#}
+{#                                <li class="list-group-item d-flex align-items-center gap-3">#}
+{#                                    <div class="memberName py-1">#}
+{#                                        <p class="m-0">#}
+{#                                            <span class="fw-bold">{{ transfer['from'].nickname }}</span>#}
+{#                                            doit#}
+{#                                            <span class="text-decoration-underline">{{ transfer['amount']|round(2) }}€</span>#}
+{#                                            à#}
+{#                                            <span class="fw-bold">{{ transfer['to'].nickname }}</span>#}
+{#                                        </p>#}
+{#                                    </div>#}
+{#                                </li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+        <div class="custom-tabs">
+            <div class="d-flex tab-header">
+                <div class="flex-fill tab factive" data-tab="depenses">Dépenses</div>
+                <div class="flex-fill tab" data-tab="balances">Balances</div>
+                <div class="flex-fill tab" data-tab="photos">Photos</div>
             </div>
-
-            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-                <div class="balanceCard">
-                    <div class="card mb-4">
-                        <ul class="list-group list-group-flush">
-                            {% for member in splitter.members %}
-                                <li class="list-group-item balanceItemList">
-                                    <div class="memberName">
-                                        <p>{{ member.nickname }}</p>
-                                    </div>
-                                    <div>
-                                        <span class="badge {{ balancePerId[member.id] < 0 ? "bg-warning text-dark" : "bg-success" }}">{{ balancePerId[member.id]|round(2) }}€</span>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
+            <div class="tab-content">
+                <div id="depenses" class="tab-pane active">
+                    <div class="expense-header">
+                        <div class="total-user">Total des dépenses utilisateur: 100€</div>
+                        <div class="total-group">Total des dépenses groupe: 500€</div>
+                    </div>
+                    <div class="expense-list">
+                        <div class="expense-date">Janvier 2023</div>
+                        <div class="expense-card">
+                            <div class="expense-title">Titre de la dépense</div>
+                            <div class="expense-payer">Payé par: Utilisateur</div>
+                            <div class="expense-amount">100€</div>
+                        </div>
+                        <!-- Ajoutez d'autres cartes de dépenses ici -->
                     </div>
                 </div>
-
-                <div class="balanceCard">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h3 class="card-title">Régler les dettes !</h3>
+                <div id="balances" class="tab-pane">
+                    <div class="balance-list">
+                        <div class="balance-card">
+                            <div class="member-name">Utilisateur 1</div>
+                            <div class="balance-amount">100€</div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            {% for transfer in transfers %}
+                        <!-- Ajoutez d'autres cartes de balance ici -->
+                    </div>
+                    <div class="settle-debts">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3 class="card-title">Régler les dettes !</h3>
+                            </div>
+                            <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex align-items-center gap-3">
                                     <div class="memberName py-1">
                                         <p class="m-0">
-                                            <span class="fw-bold">{{ transfer['from'].nickname }}</span>
+                                            <span class="fw-bold">Utilisateur 1</span>
                                             doit
-                                            <span class="text-decoration-underline">{{ transfer['amount']|round(2) }}€</span>
+                                            <span class="text-decoration-underline">50€</span>
                                             à
-                                            <span class="fw-bold">{{ transfer['to'].nickname }}</span>
+                                            <span class="fw-bold">Utilisateur 2</span>
                                         </p>
                                     </div>
                                 </li>
-                            {% endfor %}
-                        </ul>
+                                <!-- Ajoutez d'autres éléments de dette ici -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="photos" class="tab-pane">
+                    <div class="photo-placeholder">
+                        <!-- Placeholder pour les photos -->
+                        <p>Les photos seront affichées ici.</p>
                     </div>
                 </div>
             </div>
         </div>
+
+    </main>
 
 {% endblock %}
