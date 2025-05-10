@@ -1,35 +1,23 @@
-<div
-        {{ attributes }}
->
+<div {{ attributes }}>
     {{ form_start(form) }}
 
     {{ form_errors(form) }}
 
     {{ form_row(form.name, {
-        label: 'Nom du groupe',
-        attr: {
-            placeholder: 'Voyage à ...',
-            class: 'text-light'
-        },
         row_attr: {
-            class: 'form-floating mb-3 text-light'
+            class: 'form-floating mb-3'
         }
     }) }}
 
     {{ form_row(form.description, {
-        label: 'Description du groupe',
-        attr: {
-            placeholder: 'Groupe pour le voyage à ...'
-        },
         row_attr: {
-            class: 'form-floating mb-3 text-light'
+            class: 'form-floating mb-3'
         }
     }) }}
 
     {{ form_row(form.category, {
-        label: 'Catégorie',
         row_attr: {
-            class: 'form-floating mb-3 text-light'
+            class: 'form-floating mb-3'
         }
     }) }}
 
@@ -68,8 +56,11 @@
         {% endfor %}
 
     {{ form_errors(form.members) }}
-    {{ form_widget(form.members.vars.button_add, {label: '+ Ajouter un membre', attr: {class: 'btn btn-outline-primary'}}) }}
+    {{ form_widget(form.members.vars.button_add, {label: '+ Ajouter un membre', attr: {class: 'btn btn-outline-primary plus-btn'}}) }}
 
-    <button type="submit" class="btn btn-success" formnovalidate>{{ this.buttonLabel|default('Créer') }}</button>
+    <div class="centerBtn mt-4">
+        <button type="submit" class="btn btn-success valid-btn" formnovalidate>{{ this.buttonLabel|default('Créer') }}</button>
+    </div>
+
     {{ form_end(form) }}
 </div>
