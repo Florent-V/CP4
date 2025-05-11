@@ -171,9 +171,10 @@ class ExpenseController extends AbstractController
         ExpenseRepository $expenseRepository
     ): Response {
 
+
         $this->rejectIfNotAdmin($splitter, $expense);
 
-        if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $expense->getId(), $request->request->get('_token'))) {
             $expenseRepository->remove($expense, true);
         }
 

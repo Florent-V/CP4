@@ -8,52 +8,8 @@
         {{ stimulus_controller('splitterTabs') }}
         class="splitterView container-md"
     >
-        {#        <div class="d-flex align-items-center gap-4"> #}
 
-        {#            {% if not app.user or (splitter not in app.user.appUser.favoriteSplitters) %} #}
-        {#                <div> #}
-        {#                    <button type="button" class="btn btn-info"> #}
-        {#                        <a class="nav-link" href="{{ path('app_splitter_join', {'id': splitter.id}) }}" #}
-        {#                           title="Rejoindre">Rejoindre</a> #}
-        {#                    </button> #}
-        {#                </div> #}
-        {#            {% endif %} #}
-        {#            {% if app.user %} #}
-        {#                {% if splitter in app.user.appUser.favoriteSplitters %} #}
-        {#                    <a class="nav-link" href="{{ path('app_splitter_leave', {'id': splitter.id}) }}" #}
-        {#                       title="Quitter le Splitter"><i class="bi bi-box-arrow-right"></i></a> #}
-        {#                {% endif %} #}
-
-        {#                <a class="nav-link" href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}" #}
-        {#                   title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a> #}
-
-        {#                <div style="cursor:pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#shareModal"> #}
-        {#                    <i class="bi bi-share-fill"></i> #}
-        {#                </div> #}
-
-        {#                {% if splitter.owner == app.user.appUser %} #}
-        {#                    <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" #}
-        {#                       title="Editer le splitter"><i class="bi bi-pencil-square"></i></a> #}
-        {#                    <twig:Form:DeleteForm #}
-        {#                            entity='splitter' #}
-        {#                            id='{{ splitter.id }}' #}
-        {#                            title="Supprimer le groupe" #}
-        {#                    /> #}
-        {#                {% endif %} #}
-        {#                <a class="nav-link" href="{{ path('app_splitter_show_history', {'id': splitter.id}) }}" #}
-        {#                   title="Voir historique"> #}
-        {#                    {{ ux_icon('material-symbols:history', {height: '1.3rem', width: '1.3rem', 'aria-hidden': true}) }} #}
-        {#                </a> #}
-
-        {#                <a class="nav-link" href="{{ path('app_home') }}" title="Retour home"> #}
-        {#                    <i class="bi bi-arrow-return-left"></i> #}
-        {#                </a> #}
-
-        {#            {% endif %} #}
-        {#        </div> #}
         <!-- Header : title + icons -->
-
-        {#            <h1 class="m-0">{{ splitter.name }}</h1> #}
         <div class="splitter-header d-flex justify-content-between align-items-center my-4">
             <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
                 <twig:ux:icon name="ep:back" height="24" width="24"/>
@@ -177,7 +133,7 @@
             <div class="tab-content">
                 <div id="depenses" class="tab-pane active">
                     <div class="expense-header">
-                        <div class="total-user">Total des dépenses utilisateur: Soon... }€</div>
+                        <div class="total-user">Total des dépenses utilisateur: Soon... </div>
                         <div class="total-group">Total des dépenses groupe: {{ groupTotal }}€</div>
                     </div>
 

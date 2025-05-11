@@ -5,7 +5,8 @@
         onsubmit="return confirm('Etes-vous sur de vouloir supprimer cette depense ?');"
 >
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ expense.id) }}">
-    <button class="btn btn-icon p-0 d-flex gap-2">
+    <button class="dropdown-item btn btn-icon p-0 d-flex gap-2">
         <twig:ux:icon name="mdi:trash-can-outline" height="24" width="24" />
+        <span>Supprimer</span>
     </button>
 </form>
