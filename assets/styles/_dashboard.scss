@@ -128,23 +128,6 @@
     }
 
   }
-
-  #addSplitterBtn {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 99;
-    cursor: pointer;
-    transition: transform 0.5s ease-in-out;
-
-    a {
-      box-shadow: 0 0 20px 1px #48abe0;
-    }
-
-    &:hover {
-      transform: scale(1.5);
-    }
-  }
 }
 
 .expenseItemList {

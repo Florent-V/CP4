@@ -71,9 +71,10 @@
 
         <div class="container d-flex justify-content-center">{{ knp_pagination_render(splitters) }}</div>
 
-        <div id="addSplitterBtn">
-            <a class="btn btn-primary rounded-circle" href="{{ path('app_splitter_new') }}">
-                <i class="bi bi-plus-lg"></i>
+        <div class="floating-add-button">
+            <a class="add-button d-flex align-items-center gap-2" title="ajouter une dépense"
+               href="{{ path('app_splitter_new') }}">
+                <twig:ux:icon name="material-symbols:add-rounded" height="40" width="40"/>
             </a>
         </div>
 

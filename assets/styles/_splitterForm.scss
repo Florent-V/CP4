@@ -1,13 +1,12 @@
 // Style moderne, responsive, et compatible thème dark/light pour le formulaire Splitter
-.splitterForm {
+.splitterForm, .expenseForm {
   background: var(--color-bg-panel);
   color: var(--color-text);
-  border-radius: 1.2rem;
   box-shadow: 0 6px 24px 0 rgba(60,60,100,0.08), 0 1.5px 8px 0 var(--color-primary);
   padding: 2.5rem 2.5rem 2rem 2.5rem;
-  margin: 2rem auto;
   max-width: 600px;
   transition: background 0.3s, color  0.3s;
+  min-height: 100vh;
 
   h1 {
     color: var(--color-text);
@@ -59,7 +58,7 @@
   .form-floating > .form-select,
   .form-control,
   .form-select {
-    background: var(--color-bg-input) !important;
+    background: var(--color-bg-alt) !important;
     color: var(--color-text) !important;
     border-radius: 0.7rem;
     border: 1px solid var(--color-border);
@@ -150,6 +149,13 @@
   .form-floating > label::after {
     background: transparent !important;
     box-shadow: none !important;
+  }
+
+  .input-group {
+    input::placeholder {
+      color: var(--color-text);
+      opacity: 1;
+    }
   }
 
   .corbeille {

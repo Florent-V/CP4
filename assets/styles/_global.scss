@@ -71,3 +71,31 @@ table {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.floating-add-button {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* Assure que le bouton est au-dessus de tout le contenu */
+}
+
+.add-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: 0 6px 12px rgba(124, 95, 255, 0.6);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button:hover {
+  background-color: var(--color-primary-hover);
+  color: var(--color-bg);
+}

@@ -6,10 +6,11 @@
 
     <main class="container-md splitterForm">
 
-        <h1 class="text-center my-4">Ajouter un nouveau groupe</h1>
-
-        <div class="mb-2">
-            <a class="btn btn-primary return-btn" href="{{ path('app_home') }}"><i class="bi bi-arrow-return-left"></i>Retour</a>
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
+                <twig:ux:icon name="ep:back" height="30" width="30"/>
+            </a>
+            <h1 class="text-center my-2">Ajouter un nouveau groupe</h1>
         </div>
 
         {{ component('Form:SplitterForm', {
@@ -19,6 +20,5 @@
         }) }}
 
     </main>
-
 
 {% endblock %}
