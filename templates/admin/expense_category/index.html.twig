@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExpenseCategory index{% endblock %}
+
+{% block body %}
+    <h1>ExpenseCategory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Icon</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for expense_category in expense_categories %}
+            <tr>
+                <td>{{ expense_category.id }}</td>
+                <td>{{ expense_category.name }}</td>
+                <td>{{ expense_category.type }}</td>
+                <td>{{ expense_category.icon }}</td>
+                <td>
+                    <a href="{{ path('admin_app_expense_category_show', {'id': expense_category.id}) }}">show</a>
+                    <a href="{{ path('admin_app_expense_category_edit', {'id': expense_category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_app_expense_category_new') }}">Create new</a>
+{% endblock %}

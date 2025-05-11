@@ -25,7 +25,7 @@ function toggleTheme() {
 // Simple/Complet mode toggle
 const modeBtn = document.getElementById('mode-toggle');
 const modeIcon = document.getElementById('mode-icon');
-const expenseList = document.getElementsByClassName('expense-list');
+const expenseList = document.getElementsByClassName('home-expense-list');
 
 function setMode(mode) {
     localStorage.setItem('sidepanel_mode', mode);

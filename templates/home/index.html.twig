@@ -44,7 +44,7 @@
 
                         </div>
 
-                        <ul class="expense-list list-group list-group-flush">
+                        <ul class="home-expense-list list-group list-group-flush">
                             {% for expense in split.expenses|sort((a, b) => b.madeAt <=> a.madeAt)|slice(0, 3) %}
                                 <li class="list-group-item expenseItemList">
                                     <div class="expenseDate">
