@@ -14,7 +14,10 @@
             <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
                 <twig:ux:icon name="ep:back" height="24" width="24"/>
             </a>
-            <h1 class="splitter-title">{{ splitter.name }}</h1>
+            <div class="d-flex gap-3 align-items-center">
+                <twig:ux:icon name="{{ splitter.category.icon }}" height="50" width="50" aria-hidden="true" />
+                <h1 class="splitter-title">{{ splitter.name }}</h1>
+            </div>
             <div class="dropdown action-menu">
                 <button class="btn btn-icon p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <twig:ux:icon name="pepicons-pencil:dots-y" height="24" width="24"/>

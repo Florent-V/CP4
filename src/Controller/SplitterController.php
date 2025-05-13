@@ -136,7 +136,7 @@ class SplitterController extends AbstractController
         // Regrouper les dépenses par date
         $expensesByDate = [];
         foreach ($splitter->getExpenses() as $expense) {
-            $date = $expense->getCreatedAt()->format('Y-m-d');
+            $date = $expense->getMadeAt()->format('Y-m-d');
             if (!isset($expensesByDate[$date])) {
                 $expensesByDate[$date] = [];
             }

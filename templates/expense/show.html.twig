@@ -8,33 +8,14 @@
             class="expenseView container-md"
     >
 
-        <div class="d-flex justify-content-between align-items-center my-3">
-            <h1>{{ expense.name }}</h1>
-
-            <div class="d-flex align-items-center gap-4">
-                {% if splitter.owner == app.user.appUser or expense.addedBy == app.user.appUser %}
-                    <a class="nav-link" href="{{ path('app_expense_edit', {'expense_id': expense.id, 'splitter_id': splitter.id}) }}" title="Editer le groupe"><i class="bi bi-pencil-square"></i></a>
-
-                    <twig:Form:DeleteForm
-                            entity='expense'
-                            id='{{ splitter.id }}'
-                            id2='{{ expense.id }}'
-                            title="Supprimer la dépense"
-                    />
-                {% endif %}
-
-                <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour">
-                    <i class="bi bi-arrow-return-left"></i>
-                </a>
-
-            </div>
-        </div>
-
         <div class="splitter-header d-flex justify-content-between align-items-center my-4">
             <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
                 <twig:ux:icon name="ep:back" height="24" width="24"/>
             </a>
-            <h1 class="splitter-title">{{ expense.name }}</h1>
+            <div class="d-flex gap-3 align-items-center">
+                <twig:ux:icon name="{{ expense.category.icon }}" height="50" width="50" aria-hidden="true" />
+                <h1 class="splitter-title">{{ expense.name }}</h1>
+            </div>
             <div class="dropdown action-menu">
                 <button class="btn btn-icon p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <twig:ux:icon name="pepicons-pencil:dots-y" height="24" width="24"/>

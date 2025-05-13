@@ -1,12 +1,16 @@
 // Style moderne, responsive, et compatible thème dark/light pour le formulaire Splitter
 .splitterForm, .expenseForm {
+  min-height: 100vh;
+  box-shadow: 0 6px 24px 0 rgba(60,60,100,0.08), 0 1.5px 8px 0 var(--color-primary);
+}
+
+.splitterForm, .expenseForm, .sign_form {
   background: var(--color-bg-panel);
   color: var(--color-text);
-  box-shadow: 0 6px 24px 0 rgba(60,60,100,0.08), 0 1.5px 8px 0 var(--color-primary);
   padding: 2.5rem 2.5rem 2rem 2.5rem;
   max-width: 600px;
   transition: background 0.3s, color  0.3s;
-  min-height: 100vh;
+  box-shadow: 0 6px 24px 0 rgba(60,60,100,0.08), 0 1.5px 8px 0 var(--color-primary);
 
   h1 {
     color: var(--color-text);

@@ -8,9 +8,6 @@
   display: flex;
   height: 100vh;
   .sign_card {
-    margin: auto;
-    background-color: darken($dark, 5%);
-    box-shadow: 0 -1px 40px rgba(0,0,0, .12);
     width: 100%;
     .sign_img {
       min-width: 50%;
