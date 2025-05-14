@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Gestion de compte">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}"/>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.core.css" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
     {% block stylesheets %}
     {% endblock %}
@@ -14,7 +15,7 @@
         {% block importmap %}
             {{ importmap('app') }}
         {% endblock %}
-        {{ pwa() }}
+{#        {{ pwa() }}#}
     {% endblock %}
 </head>
 <header>

@@ -1,6 +1,7 @@
 <div
         {{ attributes }}
 >
+    <div {{ stimulus_controller('quillTextareaType') }}>
     {{ form_start(form) }}
 
     {{ form_errors(form) }}
@@ -16,15 +17,15 @@
         }
     }) }}
 
+
     {{ form_row(form.description, {
         label: 'Description du groupe',
         attr: {
-            placeholder: 'Groupe pour le voyage à ...'
-        },
-        row_attr: {
-            class: 'form-floating mb-3 text-light'
+            placeholder: 'Groupe pour le voyage à ...',
+            'data-quillTextareaType-target': 'input',
         }
     }) }}
+    <div data-quillTextareaType-target="editor"></div>
 
     {{ form_row(form.category, {
         label: 'Catégorie',
@@ -72,4 +73,7 @@
 
     <button type="submit" class="btn btn-success" formnovalidate>{{ this.buttonLabel|default('Créer') }}</button>
     {{ form_end(form) }}
+    </div>
+    <!-- Include stylesheet -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.core.js"></script>
 </div>

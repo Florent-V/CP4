@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Splitter;
 use App\Entity\SplitterCategory;
+use App\Form\Type\QuillTextareaType;
 use App\Repository\SplitterCategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -22,10 +23,7 @@ class SplitterType extends AbstractType
                 'label' => 'Nom du splitter',
                 'attr' => ['placeholder' => 'pseudo']
             ])
-            ->add('description', null, [
-                'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
-                'label' => 'Description du splitter',
-                'attr' => ['placeholder' => 'pseudo']
+            ->add('description', QuillTextareaType::class, [
             ])
             ->add('category', EntityType::class, [
                 'class' => SplitterCategory::class,
