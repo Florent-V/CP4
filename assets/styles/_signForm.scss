@@ -1,14 +1,17 @@
 .sign {
+  display: flex;
+  height: 100vh;
+
   .alert {
     position: absolute;
     top: 1rem;
     left: 50%;
     transform: translateX(-50%);
   }
-  display: flex;
-  height: 100vh;
+
   .sign_card {
     width: 100%;
+    margin: auto;
     .sign_img {
       min-width: 50%;
       max-width: 50%;

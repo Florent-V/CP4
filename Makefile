@@ -1,118 +1,192 @@
+# Makefile pour projet Symfony avec Asset Mapper et Docker
+# ------------------------------------------------------
 
+# Variables de configuration
+DOCKER_COMPOSE = docker compose
+SYMFONY = symfony
+CONSOLE = $(SYMFONY) console
+COMPOSER = composer
+# Couleurs pour une meilleure lisibilité
+RESET = \033[0m
+GREEN = \033[32m
+YELLOW = \033[33m
+BLUE = \033[34m
+RED = \033[31m
+
+# -------------- Configuration de l'environnement --------------
+
+# Par défaut, nous utilisons l'environnement de développement
 .DEFAULT_GOAL := help
-.PHONY: init start stop deploy-prod build-prod fixtures
+ENV ?= dev
 
+# -------------- Help --------------
 
-## 🎯 Initialisation complète du projet
-init: ## Init projet : install, db drop/create, migrate, fixtures, assets
-	@echo "🚀 Initialisation complète du projet..."
-	composer install
-	cp -n .env .env.local || true
-	docker compose up -d
-	php bin/console d:d:d -f || true
-	php bin/console d:d:c
-	php bin/console d:m:m --no-interaction
-	php bin/console d:f:l --no-interaction
-	php bin/console sass:build --watch &
-	symfony server:start -d
+help:
+	@echo ""
+	@echo "${BLUE}Makefile pour projet Symfony avec Asset Mapper et Docker${RESET}"
+	@echo "${BLUE}------------------------------------------------------${RESET}"
+	@echo ""
+	@echo "${YELLOW}Usage:${RESET}"
+	@echo "  make [commande]"
+	@echo ""
+	@echo "${YELLOW}Commandes disponibles:${RESET}"
+	@echo "  ${GREEN}setup${RESET}              - Installation initiale du projet"
+	@echo ""
+	@echo "  ${GREEN}start${RESET}              - Démarrer le serveur Symfony et les services Docker"
+	@echo "  ${GREEN}stop${RESET}               - Arrêter le serveur Symfony et les services Docker"
+	@echo "  ${GREEN}restart${RESET}            - Redémarrer le serveur Symfony et les services Docker"
+	@echo ""
+	@echo "  ${GREEN}db-start${RESET}           - Démarrer uniquement les services Docker (DB, mailer)"
+	@echo "  ${GREEN}db-stop${RESET}            - Arrêter uniquement les services Docker"
+	@echo "  ${GREEN}db-status${RESET}          - Vérifier le statut des services Docker"
+	@echo ""
+	@echo "  ${GREEN}install${RESET}            - Installer les dépendances PHP et NPM"
+	@echo "  ${GREEN}update${RESET}             - Mettre à jour les dépendances PHP et NPM"
+	@echo ""
+	@echo "  ${GREEN}db-create${RESET}          - Créer la base de données"
+	@echo "  ${GREEN}db-drop${RESET}            - Supprimer la base de données"
+	@echo "  ${GREEN}db-reset${RESET}           - Réinitialiser la base de données (drop + create)"
+	@echo "  ${GREEN}db-migrate${RESET}         - Exécuter les migrations"
+	@echo "  ${GREEN}db-fixtures${RESET}        - Charger les fixtures"
+	@echo "  ${GREEN}db-recreate${RESET}        - Réinitialiser la base et recharger les fixtures"
+	@echo ""
+	@echo "  ${GREEN}migration-generate${RESET} - Générer une nouvelle migration"
+	@echo "  ${GREEN}migration-migrate${RESET}  - Exécuter les migrations"
+	@echo ""
+	@echo "  ${GREEN}assets-build${RESET}       - Compiler les assets avec Asset Mapper"
+	@echo "  ${GREEN}assets-watch${RESET}       - Surveiller les modifications des assets"
+	@echo ""
+	@echo "  ${GREEN}cache-clear${RESET}        - Vider le cache"
+	@echo "  ${GREEN}tests${RESET}              - Exécuter les tests"
+	@echo "  ${GREEN}lint${RESET}               - Vérifier la qualité du code"
+	@echo "  ${GREEN}grumphp-run${RESET}        - Exécuter GrumPHP sur tous les fichiers"
+	@echo "  ${GREEN}grumphp-git${RESET}        - Exécuter GrumPHP sur les fichiers Git modifiés"
+	@echo ""
 
-## ⚙️ Démarrage normal (sans toucher aux données)
-start: ## Démarre Symfony + Docker + met à jour le schéma DB
-	@echo "🔧 Démarrage du projet..."
-	composer install
-	docker compose up -d
-	php bin/console d:m:m --no-interaction
-	php bin/console sass:build --watch &
-	symfony server:start -d
+# -------------- Installation et configuration --------------
 
-## 🛑 Arrêt propre de tous les services
-stop: ## Stoppe Symfony server + Docker + watchers
-	@echo "🛑 Arrêt du projet..."
-	symfony server:stop || true
-	docker compose down
-	pkill -f "php bin/console sass:build --watch" || true
+setup: install db-start db-create db-migrate db-fixtures start sass-watch
+	@echo "${GREEN}Projet configuré avec succès !${RESET}"
 
-## 🚀 Déploiement production
-deploy-prod: ## Prépare le projet pour la production (sans perte de données)
-	@echo "📦 Déploiement production..."
-	composer install --no-dev --optimize-autoloader
-	php bin/console d:m:m --no-interaction --no-debug
-	php bin/console sass:build
-	php bin/console asset-map:compile
+install:
+	@echo "${BLUE}Installation des dépendances...${RESET}"
+	$(COMPOSER) install
 
-## 🔁 Recharge des fixtures uniquement
-fixtures: ## Recharge les fixtures (⚠️ supprime la DB)
-	@echo "♻️ Réinitialisation base + fixtures"
-	php bin/console d:d:d -f
-	php bin/console d:d:c
-	php bin/console d:m:m --no-interaction
-	php bin/console d:f:l --no-interaction
+update:
+	@echo "${BLUE}Mise à jour des dépendances...${RESET}"
+	$(COMPOSER) update
 
-## 🐳 Docker
+# -------------- Gestion du serveur --------------
 
-up: ## Démarre les services Docker (base de données, mailpit)
-	docker compose up -d
+start: install db-start db-migrate assets-build
+	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
+	$(SYMFONY) server:start -d
 
-down: ## Stoppe les services Docker
-	docker compose down
+stop: db-stop
+	@echo "${BLUE}Arrêt du serveur Symfony...${RESET}"
+	$(SYMFONY) server:stop
 
-restart: down up ## Redémarre les services Docker
+restart: stop start
+	@echo "${GREEN}Serveur redémarré !${RESET}"
 
-## ⚙️ Symfony
+clean-start: update db-start db-recreate assets-build
+	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
+	$(SYMFONY) server:start -d
+# -------------- Gestion des services Docker --------------
 
-start: ## Démarre le serveur Symfony
-	symfony server:start
+db-start:
+	@echo "${BLUE}Démarrage des services Docker (DB, mailer)...${RESET}"
+	$(DOCKER_COMPOSE) up -d
 
-console: ## Alias vers la console Symfony
-	php bin/console
+db-stop:
+	@echo "${BLUE}Arrêt des services Docker...${RESET}"
+	$(DOCKER_COMPOSE) down
 
-## 🎨 Assets
+db-status:
+	@echo "${BLUE}Statut des services Docker :${RESET}"
+	$(DOCKER_COMPOSE) ps
 
-sass-watch: ## Lance la compilation Sass en mode dev
-	php bin/console sass:build --watch
+# -------------- Gestion de la base de données --------------
 
-sass-prod: ## Compile Sass pour la production
-	php bin/console sass:build
+db-create:
+	@echo "${BLUE}Création de la base de données...${RESET}"
+	$(CONSOLE) doctrine:database:create --if-not-exists
 
-asset-map: ## Compile l'asset map pour la production
-	php bin/console asset-map:compile
+db-drop:
+	@echo "${BLUE}Suppression de la base de données...${RESET}"
+	$(CONSOLE) doctrine:database:drop --force --if-exists
 
-## 🧪 Fixtures
+db-reset: db-drop db-create
+	@echo "${GREEN}Base de données réinitialisée !${RESET}"
 
-fixtures: ## Recharge la base et les fixtures
-	php bin/console d:d:d -f || true
-	php bin/console d:d:c
-	php bin/console d:m:m --no-interaction
-	php bin/console d:f:l --no-interaction
+db-migrate:
+	@echo "${BLUE}Exécution des migrations...${RESET}"
+	$(CONSOLE) doctrine:migrations:migrate --no-interaction
 
-## 🔧 Qualité
+db-fixtures:
+	@echo "${BLUE}Chargement des fixtures...${RESET}"
+	$(CONSOLE) doctrine:fixtures:load --no-interaction
 
-grumphp: ## Lance GrumPHP manuellement
+db-recreate: db-reset db-migrate db-fixtures
+	@echo "${GREEN}Base de données recréée avec succès !${RESET}"
+
+# -------------- Gestion des migrations --------------
+
+migration-generate:
+	@echo "${BLUE}Génération d'une nouvelle migration...${RESET}"
+	$(CONSOLE) make:migration
+
+migration-migrate:
+	@echo "${BLUE}Exécution des migrations...${RESET}"
+	$(CONSOLE) doctrine:migrations:migrate --no-interaction
+
+# -------------- Gestion des assets --------------
+
+assets-build:
+	@echo "${BLUE}Compilation des assets...${RESET}"
+	$(CONSOLE) asset-map:compile
+
+assets-watch:
+	@echo "${BLUE}Surveillance des assets...${RESET}"
+	$(CONSOLE) asset-map:compile --watch
+
+sass-watch:
+	@echo "${BLUE}Surveillance des fichiers SASS...${RESET}"
+	$(CONSOLE) sass:build --watch
+
+# -------------- Utilitaires --------------
+
+cache-clear:
+	@echo "${BLUE}Vidage du cache...${RESET}"
+	$(CONSOLE) cache:clear
+
+tests:
+	@echo "${BLUE}Exécution des tests...${RESET}"
+	vendor/bin/phpunit
+
+lint:
+	@echo "${BLUE}Vérification de la qualité du code...${RESET}"
+	vendor/bin/php-cs-fixer fix --dry-run
+	$(CONSOLE) lint:container
+	$(CONSOLE) lint:twig templates/
+	$(CONSOLE) lint:yaml config/
+
+grumphp-run:
+	@echo "${BLUE}Exécution de GrumPHP sur tous les fichiers...${RESET}"
 	vendor/bin/grumphp run
 
-## 📬 Mailpit
+grumphp-git:
+	@echo "${BLUE}Exécution de GrumPHP sur les fichiers Git modifiés...${RESET}"
+	vendor/bin/grumphp run --git
 
-mailpit-url: ## Affiche l'URL d’accès à l’interface Mailpit
-	@echo "➡️ http://localhost:8025"
+# -------------- Environnement de production --------------
 
-## 📦 Composer
+prod-deploy:
+	@echo "${BLUE}Déploiement en production...${RESET}"
+	$(COMPOSER) install --no-dev --optimize-autoloader
+	$(CONSOLE) cache:clear --env=prod
+	$(CONSOLE) asset-map:compile --env=prod
+	$(CONSOLE) doctrine:migrations:migrate --no-interaction --env=prod
 
-composer-update: ## Met à jour Composer
-	composer update
-
-## MySQL
-db-root: ## Ouvre une session MySQL en root dans le conteneur kopeck-db-local
-	docker exec -it kopeck-db-local mysql -u root -p
-
-db-secure: ## Supprime root et donne tous les droits à db_user (⚠️ danger en prod)
-	docker exec -i kopeck-db-local mysql -u root -p$$(grep MYSQL_ROOT_PASSWORD .env | cut -d '=' -f2) -e "\
-	DROP USER IF EXISTS 'root'@'%'; \
-	DROP USER IF EXISTS 'root'@'localhost'; \
-	CREATE USER IF NOT EXISTS 'db_user'@'%' IDENTIFIED BY 'db_password'; \
-	GRANT ALL PRIVILEGES ON *.* TO 'db_user'@'%' WITH GRANT OPTION; \
-	FLUSH PRIVILEGES;"
-## 🆘 Aide
-
-
-help: ## Affiche cette aide
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "🔹 [36m%-20s[0m %s\n", $$1, $$2}'
+# Pour éviter les conflits avec des fichiers du même nom
+.PHONY: help setup install update start stop restart db-start db-stop db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build assets-watch cache-clear tests lint grumphp-run grumphp-git prod-deploy
