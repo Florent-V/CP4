@@ -23,6 +23,12 @@
                 <th>Icon</th>
                 <td>{{ expense_category.icon }}</td>
             </tr>
+            <tr>
+                <th>Icon Preview</th>
+                <td>
+                    <twig:ux:icon name="{{ expense_category.icon }}" height="50" width="50" aria-hidden="true" />
+                </td>
+            </tr>
         </tbody>
     </table>
 

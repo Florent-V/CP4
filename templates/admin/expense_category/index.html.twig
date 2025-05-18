@@ -12,6 +12,7 @@
                 <th>Name</th>
                 <th>Type</th>
                 <th>Icon</th>
+                <th>Icon Preview</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,9 @@
                 <td>{{ expense_category.name }}</td>
                 <td>{{ expense_category.type }}</td>
                 <td>{{ expense_category.icon }}</td>
+                <td>
+                    <twig:ux:icon name="{{ expense_category.icon }}" height="50" width="50" aria-hidden="true" />
+                </td>
                 <td>
                     <a href="{{ path('admin_app_expense_category_show', {'id': expense_category.id}) }}">show</a>
                     <a href="{{ path('admin_app_expense_category_edit', {'id': expense_category.id}) }}">edit</a>
