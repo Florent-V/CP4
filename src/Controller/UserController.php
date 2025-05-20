@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserUpdateType;
+use App\Enum\Role;
+use App\Form\UserUpdateFormType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted(Role::USER->value)]
 #[Route('/account')]
 class UserController extends AbstractController
 {
@@ -42,7 +43,7 @@ class UserController extends AbstractController
          */
         $user = $this->getUser();
 
-        $form = $this->createForm(UserUpdateType::class, $user);
+        $form = $this->createForm(UserUpdateFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

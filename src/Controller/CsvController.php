@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Expense;
+use App\Enum\Role;
 use App\Repository\CategoryRepository;
 use App\Repository\ExpenseRepository;
 use App\Repository\SplitterRepository;
@@ -10,7 +11,6 @@ use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CsvController extends AbstractController
 {
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted(Role::ADMIN->value)]
     #[Route('/upload-csv', name: 'app_upload_csv', methods: ['GET', 'POST'])]
     public function uploadCsv(
         Request $request,

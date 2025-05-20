@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
-class SplitterType extends AbstractType
+class SplitterFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -39,7 +39,7 @@ class SplitterType extends AbstractType
                 'choice_label' => 'name'
             ])
             ->add('members', LiveCollectionType::class, [
-                'entry_type' => MemberType::class,
+                'entry_type' => MemberFormType::class,
                 'entry_options' => [
                     'label' => false,
                     'constraints' => new Valid()

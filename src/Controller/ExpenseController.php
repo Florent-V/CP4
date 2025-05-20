@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Expense;
 use App\Entity\Splitter;
 use App\Entity\User;
-use App\Form\ExpenseType;
+use App\Form\ExpenseFormType;
 use App\Repository\ExpenseRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,7 +73,7 @@ class ExpenseController extends AbstractController
 
         $user = $this->rejectIfNotMember($splitter);
         $expense = new Expense();
-        $form = $this->createForm(ExpenseType::class, $expense, [
+        $form = $this->createForm(ExpenseFormType::class, $expense, [
             'splitter' => $splitter
         ]);
         $form->handleRequest($request);
@@ -137,7 +137,7 @@ class ExpenseController extends AbstractController
 
         $this->rejectIfNotAdmin($splitter, $expense);
 
-        $form = $this->createForm(ExpenseType::class, $expense, [
+        $form = $this->createForm(ExpenseFormType::class, $expense, [
             'splitter' => $splitter
         ]);
         $form->handleRequest($request);

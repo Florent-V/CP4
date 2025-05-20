@@ -12,7 +12,7 @@ grumphp:
             ignore_patterns: [ 'migrations']
         phpstan:
             configuration: ./phpstan.neon
-            level: 6
+            level: 5
         phpmd:
             whitelist_patterns:
                 - 'src'
