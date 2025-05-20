@@ -36,8 +36,8 @@ help:
 	@echo "  ${GREEN}stop${RESET}               - Arrêter le serveur Symfony et les services Docker"
 	@echo "  ${GREEN}restart${RESET}            - Redémarrer le serveur Symfony et les services Docker"
 	@echo ""
-	@echo "  ${GREEN}db-start${RESET}           - Démarrer uniquement les services Docker (DB, mailer)"
-	@echo "  ${GREEN}db-stop${RESET}            - Arrêter uniquement les services Docker"
+	@echo "  ${GREEN}up${RESET}           - Démarrer uniquement les services Docker (DB, mailer)"
+	@echo "  ${GREEN}down${RESET}            - Arrêter uniquement les services Docker"
 	@echo "  ${GREEN}db-status${RESET}          - Vérifier le statut des services Docker"
 	@echo ""
 	@echo "  ${GREEN}install${RESET}            - Installer les dépendances PHP et NPM"
@@ -67,7 +67,7 @@ help:
 
 # -------------- ⚙️ Installation et configuration ⚙️ --------------
 
-setup: install db-start db-create db-migrate db-fixtures start sass-watch
+setup: install up db-create db-migrate db-fixtures start sass-watch
 	@echo "${GREEN}Projet configuré avec succès !${RESET}"
 
 install:
@@ -80,11 +80,11 @@ update:
 
 # -------------- 🎯  Gestion du serveur 🎯  --------------
 
-start: install db-start db-migrate assets-build
+start: install up db-migrate assets-build
 	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
 	$(SYMFONY) server:start -d
 
-stop: db-stop
+stop: down
 	@echo "${BLUE}Arrêt du serveur Symfony...${RESET}"
 	$(SYMFONY) server:stop
 	pkill -f "php bin/console sass:build --watch" || true
@@ -92,7 +92,7 @@ stop: db-stop
 restart: stop start
 	@echo "${GREEN}Serveur redémarré !${RESET}"
 
-clean-start: update db-start db-recreate assets-build
+clean-start: update up db-recreate assets-build
 	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
 	$(SYMFONY) server:start -d
 
@@ -197,7 +197,6 @@ prod-deploy:
 	$(CONSOLE) d:m:m --no-interaction --no-debug
 	$(CONSOLE) sass:build
 	$(CONSOLE) asset-map:compile --env=prod
-	$(CONSOLE) doctrine:migrations:migrate --no-interaction --env=prod
 
 # Pour éviter les conflits avec des fichiers du même nom
-.PHONY: help setup install update start stop restart db-start db-stop db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build assets-watch cache-clear tests lint grumphp-run grumphp-git prod-deploy
+.PHONY: help setup install update start stop restart up down db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build assets-watch cache-clear tests lint grumphp-run grumphp-git prod-deploy

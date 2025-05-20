@@ -188,6 +188,22 @@
     color: var(--color-text) !important;
   }
 
+  // Correction autofill Chrome/Edge/Safari
+  .form-control:-webkit-autofill,
+  .form-control:-webkit-autofill:focus,
+  .form-control:-webkit-autofill:hover,
+  .form-control:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-bg-alt) inset !important;
+    box-shadow: 0 0 0 1000px var(--color-bg-alt) inset !important;
+    -webkit-text-fill-color: var(--color-text) !important;
+    transition: background 0s;
+  }
+  // Correction autofill Firefox
+  .form-control:autofill,
+  .form-control:autofill:focus {
+    background: var(--color-bg-alt) !important;
+    color: var(--color-text) !important;
+  }
 
   @media (max-width: 600px) {
     padding: 1rem;
