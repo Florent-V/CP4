@@ -143,6 +143,8 @@ class SplitterController extends AbstractController
             }
             $expensesByDate[$date][] = $expense;
         }
+        // Tri des dates du plus récent au plus ancien
+        krsort($expensesByDate);
 
         return $this->render('splitter/show.html.twig', [
             'splitter' => $splitter,
