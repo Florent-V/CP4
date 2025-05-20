@@ -119,8 +119,34 @@ class SplitterController extends AbstractController
         $balancePerId = $balanceCalculator->calculateIndividualBalance($splitter);
         $transfers = $balanceCalculator->calculateTransfer($balancePerId);
 
+        // Calcul du total des dépenses de l'utilisateur connecté
+        //        $userTotal = 0;
+        //        foreach ($splitter->getExpenses() as $expense) {
+        //            if ($expense->getPaidBy() === $connectedUser) {
+        //                $userTotal += $expense->getAmount();
+        //            }
+        //        }
+
+        // Calcul du total des dépenses du groupe
+        $groupTotal = 0;
+        foreach ($splitter->getExpenses() as $expense) {
+            $groupTotal += $expense->getAmount();
+        }
+
+        // Regrouper les dépenses par date
+        $expensesByDate = [];
+        foreach ($splitter->getExpenses() as $expense) {
+            $date = $expense->getMadeAt()->format('Y-m-d');
+            if (!isset($expensesByDate[$date])) {
+                $expensesByDate[$date] = [];
+            }
+            $expensesByDate[$date][] = $expense;
+        }
+
         return $this->render('splitter/show.html.twig', [
             'splitter' => $splitter,
+            'groupTotal' => $groupTotal,
+            'expensesByDate' => $expensesByDate,
             'balancePerId' => $balancePerId,
             'transfers' => $transfers,
         ]);

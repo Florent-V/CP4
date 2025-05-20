@@ -19,3 +19,13 @@
         justify-content: center;
     }
 }
+
+.admin-link {
+    font-size: 1.15rem;
+    transition: background 0.2s, color 0.2s;
+}
+.admin-link:hover {
+    background: #f8f9fa;
+    color: #0056b3;
+    text-decoration: none;
+}

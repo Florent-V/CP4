@@ -42,4 +42,7 @@ return [
     '@stimulus-components/clipboard' => [
         'version' => '5.0.0',
     ],
+    '@hotwired/turbo' => [
+        'version' => '7.3.0',
+    ],
 ];

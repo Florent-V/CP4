@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Accueil{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8 text-center">
+                <h1 class="display-4 mb-3">Interface d'administration</h1>
+                <p class="lead text-muted">Bienvenue sur l’espace d’administration. Choisissez une section :</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="list-group shadow">
+                    {% for section in sections %}
+                        <a href="{{ path(section.route) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center admin-link">
+                            <span>{{ section.name }}</span>
+                            <span class="badge bg-primary rounded-pill">&rarr;</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

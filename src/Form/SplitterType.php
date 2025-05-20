@@ -18,19 +18,16 @@ class SplitterType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'row_attr' => ['class' => 'form-floating mb-3 text-dark'],
-                'label' => 'Nom du splitter',
-                'attr' => ['placeholder' => 'pseudo']
+                'label' => 'Nom du groupe',
+                'attr' => ['placeholder' => 'Voyage à ...']
             ])
             ->add('description', null, [
-                'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
-                'label' => 'Description du splitter',
-                'attr' => ['placeholder' => 'pseudo']
+                'label' => 'Description du groupe',
+                'attr' => ['placeholder' => 'Groupe pour le voyage à ...']
             ])
             ->add('category', EntityType::class, [
                 'class' => SplitterCategory::class,
                 'required' => true,
-                'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
                 'label' => 'Catégorie',
                 'query_builder' => function (SplitterCategoryRepository $repository) {
                     return $repository->createQueryBuilder('c')

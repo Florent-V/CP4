@@ -16,6 +16,12 @@
         {% endblock %}
         {{ pwa() }}
     {% endblock %}
+    <script>
+        document.documentElement.setAttribute(
+            'data-theme', localStorage.getItem('theme') || 'light'
+        );
+    </script>
+
 </head>
 <header>
     {# Flash Message #}
@@ -31,7 +37,6 @@
     {% endblock %}
 </header>
 <body
-        data-bs-theme=dark
         {{ stimulus_controller('deleteAlert') }}
 >
 {% block body %}{% endblock %}
