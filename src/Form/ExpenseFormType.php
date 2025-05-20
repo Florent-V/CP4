@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
-class ExpenseType extends AbstractType
+class ExpenseFormType extends AbstractType
 {
     private Splitter $splitter;
 

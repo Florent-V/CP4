@@ -2,25 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\ExpenseCategory;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ExpenseCategoryType extends AbstractType
+class ShareSplitterFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('type')
+            ->add('email', EmailType::class, [
+                    'label' => '@',
+                    'attr' => ['placeholder' => 'name@mail.fr'],
+                    'row_attr' => ['class' => 'input-group'],
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => ExpenseCategory::class,
-        ]);
+        $resolver->setDefaults([]);
     }
 }

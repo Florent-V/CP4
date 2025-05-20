@@ -5,18 +5,18 @@ namespace App\Controller;
 use App\Entity\Expense;
 use App\Entity\Splitter;
 use App\Entity\User;
-use App\Form\ExpenseType;
+use App\Enum\Role;
+use App\Form\ExpenseFormType;
 use App\Repository\ExpenseRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use DateTime;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted(Role::USER->value)]
 #[Route('/splitter/{splitter_id}/expense', name: 'app_expense_')]
 class ExpenseController extends AbstractController
 {
@@ -75,7 +75,7 @@ class ExpenseController extends AbstractController
 
         $user = $this->rejectIfNotMember($splitter);
         $expense = new Expense();
-        $form = $this->createForm(ExpenseType::class, $expense, [
+        $form = $this->createForm(ExpenseFormType::class, $expense, [
             'splitter' => $splitter
         ]);
         $form->handleRequest($request);
@@ -139,7 +139,7 @@ class ExpenseController extends AbstractController
 
         $this->rejectIfNotAdmin($splitter, $expense);
 
-        $form = $this->createForm(ExpenseType::class, $expense, [
+        $form = $this->createForm(ExpenseFormType::class, $expense, [
             'splitter' => $splitter
         ]);
         $form->handleRequest($request);

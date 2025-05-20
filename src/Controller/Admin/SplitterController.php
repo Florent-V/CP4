@@ -4,10 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Splitter;
 use App\Entity\User;
-use App\Form\JoinSplitterType;
-use App\Form\SearchBarType;
-use App\Form\ShareSplitterType;
-use App\Form\SplitterType;
+use App\Form\JoinSplitterFormType;
+use App\Form\SearchBarFormType;
+use App\Form\ShareSplitterFormType;
+use App\Form\SplitterFormType;
 use App\Repository\SplitterRepository;
 use App\Service\BalanceCalculator;
 use Knp\Component\Pager\PaginatorInterface;
@@ -29,7 +29,7 @@ class SplitterController extends AbstractController
         PaginatorInterface $paginator
     ): Response {
 
-        $form = $this->createForm(SearchBarType::class);
+        $form = $this->createForm(SearchBarFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

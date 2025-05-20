@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ExpenseCategory;
-use App\Form\ExpenseCategoryType;
+use App\Form\ExpenseCategoryFormType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ final class ExpenseCategoryController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $expenseCategory = new ExpenseCategory();
-        $form = $this->createForm(ExpenseCategoryType::class, $expenseCategory);
+        $form = $this->createForm(ExpenseCategoryFormType::class, $expenseCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -60,7 +60,7 @@ final class ExpenseCategoryController extends AbstractController
         ExpenseCategory $expenseCategory,
         EntityManagerInterface $entityManager
     ): Response {
-        $form = $this->createForm(ExpenseCategoryType::class, $expenseCategory);
+        $form = $this->createForm(ExpenseCategoryFormType::class, $expenseCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
