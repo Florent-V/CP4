@@ -1,64 +1,264 @@
-.splitterView {
-    .balanceItemList {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-
-        p {
-            margin: 0;
-        }
-
-        span {
-            font-size: 1rem;
-        }
+.splitterView, .expenseView {
+  // Header et menu d'action moderne
+  .splitter-header {
+    background: var(--color-bg-panel);
+    border-radius: 1.2rem;
+    padding: 1rem;
+    box-shadow: 0 2px 12px 0 rgba(60,60,100,0.08);
+    margin-bottom: 2rem;
+    .splitter-title {
+      color: var(--color-primary);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin: 0;
     }
-    .expenseItemList {
-        .linkExpense {
-            @include clickable-zone;
-        }
+    .action-menu .btn-icon {
+      background: transparent;
+      border: none;
+      color: var(--color-text);
+      border-radius: 50%;
+      transition: background 0.2s;
+      &:hover, &:focus {
+        background: var(--color-bg-input-focus);
+        color: var(--color-primary);
+      }
     }
-    .splitterForm {
-        .corbeille {
-            font-size: 1.5rem;
+    .dropdown-menu {
+      background: var(--color-bg-alt);
+      border-radius: 0.8rem;
+      box-shadow: 0 2px 12px 0 rgba(60,60,100,0.10);
+      .dropdown-item {
+        color: var(--color-text);
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: background 0.2s, color 0.2s;
+        &:hover, &:focus {
+          background: var(--color-primary);
+          color: #fff;
         }
+        i {
+          font-size: 1.2rem;
+        }
+      }
     }
-    #myTab {
-        //border-bottom: 0;
-        h3 {
-            color: $light;
-        }
-        .card-header {
-            background-color: transparent;
-            border: none;
-            border-radius: 0;
-        }
-        a.active {
-            background-color: var(--bs-card-cap-bg);
-        }
-        a:not(.active) {
-            //background-color: blue;
-        }
-        li {
-            flex-basis: 50%;
-            border: none;
-            border-radius: 0;
-        }
-        a {
-
-        }
-    }
-    #myTabContent {
-        .expenseCard .card, .balanceCard:first-of-type .card {
-            border-top: none;
-            border-top-right-radius: 0;
-            border-top-left-radius: 0;
-            //border-color: var(--bs-nav-tabs-link-active-border-color);
-        }
-        //div {
-        //    border-radius: 0;
-        //}
-    }
+  }
 }
 
 
+.splitterView {
+    .custom-tabs {
+      margin-top: 20px;
+    }
+
+    .tab-header {
+      background-color: var(--color-bg-alt);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: var(--color-bg-alt);
+      color: var(--color-text);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .tab.active {
+      background-color: var(--color-primary);
+      color: var(--color-bg);
+    }
+
+    .tab-content {
+      margin-top: 20px;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .expense-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .expense-list {
+      margin-top: 20px;
+    }
+
+    .expense-date, .balance-subtitle {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .expense-card {
+      position: relative;
+      background-color: var(--color-card);
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      .linkExpense {
+        @include clickable-zone;
+      }
+    }
+
+    .balance-list {
+      margin-top: 20px;
+    }
+
+    .balance-card {
+      background-color: var(--color-card);
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .photo-placeholder {
+      background-color: var(--color-card);
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .splitter-members {
+      color: var(--color-accent);
+      font-size: 0.97rem;
+    }
+
+
+    // Onglets modernes
+    .splitter-tabs {
+      background: var(--color-bg-panel);
+      border-radius: 0.9rem 0.9rem 0 0;
+      padding: 0.4rem 1rem 0 1rem;
+      .nav-link {
+        color: var(--color-text);
+        border: none;
+        border-radius: 0.7rem 0.7rem 0 0;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s;
+        &.active, &:hover, &:focus {
+          background: var(--color-primary);
+          color: #fff;
+        }
+      }
+      .nav-link:not(.active) {
+        background: transparent;
+      }
+    }
+
+  .balance-list {
+    margin-top: 20px;
+  }
+
+  .balance-card {
+    background-color: var(--color-card);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .settle-debts {
+    margin-top: 20px;
+  }
+
+  .card {
+    background-color: var(--color-card);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    background-color: var(--color-bg-alt);
+    padding: 10px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .list-group-item {
+    padding: 10px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .memberName {
+    font-size: 1rem;
+  }
+
+  .bg-warning {
+    background-color: var(--color-warning);
+  }
+
+  .bg-success {
+    background-color: var(--color-success);
+  }
+
+  .text-decoration-underline {
+    text-decoration: underline;
+  }
+
+  .settle-debts {
+    margin-top: 20px;
+    background-color: var(--color-card);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .settle-debts-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-bottom: 20px;
+  }
+
+  .debts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .debt-item {
+    padding: 15px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+  }
+
+  .debt-item:last-child {
+    border-bottom: none;
+  }
+
+  .debt-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+  }
+
+  .debt-from, .debt-to {
+    font-weight: bold;
+    color: var(--color-text);
+  }
+
+  .debt-amount {
+    text-decoration: underline;
+    color: var(--color-accent);
+  }
+}

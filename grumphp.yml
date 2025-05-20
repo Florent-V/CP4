@@ -11,7 +11,7 @@ grumphp:
             standard: PSR12
             ignore_patterns: [ 'migrations']
         phpstan:
-            configuration: ./phpstan.neon
+            configuration: ./phpstan.dist.neon
             level: 5
         phpmd:
             whitelist_patterns:

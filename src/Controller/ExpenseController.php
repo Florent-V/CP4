@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Expense;
 use App\Entity\Splitter;
 use App\Entity\User;
+use App\Enum\Role;
 use App\Form\ExpenseFormType;
 use App\Repository\ExpenseRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -12,9 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use DateTime;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted(Role::USER->value)]
 #[Route('/splitter/{splitter_id}/expense', name: 'app_expense_')]
 class ExpenseController extends AbstractController
 {
@@ -169,9 +171,10 @@ class ExpenseController extends AbstractController
         ExpenseRepository $expenseRepository
     ): Response {
 
+
         $this->rejectIfNotAdmin($splitter, $expense);
 
-        if ($this->isCsrfTokenValid('delete' . $splitter->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $expense->getId(), $request->request->get('_token'))) {
             $expenseRepository->remove($expense, true);
         }
 

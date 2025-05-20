@@ -1,35 +1,23 @@
-<div
-        {{ attributes }}
->
+<div {{ attributes }}>
     {{ form_start(form) }}
 
     {{ form_errors(form) }}
 
     {{ form_row(form.name, {
-        label: 'Nom du groupe',
-        attr: {
-            placeholder: 'Voyage à ...',
-            class: 'text-light'
-        },
         row_attr: {
-            class: 'form-floating mb-3 text-light'
+            class: 'form-floating mb-3'
         }
     }) }}
 
     {{ form_row(form.description, {
-        label: 'Description du groupe',
-        attr: {
-            placeholder: 'Groupe pour le voyage à ...'
-        },
         row_attr: {
-            class: 'form-floating mb-3 text-light'
+            class: 'form-floating mb-3'
         }
     }) }}
 
     {{ form_row(form.category, {
-        label: 'Catégorie',
         row_attr: {
-            class: 'form-floating mb-3 text-light'
+            class: 'form-floating mb-3'
         }
     }) }}
 
@@ -39,7 +27,7 @@
             {% set my_label = (key == 0) ? 'Votre Nom' : 'Autre Participant' %}
             {% set nickname = (key == 0) ? app.user.firstName : (member_form.vars.value ? member_form.vars.value.nickname : '') %}
 
-            <div class="d-flex gap-2 align-items-center">
+            <div class="d-flex gap-2">
                 {{ form_row(member_form.nickname, {
                     label: my_label,
                     row_attr: {
@@ -52,15 +40,17 @@
                 }) }}
 
                 {%  if my_label != 'Votre Nom' %}
-                    {{ form_row(member_form.vars.button_delete, {
-                        label: false,
-                        row_attr: {
-                            class: 'mb-3'
-                        },
-                        attr: {
-                            class: 'btn btn-danger p-2 corbeille bi bi-trash',
-                        }
-                    }) }}
+
+                    <button
+                            data-action="live#action"
+                            data-live-action-param="removeComment"
+                            data-live-index-param="{{ key }}"
+                            type="button"
+                            class="mb-3 btn btn-danger p-2 corbeille d-flex align-items-center"
+                    >
+                        <twig:ux:icon name="mdi:trash-can-outline" height="24" width="24" />
+                    </button>
+
                 {% endif %}
 
             </div>
@@ -68,8 +58,11 @@
         {% endfor %}
 
     {{ form_errors(form.members) }}
-    {{ form_widget(form.members.vars.button_add, {label: '+ Ajouter un membre', attr: {class: 'btn btn-outline-primary'}}) }}
+    {{ form_widget(form.members.vars.button_add, {label: '+ Ajouter un membre', attr: {class: 'btn btn-outline-primary plus-btn'}}) }}
 
-    <button type="submit" class="btn btn-success" formnovalidate>{{ this.buttonLabel|default('Créer') }}</button>
+    <div class="centerBtn mt-4">
+        <button type="submit" class="btn btn-success valid-btn" formnovalidate>{{ this.buttonLabel|default('Créer') }}</button>
+    </div>
+
     {{ form_end(form) }}
 </div>
