@@ -61,9 +61,11 @@ help:
 	@echo "  ${GREEN}lint${RESET}               - Vérifier la qualité du code"
 	@echo "  ${GREEN}grumphp-run${RESET}        - Exécuter GrumPHP sur tous les fichiers"
 	@echo "  ${GREEN}grumphp-git${RESET}        - Exécuter GrumPHP sur les fichiers Git modifiés"
+	@echo "  ${GREEN}mailpit-open${RESET}        - Ouvrir l'interface Mailpit dans le navigateur"
+	@echo "  ${GREEN}mailpit-logs${RESET}        - Afficher les logs de Mailpit"
 	@echo ""
 
-# -------------- Installation et configuration --------------
+# -------------- ⚙️ Installation et configuration ⚙️ --------------
 
 setup: install db-start db-create db-migrate db-fixtures start sass-watch
 	@echo "${GREEN}Projet configuré avec succès !${RESET}"
@@ -76,7 +78,7 @@ update:
 	@echo "${BLUE}Mise à jour des dépendances...${RESET}"
 	$(COMPOSER) update
 
-# -------------- Gestion du serveur --------------
+# -------------- 🎯  Gestion du serveur 🎯  --------------
 
 start: install db-start db-migrate assets-build
 	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
@@ -85,6 +87,7 @@ start: install db-start db-migrate assets-build
 stop: db-stop
 	@echo "${BLUE}Arrêt du serveur Symfony...${RESET}"
 	$(SYMFONY) server:stop
+	pkill -f "php bin/console sass:build --watch" || true
 
 restart: stop start
 	@echo "${GREEN}Serveur redémarré !${RESET}"
@@ -92,21 +95,27 @@ restart: stop start
 clean-start: update db-start db-recreate assets-build
 	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
 	$(SYMFONY) server:start -d
-# -------------- Gestion des services Docker --------------
 
-db-start:
+# -------------- 🐳 Gestion des services Docker 🐳 --------------
+
+up:
 	@echo "${BLUE}Démarrage des services Docker (DB, mailer)...${RESET}"
 	$(DOCKER_COMPOSE) up -d
 
-db-stop:
+prod-up:
+	@echo "${BLUE}Démarrage des services Docker (DB, mailer) en production...${RESET}"
+	$(DOCKER_COMPOSE) -f docker-compose.yml up -d
+
+down:
 	@echo "${BLUE}Arrêt des services Docker...${RESET}"
 	$(DOCKER_COMPOSE) down
 
 db-status:
 	@echo "${BLUE}Statut des services Docker :${RESET}"
 	$(DOCKER_COMPOSE) ps
+	@echo "${BLUE}  ${RESET}"
 
-# -------------- Gestion de la base de données --------------
+# -------------- ⛁ Gestion de la base de données ⛁ --------------
 
 db-create:
 	@echo "${BLUE}Création de la base de données...${RESET}"
@@ -130,7 +139,7 @@ db-fixtures:
 db-recreate: db-reset db-migrate db-fixtures
 	@echo "${GREEN}Base de données recréée avec succès !${RESET}"
 
-# -------------- Gestion des migrations --------------
+# -------------- 🔁 Gestion des migrations 🔁 --------------
 
 migration-generate:
 	@echo "${BLUE}Génération d'une nouvelle migration...${RESET}"
@@ -140,7 +149,7 @@ migration-migrate:
 	@echo "${BLUE}Exécution des migrations...${RESET}"
 	$(CONSOLE) doctrine:migrations:migrate --no-interaction
 
-# -------------- Gestion des assets --------------
+# -------------- 🎨 Gestion des assets 🎨 --------------
 
 assets-build:
 	@echo "${BLUE}Compilation des assets...${RESET}"
@@ -154,7 +163,7 @@ sass-watch:
 	@echo "${BLUE}Surveillance des fichiers SASS...${RESET}"
 	$(CONSOLE) sass:build --watch
 
-# -------------- Utilitaires --------------
+# -------------- 🔧 Utilitaires 🔧 --------------
 
 cache-clear:
 	@echo "${BLUE}Vidage du cache...${RESET}"
@@ -179,12 +188,14 @@ grumphp-git:
 	@echo "${BLUE}Exécution de GrumPHP sur les fichiers Git modifiés...${RESET}"
 	vendor/bin/grumphp run --git
 
-# -------------- Environnement de production --------------
+# -------------- 🚀 Environnement de production 🚀 --------------
 
 prod-deploy:
 	@echo "${BLUE}Déploiement en production...${RESET}"
 	$(COMPOSER) install --no-dev --optimize-autoloader
 	$(CONSOLE) cache:clear --env=prod
+	$(CONSOLE) d:m:m --no-interaction --no-debug
+	$(CONSOLE) sass:build
 	$(CONSOLE) asset-map:compile --env=prod
 	$(CONSOLE) doctrine:migrations:migrate --no-interaction --env=prod
 
