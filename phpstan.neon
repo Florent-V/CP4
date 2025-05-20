@@ -13,4 +13,3 @@ parameters:
         - '#Cannot instantiate custom generator#'
     reportUnmatchedIgnoredErrors: false
     checkGenericClassInNonGenericObjectType: false
-    checkMissingIterableValueType: false
