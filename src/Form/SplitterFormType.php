@@ -12,25 +12,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
-class SplitterType extends AbstractType
+class SplitterFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', null, [
-                'row_attr' => ['class' => 'form-floating mb-3 text-dark'],
-                'label' => 'Nom du splitter',
-                'attr' => ['placeholder' => 'pseudo']
+                'label' => 'Nom du groupe',
+                'attr' => ['placeholder' => 'Voyage à ...']
             ])
             ->add('description', null, [
-                'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
-                'label' => 'Description du splitter',
-                'attr' => ['placeholder' => 'pseudo']
+                'label' => 'Description du groupe',
+                'attr' => ['placeholder' => 'Groupe pour le voyage à ...']
             ])
             ->add('category', EntityType::class, [
                 'class' => SplitterCategory::class,
                 'required' => true,
-                'row_attr' => ['class' => 'form-floating mb-3  text-dark'],
                 'label' => 'Catégorie',
                 'query_builder' => function (SplitterCategoryRepository $repository) {
                     return $repository->createQueryBuilder('c')
@@ -39,7 +36,7 @@ class SplitterType extends AbstractType
                 'choice_label' => 'name'
             ])
             ->add('members', LiveCollectionType::class, [
-                'entry_type' => MemberType::class,
+                'entry_type' => MemberFormType::class,
                 'entry_options' => [
                     'label' => false,
                     'constraints' => new Valid()

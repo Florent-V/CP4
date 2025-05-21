@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Expense;
 use App\Entity\Splitter;
-use App\Form\ExpenseType;
+use App\Form\ExpenseFormType;
 use App\Repository\ExpenseRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

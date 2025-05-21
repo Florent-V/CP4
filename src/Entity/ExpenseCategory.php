@@ -21,6 +21,9 @@ class ExpenseCategory
     #[ORM\Column(length: 100)]
     private ?string $type = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $icon = null;
+
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Expense::class, orphanRemoval: true)]
     private Collection $expenses;
 
@@ -64,6 +67,17 @@ class ExpenseCategory
     public function getExpenses(): Collection
     {
         return $this->expenses;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(?string $icon): ExpenseCategory
+    {
+        $this->icon = $icon;
+        return $this;
     }
 
     public function addExpense(Expense $expense): self

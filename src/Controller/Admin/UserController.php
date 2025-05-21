@@ -3,8 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\SearchBarType;
-use App\Form\UserUpdateType;
+use App\Form\SearchBarFormType;
+use App\Form\UserUpdateFormType;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +22,7 @@ class UserController extends AbstractController
         PaginatorInterface $paginator
     ): Response {
 
-        $form = $this->createForm(SearchBarType::class);
+        $form = $this->createForm(SearchBarFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +56,7 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserUpdateType::class, $user);
+        $form = $this->createForm(UserUpdateFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

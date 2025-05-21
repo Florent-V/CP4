@@ -4,7 +4,7 @@ namespace App\Twig\Form;
 
 use App\Entity\Member;
 use App\Entity\Splitter;
-use App\Form\SplitterType;
+use App\Form\SplitterFormType;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -43,7 +43,7 @@ class SplitterForm extends AbstractController
         }
 
         return $this->createForm(
-            SplitterType::class,
+            SplitterFormType::class,
             $this->initialFormData
         );
     }

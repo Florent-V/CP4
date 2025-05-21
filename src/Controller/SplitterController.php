@@ -6,9 +6,10 @@ use App\Entity\Expense;
 use App\Entity\Member;
 use App\Entity\Splitter;
 use App\Entity\User;
-use App\Form\JoinSplitterType;
-use App\Form\ShareSplitterType;
-use App\Form\SplitterType;
+use App\Enum\Role;
+use App\Form\JoinSplitterFormType;
+use App\Form\ShareSplitterFormType;
+use App\Form\SplitterFormType;
 use App\Repository\LogEntryRepository;
 use App\Repository\SplitterRepository;
 use App\Service\BalanceCalculator;
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted(Role::USER->value)]
 #[Route('/splitter')]
 class SplitterController extends AbstractController
 {
@@ -73,7 +74,7 @@ class SplitterController extends AbstractController
         $member = new Member();
         $splitter->addMember($member);
 
-        $form = $this->createForm(SplitterType::class, $splitter);
+        $form = $this->createForm(SplitterFormType::class, $splitter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -119,8 +120,36 @@ class SplitterController extends AbstractController
         $balancePerId = $balanceCalculator->calculateIndividualBalance($splitter);
         $transfers = $balanceCalculator->calculateTransfer($balancePerId);
 
+        // Calcul du total des dépenses de l'utilisateur connecté
+        //        $userTotal = 0;
+        //        foreach ($splitter->getExpenses() as $expense) {
+        //            if ($expense->getPaidBy() === $connectedUser) {
+        //                $userTotal += $expense->getAmount();
+        //            }
+        //        }
+
+        // Calcul du total des dépenses du groupe
+        $groupTotal = 0;
+        foreach ($splitter->getExpenses() as $expense) {
+            $groupTotal += $expense->getAmount();
+        }
+
+        // Regrouper les dépenses par date
+        $expensesByDate = [];
+        foreach ($splitter->getExpenses() as $expense) {
+            $date = $expense->getMadeAt()->format('Y-m-d');
+            if (!isset($expensesByDate[$date])) {
+                $expensesByDate[$date] = [];
+            }
+            $expensesByDate[$date][] = $expense;
+        }
+        // Tri des dates du plus récent au plus ancien
+        krsort($expensesByDate);
+
         return $this->render('splitter/show.html.twig', [
             'splitter' => $splitter,
+            'groupTotal' => $groupTotal,
+            'expensesByDate' => $expensesByDate,
             'balancePerId' => $balancePerId,
             'transfers' => $transfers,
         ]);
@@ -171,7 +200,7 @@ class SplitterController extends AbstractController
 
         $this->checkEditAccess($splitter);
 
-        $form = $this->createForm(SplitterType::class, $splitter);
+        $form = $this->createForm(SplitterFormType::class, $splitter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -213,7 +242,7 @@ class SplitterController extends AbstractController
          */
         $user = $this->getUser();
 
-        $form = $this->createForm(ShareSplitterType::class);
+        $form = $this->createForm(ShareSplitterFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -316,7 +345,7 @@ class SplitterController extends AbstractController
          */
         $user = $this->getUser();
 
-        $form = $this->createForm(JoinSplitterType::class);
+        $form = $this->createForm(JoinSplitterFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -354,6 +383,7 @@ class SplitterController extends AbstractController
 
         /* @var ?User $user */
         $user = $this->getUser();
+        // @phpstan-ignore method.notFound
         if ($splitter->getOwner() !== $user->getAppUser() && !$this->isGranted('ROLE_ADMIN')) {
 //            $this->addFlash('danger', '🤨 Vous ne pouvez pas éditer un Splitter qui ne vous appartient pas !');
 //            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);

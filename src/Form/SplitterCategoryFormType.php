@@ -2,28 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Member;
+use App\Entity\SplitterCategory;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
 
-class MemberType extends AbstractType
+class SplitterCategoryFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nickname', TextType::class, [
-                'required' => false,
-            ])
+            ->add('name')
+            ->add('icon')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Member::class,
+            'data_class' => SplitterCategory::class,
         ]);
     }
 }

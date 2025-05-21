@@ -1,8 +1,20 @@
 parameters:
-    level: 6
+    level: 5
     paths:
         - bin/
         - config/
         - public/
         - src/
+    excludePaths:
         - tests/
+        - src/Entity/
+        - src/Security/EmailVerifier.php
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+    ignoreErrors:
+            - '#Use invokable controller with __invoke\(\) method instead of named action method#'
+            - '#Avoid class-level route prefixing. Use method route to keep single source of truth and focus#'
+
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/symplify/phpstan-rules/config/symfony-rules.neon

@@ -18,6 +18,9 @@ class SplitterCategory
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $icon = null;
+
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Splitter::class, orphanRemoval: true)]
     private Collection $splitters;
 
@@ -49,6 +52,17 @@ class SplitterCategory
     public function getSplitters(): Collection
     {
         return $this->splitters;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(?string $icon): SplitterCategory
+    {
+        $this->icon = $icon;
+        return $this;
     }
 
     public function addSplitter(Splitter $splitter): self
