@@ -36,8 +36,8 @@ help:
 	@echo "  ${GREEN}stop${RESET}               - Arrêter le serveur Symfony et les services Docker"
 	@echo "  ${GREEN}restart${RESET}            - Redémarrer le serveur Symfony et les services Docker"
 	@echo ""
-	@echo "  ${GREEN}up${RESET}           - Démarrer uniquement les services Docker (DB, mailer)"
-	@echo "  ${GREEN}down${RESET}            - Arrêter uniquement les services Docker"
+	@echo "  ${GREEN}up${RESET}                 - Démarrer uniquement les services Docker (DB, mailer)"
+	@echo "  ${GREEN}down${RESET}               - Arrêter uniquement les services Docker"
 	@echo "  ${GREEN}db-status${RESET}          - Vérifier le statut des services Docker"
 	@echo ""
 	@echo "  ${GREEN}install${RESET}            - Installer les dépendances PHP et NPM"
@@ -80,9 +80,8 @@ update:
 
 # -------------- 🎯  Gestion du serveur 🎯  --------------
 
-start: install up db-migrate assets-build
+start: install up db-migrate server-start sass-watch
 	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
-	$(SYMFONY) server:start -d
 
 stop: down
 	@echo "${BLUE}Arrêt du serveur Symfony...${RESET}"
@@ -92,7 +91,11 @@ stop: down
 restart: stop start
 	@echo "${GREEN}Serveur redémarré !${RESET}"
 
-clean-start: update up db-recreate assets-build
+clean-start: update up db-recreate sass-watch
+	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
+	$(SYMFONY) server:start -d
+
+server-start:
 	@echo "${BLUE}Démarrage du serveur Symfony...${RESET}"
 	$(SYMFONY) server:start -d
 
