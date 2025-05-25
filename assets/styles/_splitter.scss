@@ -1,11 +1,11 @@
 .splitterView, .expenseView {
   // Header et menu d'action moderne
-  .splitter-header {
+  .splitter-header, .expense-header {
     background: var(--color-bg-panel);
     border-radius: 1.2rem;
     padding: 1rem;
     box-shadow: 0 2px 12px 0 rgba(60,60,100,0.08);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     .splitter-title {
       color: var(--color-primary);
       font-size: 2rem;
@@ -84,8 +84,26 @@
 
     .expense-header {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      align-items: center;
+      font-size: 1.5rem;
+      p {
+        margin: 0;
+      }
+      a, button {
+        font-size: 1.3rem;
+        &:hover, &:active, &:focus, &:focus-visible, &:focus-within {
+          color: var(--bs-light);
+        }
+
+      }
+    }
+
+    .expense-header > .total-member,
+    .expense-header > .total-group {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .expense-list {
