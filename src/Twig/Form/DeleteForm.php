@@ -11,6 +11,7 @@ class DeleteForm
     public string $id;
     public ?string $id2 = null;
     public string $title;
+    public ?string $label = null;
 
     public function getRoute(): string
     {

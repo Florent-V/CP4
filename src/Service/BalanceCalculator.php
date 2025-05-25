@@ -4,13 +4,11 @@ namespace App\Service;
 
 use App\Entity\Splitter;
 use App\Repository\MemberRepository;
-use App\Repository\SplitterRepository;
-use App\Repository\UserRepository;
 
-class BalanceCalculator
+readonly class BalanceCalculator
 {
     public function __construct(
-        private readonly MemberRepository $memberRepository
+        private MemberRepository $memberRepository
     ) {
     }
 

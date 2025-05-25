@@ -14,7 +14,7 @@ class JoinSplitterFormType extends AbstractType
         $builder
             ->add('code', TextType::class, [
                     'label' => 'Code',
-                    'attr' => ['placeholder' => 'rechercher...'],
+                    'attr' => ['placeholder' => 'Entrez le code...'],
                     'row_attr' => ['class' => 'input-group'],
             ])
         ;

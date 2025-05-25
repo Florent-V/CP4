@@ -62,7 +62,7 @@ class ExpenseController extends AbstractController
         '/new',
         name: 'new',
         requirements: [
-            'splitter_id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+            'splitter_id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
         ],
         methods: ['GET', 'POST']
     )]
@@ -99,7 +99,7 @@ class ExpenseController extends AbstractController
         '/{expense_id}',
         name: 'show',
         requirements: [
-            'splitter_id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$',
+            'splitter_id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}',
             'expense_id' => '\d+'
         ],
         methods: ['GET']
@@ -123,7 +123,7 @@ class ExpenseController extends AbstractController
         '/{expense_id}/edit',
         name: 'edit',
         requirements: [
-            'splitter_id' => '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$',
+            'splitter_id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}',
             'expense_id' => '\d+'
         ],
         methods: ['GET', 'POST']
