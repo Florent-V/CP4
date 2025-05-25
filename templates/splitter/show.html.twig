@@ -74,9 +74,9 @@
                                             entity='splitter'
                                             id='{{ splitter.id }}'
                                             title="Supprimer le groupe"
+                                            label="Supprimer"
                                     />
-                                    <span>Supprimer</span>
-
+{#                                    <span>Supprimer</span>#}
                                 </div>
                             </li>
                         {% endif %}
@@ -94,7 +94,7 @@
 
         {% if app.user %}
             <!-- Modal pour partage du groupe -->
-            <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel"
+            <div class="modal fade defaultForm" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div id="modal" class="modal-content">
@@ -108,12 +108,12 @@
                             <input class="form-control" type="text"
                                    value="{{ url('app_splitter_guest_show', {'id': splitter.id, 'unique_id': splitter.uniqueId}) }}"
                                    data-clipboard-target="source" readonly>
-                            <button type="button" class="btn btn-primary align-self-center" data-action="clipboard#copy"
+                            <button type="button" class="btn btn-primary align-self-center mt-2" data-action="clipboard#copy"
                                     data-clipboard-target="button">Copier
                             </button>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
                             <button type="button" class="btn btn-primary">
                                 <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}"
                                    title="Partager par mail">Partager par Mail</a>

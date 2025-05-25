@@ -5,19 +5,19 @@
 {% block body %}
 
     <main class="container-md">
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour Groupe">
+                <twig:ux:icon name="ep:back" height="30" width="30"/>
+            </a>
+            <h1 class="text-center my-2">Partager le groupe {{ splitter.name }}</h1>
+        </div>
+
+
+
+
         <div class="d-flex justify-content-between align-items-center my-3">
-            <h1 class="m-0">{{ splitter.name }}</h1>
-{#            <div class="d-flex align-items-center gap-4">#}
-{#                <a class="nav-link" href=""><i class="bi bi-share-fill"></i></a>#}
-{#                {% if splitter.owner in app.user.members %}#}
-{#                    <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}"><i class="bi bi-pencil-square"></i></a>#}
-{#                    <twig:Form:DeleteForm#}
-{#                            entity='splitter'#}
-{#                            id='{{ splitter.id }}'#}
-{#                            title="Supprimer le splitter"#}
-{#                    />#}
-{#                {% endif %}#}
-{#            </div>#}
+            <h2 class="m-0">Saisir le mail de la personne que vous souhaitez inviter :</h2>
         </div>
 
         <div>
