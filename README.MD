@@ -29,13 +29,28 @@ Cette application permet de **gérer les dépenses entre plusieurs personnes** d
     - `TwigComponent`
 - **AssetMapper**
 - **SASS** + **Bootstrap**
-- **PWA ready**
+- **PWA ready** (manifest, service worker)
 - **GrumPHP** avec :
     - `phpmd`
     - `phpstan`
     - `phpcs`
     - `php-cs-fixer`
     - `twigcs`
+- **Docker & Docker Compose**
+  - `Base de données MySQL`
+  - `**Mailer** avec Mailpit pour les notifications`
+- **Fichier Makefile** pour simplifier les commandes
+
+## 🚀 Fonctionnalités principales
+
+- Création et gestion de groupes de dépenses ("splitters")
+- Ajout, édition et suppression de dépenses
+- Répartition automatique des soldes et calcul des remboursements
+- Gestion des membres (invitation, partage de lien)
+- Vue historique et synthèse par date ou par membre
+- Interface responsive et moderne (mode clair/foncé)
+- Export, notifications mail, PWA (offline, installable)
+
 
 ## 🚀 Installation
 
@@ -52,6 +67,17 @@ Copiez le fichier `.env` vers `.env.local` :
 
 ```bash
 cp .env .env.local
+# puis éditez .env.local
+```
+
+#### 🔑 Exemple de configuration (.env)
+
+```
+# Extrait (à adapter)
+APP_ENV=dev
+APP_SECRET=xxxxxxx
+DATABASE_URL="mysql://user:pass@db:3306/splitter?serverVersion=8.0"
+MAILER_DSN=smtp://mailpit:1025
 ```
 
 Dans ce fichier `.env.local`, configurez :
@@ -59,53 +85,40 @@ Dans ce fichier `.env.local`, configurez :
 - les paramètres de **connexion à la base de données**
 - les **informations de mailer** (voir plus bas avec Mailpit)
 
-### Étape 3 : Lancer les services Docker
+### Étape 3 : Installation du projet
 
-Assurez-vous d’avoir Docker installé, puis lancez les services :
-
+Assurez-vous d’avoir Docker installé, puis lancez :
 ```bash
-docker compose up -d
+make setup
 ```
-
 Décommentez le service `mailpit` dans le fichier `docker-compose.override.yml` si nécessaire.
 
-### Étape 4 : Lancer le serveur Symfony
+### Étape 4 : Démarrage des services (dev)
 
 ```bash
-symfony server:start
+make start
 ```
 
-### Étape 5 : Compiler les assets
-
-- En mode développement :
+### Étape 5 : En mode production
 
 ```bash
-php bin/console sass:build --watch
+make prod-deploy
 ```
 
-- En mode production :
+## 🧪 Tests & Qualité
 
+- Lancer les tests :
+  ```bash
+  make tests
+  ```
+- Linter le code :
+  ```bash
+  make lint
+  ```
+- Lancer GrumPHP pour vérifier la qualité du code avant chaque commit :
 ```bash
-php bin/console sass:build
-php bin/console asset-map:compile
-```
-
-### Étape 6 : Charger les fixtures
-
-Un script `fixtures.sh` est disponible :
-
-```bash
-./fixtures.sh
-```
-
-Contenu du script :
-
-```bash
-php bin/console d:d:d -f
-php bin/console d:d:c
-php bin/console d:m:m --no-interaction
-php bin/console d:f:l --no-interaction
-```
+make grumphp-run
+ ```
 
 ## 📬 Configuration du mailer avec Mailpit
 
@@ -163,6 +176,11 @@ Les hooks sont lancés automatiquement avant chaque commit.
 - Installation sur mobile/tablette
 - Mode hors-ligne
 - Chargement rapide via service worker
+
+## 👥 Auteurs / Contributeurs
+
+- Florent Vasseur (Florent-V)
+
 
 ## 🤝 Contribuer
 
