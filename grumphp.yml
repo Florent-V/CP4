@@ -3,10 +3,7 @@ grumphp:
         composer:
             file: ./composer.json
         phpversion:
-            project: '8.2'
-        phpcpd:
-            directory: [ 'src' ]
-            exclude: [ 'src/DataFixtures', 'vendor' ]
+            project: '8.3'
         phpcs:
             standard: PSR12
             ignore_patterns: [ 'migrations']
