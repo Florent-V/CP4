@@ -10,7 +10,6 @@
 import './styles/app.scss';
 
 // start the Stimulus application
-import './bootstrap.js';
 //Icons From Bootstrap
 //Bootstrap https://getbootstrap.com/
 import './vendor/bootstrap/bootstrap.index.js';
