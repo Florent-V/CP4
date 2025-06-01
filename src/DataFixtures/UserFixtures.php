@@ -13,8 +13,9 @@ class UserFixtures extends Fixture
 {
     public static int $userIndex = 0;
 
-    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
-    {
+    public function __construct(
+        private readonly UserPasswordHasherInterface $passwordHasher
+    ) {
     }
 
     public function load(ObjectManager $manager): void
@@ -66,6 +67,27 @@ class UserFixtures extends Fixture
             $manager->persist($appUser);
             $this->addReference('appUser_' . $i, $appUser);
         }
+
+        $notVerifiedUser = new User();
+        $notVerifiedAppUser = new AppUser();
+        $notVerifiedUser->setPseudo('NotVerifiedUser');
+        $notVerifiedUser->setFirstName('Not');
+        $notVerifiedUser->setLastName('Verified');
+        $notVerifiedUser->setEmail('notverified@mail.fr');
+        $notVerifiedUser->setPhone($faker->phoneNumber());
+        $notVerifiedUser->setIsVerified(false);
+        $notVerifiedUser->setRoles((array)'ROLE_USER');
+        $notVerifiedUser->setAppUser($notVerifiedAppUser);
+
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $notVerifiedUser,
+            'motdepasse'
+        );
+        $notVerifiedUser->setPassword($hashedPassword);
+
+        $manager->persist($notVerifiedUser);
+        $manager->persist($notVerifiedAppUser);
+
         $manager->flush();
     }
 }

@@ -9,6 +9,7 @@
     "php": ">=8.3",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "doctrine/dbal": "^3",
     "doctrine/doctrine-bundle": "^2.8",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/orm": "^3.3",
@@ -128,6 +129,7 @@
     "symfony/phpunit-bridge": "^7.3",
     "symfony/stopwatch": "7.3.*",
     "symfony/web-profiler-bundle": "7.3.*",
-    "symplify/phpstan-rules": "^14.6.9"
+    "symplify/phpstan-rules": "^14.6.9",
+    "zenstruck/browser": "^1.9"
   }
 }
