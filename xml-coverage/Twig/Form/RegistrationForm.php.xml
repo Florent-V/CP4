@@ -1,0 +1,777 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="RegistrationForm.php" path="/Twig/Form">
+    <totals>
+      <lines total="90" comments="3" code="87" executable="30" executed="30" percent="100.00"/>
+      <methods count="3" tested="3" percent="100.00"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="1" percent="100.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Twig\Form\RegistrationForm" start="22" executable="30" executed="30" crap="4">
+      <namespace name="App\Twig\Form"/>
+      <method name="instantiateForm" signature="instantiateForm(): FormInterface" start="37" end="40" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="hasValidationErrors" signature="hasValidationErrors(): bool" start="42" end="45" crap="2" executable="1" executed="1" coverage="100"/>
+      <method name="save" signature="save(UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, EmailVerifier $emailVerifier): Response" start="47" end="88" crap="1" executable="28" executed="28" coverage="100"/>
+    </class>
+    <coverage>
+      <line nr="39">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="44">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="53">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="56">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="57">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="58">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="59">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="60">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="61">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="64">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="65">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="66">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="67">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="68">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="69">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="71">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="74">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="75">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="77">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="78">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="79">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="80">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="81">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="84">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="87">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="62">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="63">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="76">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="82">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+      <line nr="85">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+      </line>
+    </coverage>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2"/>
+      <line no="3">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Twig\Form</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="4"/>
+      <line no="5">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Entity\AppUser</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Entity\User</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Form\RegistrationFormType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Security\EmailVerifier</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="9">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Doctrine\ORM\EntityManagerInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="10">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Bridge\Twig\Mime\TemplatedEmail</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="11">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Bundle\FrameworkBundle\Controller\AbstractController</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="12">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Form\FormInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="13">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\HttpFoundation\Response</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="14">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Mime\Address</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="15">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="16">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\UX\LiveComponent\Attribute\AsLiveComponent</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="17">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\UX\LiveComponent\Attribute\LiveAction</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="18">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\UX\LiveComponent\Attribute\LiveProp</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="19">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\UX\LiveComponent\ComponentWithFormTrait</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="20">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\UX\LiveComponent\DefaultActionTrait</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="21"/>
+      <line no="22">
+        <token name="T_ATTRIBUTE">#[</token>
+        <token name="T_STRING">AsLiveComponent</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'registration_form'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_SQUARE">]</token>
+      </line>
+      <line no="23">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">RegistrationForm</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EXTENDS">extends</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">AbstractController</token>
+      </line>
+      <line no="24">
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="25">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">ComponentWithFormTrait</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="26">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">DefaultActionTrait</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="27"/>
+      <line no="28">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_ATTRIBUTE">#[</token>
+        <token name="T_STRING">LiveProp</token>
+        <token name="T_CLOSE_SQUARE">]</token>
+      </line>
+      <line no="29">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">bool</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$isSuccessful</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">false</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="30"/>
+      <line no="31">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_ATTRIBUTE">#[</token>
+        <token name="T_STRING">LiveProp</token>
+        <token name="T_CLOSE_SQUARE">]</token>
+      </line>
+      <line no="32">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">bool</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$isSubmitted</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">false</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="33"/>
+      <line no="34">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_ATTRIBUTE">#[</token>
+        <token name="T_STRING">LiveProp</token>
+        <token name="T_CLOSE_SQUARE">]</token>
+      </line>
+      <line no="35">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">User</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">null</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="36"/>
+      <line no="37">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PROTECTED">protected</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">instantiateForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">FormInterface</token>
+      </line>
+      <line no="38">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="39">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">createForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">RegistrationFormType</token>
+        <token name="T_DOUBLE_COLON">::</token>
+        <token name="T_CLASS">class</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">user</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="40">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="41"/>
+      <line no="42">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">hasValidationErrors</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">bool</token>
+      </line>
+      <line no="43">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="44">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">isSubmitted</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_BOOLEAN_AND">&amp;&amp;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EXCLAMATION_MARK">!</token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">isValid</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="45">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="46"/>
+      <line no="47">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_ATTRIBUTE">#[</token>
+        <token name="T_STRING">LiveAction</token>
+        <token name="T_CLOSE_SQUARE">]</token>
+      </line>
+      <line no="48">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">save</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="49">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">UserPasswordHasherInterface</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$userPasswordHasher</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="50">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">EntityManagerInterface</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="51">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">EmailVerifier</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$emailVerifier</token>
+      </line>
+      <line no="52">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Response</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="53">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">submitForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="54"/>
+      <line no="55">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_DOC_COMMENT">/** @var User $user */</token>
+      </line>
+      <line no="56">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getData</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="57">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$appUser</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">AppUser</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="58">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setPassword</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="59">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_VARIABLE">$userPasswordHasher</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">hashPassword</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="60">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="61">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">get</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'plainPassword'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getData</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="62">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="63">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="64">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setAppUser</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$appUser</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="65">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setRoles</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_ARRAY_CAST">(array)</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'ROLE_USER'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="66">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">resetForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="67">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">persist</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="68">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">persist</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$appUser</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="69">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">flush</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="70"/>
+      <line no="71">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">isSuccessful</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">true</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="72"/>
+      <line no="73">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">// generate a signed url and email it to the user</token>
+      </line>
+      <line no="74">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$emailVerifier</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">sendEmailConfirmation</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="75">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'app_verify_email'</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="76">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="77">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">TemplatedEmail</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="78">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">to</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$user</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getEmail</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="79">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">from</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Address</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'florent@f5t.fr'</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'Florent Vasseur'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="80">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">subject</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'Please Confirm your Email'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="81">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">htmlTemplate</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'registration/confirmation_email.html.twig'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="82">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="83">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">// do anything else you need here, like send an email</token>
+      </line>
+      <line no="84">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">addFlash</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'success'</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'Votre compte a bien &#xE9;t&#xE9; cr&#xE9;&#xE9; ! Un mail vous a &#xE9;t&#xE9; envoy&#xE9;</token>
+      </line>
+      <line no="85">
+        <token name="T_CONSTANT_ENCAPSED_STRING">            pour valider votre compte et confirmer l\'adresse mail'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="86"/>
+      <line no="87">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">redirectToRoute</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'app_login'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="88">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="89">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="90"/>
+    </source>
+  </file>
+</phpunit>

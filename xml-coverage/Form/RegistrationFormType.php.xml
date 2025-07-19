@@ -1,0 +1,798 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="RegistrationFormType.php" path="/Form">
+    <totals>
+      <lines total="64" comments="3" code="61" executable="36" executed="36" percent="100.00"/>
+      <methods count="2" tested="2" percent="100.00"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="1" percent="100.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Form\RegistrationFormType" start="15" executable="36" executed="36" crap="2">
+      <namespace name="App\Form"/>
+      <method name="buildForm" signature="buildForm(FormBuilderInterface $builder, array $options): void" start="17" end="55" crap="1" executable="33" executed="33" coverage="100"/>
+      <method name="configureOptions" signature="configureOptions(OptionsResolver $resolver): void" start="57" end="62" crap="1" executable="3" executed="3" coverage="100"/>
+    </class>
+    <coverage>
+      <line nr="20">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="21">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="22">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="23">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="24">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="25">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="26">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="28">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="29">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="33">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="36">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="43">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="44">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="46">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="47">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="48">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="50">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="59">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="60">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="19">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="27">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="30">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="31">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="32">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="37">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="38">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="39">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="40">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="41">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="42">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="45">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="51">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="52">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="53">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="54">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="61">
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+    </coverage>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2"/>
+      <line no="3">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Form</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="4"/>
+      <line no="5">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Entity\User</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Form\AbstractType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Form\Extension\Core\Type\CheckboxType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Form\Extension\Core\Type\PasswordType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="9">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Form\FormBuilderInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="10">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\OptionsResolver\OptionsResolver</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="11">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Validator\Constraints\IsTrue</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="12">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Validator\Constraints\Length</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="13">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Validator\Constraints\NotBlank</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="14"/>
+      <line no="15">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">RegistrationFormType</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EXTENDS">extends</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">AbstractType</token>
+      </line>
+      <line no="16">
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="17">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">buildForm</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">FormBuilderInterface</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$builder</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_ARRAY">array</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$options</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">void</token>
+      </line>
+      <line no="18">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="19">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$builder</token>
+      </line>
+      <line no="20">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'pseudo'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="21">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'firstName'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="22">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'lastName'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="23">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'phone'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="24">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'email'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="25">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'agreeTerms'</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">CheckboxType</token>
+        <token name="T_DOUBLE_COLON">::</token>
+        <token name="T_CLASS">class</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_SQUARE">[</token>
+      </line>
+      <line no="26">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'mapped'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">false</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="27">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'constraints'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_SQUARE">[</token>
+      </line>
+      <line no="28">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">IsTrue</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="29">
+        <token name="T_WHITESPACE">                        </token>
+        <token name="T_STRING">message</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'Your custom error message'</token>
+      </line>
+      <line no="30">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="31">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="32">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="33">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'plainPassword'</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">PasswordType</token>
+        <token name="T_DOUBLE_COLON">::</token>
+        <token name="T_CLASS">class</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_SQUARE">[</token>
+      </line>
+      <line no="34">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_COMMENT">// instead of being set onto the object directly,</token>
+      </line>
+      <line no="35">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_COMMENT">// this is read and encoded in the controller</token>
+      </line>
+      <line no="36">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'mapped'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">false</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="37">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'always_empty'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">false</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="38">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'attr'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_SQUARE">[</token>
+      </line>
+      <line no="39">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'autocomplete'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'new-password'</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="40">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'placeholder'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'*****'</token>
+      </line>
+      <line no="41">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="42">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'constraints'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_SQUARE">[</token>
+      </line>
+      <line no="43">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">NotBlank</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="44">
+        <token name="T_WHITESPACE">                        </token>
+        <token name="T_STRING">message</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'Please enter a password'</token>
+      </line>
+      <line no="45">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="46">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Length</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="47">
+        <token name="T_WHITESPACE">                        </token>
+        <token name="T_STRING">min</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_LNUMBER">6</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="48">
+        <token name="T_WHITESPACE">                        </token>
+        <token name="T_STRING">minMessage</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'Your password should be at least {{ limit }} characters'</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="49">
+        <token name="T_WHITESPACE">                        </token>
+        <token name="T_COMMENT">// max length allowed by Symfony for security reasons</token>
+      </line>
+      <line no="50">
+        <token name="T_WHITESPACE">                        </token>
+        <token name="T_STRING">max</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_LNUMBER">4096</token>
+      </line>
+      <line no="51">
+        <token name="T_WHITESPACE">                    </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="52">
+        <token name="T_WHITESPACE">                </token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="53">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="54">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="55">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="56"/>
+      <line no="57">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">configureOptions</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">OptionsResolver</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$resolver</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">void</token>
+      </line>
+      <line no="58">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="59">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$resolver</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setDefaults</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_OPEN_SQUARE">[</token>
+      </line>
+      <line no="60">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'data_class'</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_DOUBLE_ARROW">=&gt;</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">User</token>
+        <token name="T_DOUBLE_COLON">::</token>
+        <token name="T_CLASS">class</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="61">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="62">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="63">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="64"/>
+    </source>
+  </file>
+</phpunit>

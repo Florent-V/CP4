@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="AuthenticationEntryPoint.php" path="/Security">
+    <totals>
+      <lines total="30" comments="2" code="28" executable="4" executed="4" percent="100.00"/>
+      <methods count="2" tested="2" percent="100.00"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="1" percent="100.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Security\AuthenticationEntryPoint" start="11" executable="4" executed="4" crap="2">
+      <namespace name="App\Security"/>
+      <method name="__construct" signature="__construct(UrlGeneratorInterface $urlGenerator)" start="15" end="18" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="start" signature="start(Request $request, AuthenticationException $authException): RedirectResponse" start="20" end="28" crap="1" executable="3" executed="3" coverage="100"/>
+    </class>
+    <coverage>
+      <line nr="17">
+        <covered by="App\Tests\Functional\Controller\HomeControllerTest::testRedirectIfNotLoggedIn"/>
+        <covered by="App\Tests\Functional\Controller\HomeControllerTest::testIndexPageForLoggedUser"/>
+        <covered by="App\Tests\Functional\Controller\LoginControllerTest::testLoginPage"/>
+        <covered by="App\Tests\Functional\Controller\LoginControllerTest::testLoginPageRendersSuccessfullyBis"/>
+        <covered by="App\Tests\Functional\Controller\LoginControllerTest::testLoginPageDisplaysBadCredentialsError"/>
+        <covered by="App\Tests\Functional\Controller\LoginControllerTest::testLoginPageDisplaysNotVerifiedError"/>
+        <covered by="App\Tests\Functional\Controller\LoginControllerTest::testCsrfTokenIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterPageRendersSuccessfullyAndFormIsPresent"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithValidData"/>
+        <covered by="App\Tests\Functional\Controller\RegistrationControllerTest::testRegisterUserWithInvalidData"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testInitialRender"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testFormRendering"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testValidationErrors"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testSuccessfulRegistration"/>
+        <covered by="App\Tests\LiveComponent\RegistrationFormLiveComponentTest::testDuplicateEmailValidation"/>
+      </line>
+      <line nr="24">
+        <covered by="App\Tests\Functional\Controller\HomeControllerTest::testRedirectIfNotLoggedIn"/>
+      </line>
+      <line nr="27">
+        <covered by="App\Tests\Functional\Controller\HomeControllerTest::testRedirectIfNotLoggedIn"/>
+      </line>
+      <line nr="25">
+        <covered by="App\Tests\Functional\Controller\HomeControllerTest::testRedirectIfNotLoggedIn"/>
+      </line>
+    </coverage>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2"/>
+      <line no="3">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Security</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="4"/>
+      <line no="5">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\HttpFoundation\RedirectResponse</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\HttpFoundation\Request</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Routing\Generator\UrlGeneratorInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Security\Core\Exception\AuthenticationException</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="9">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="10"/>
+      <line no="11">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">AuthenticationEntryPoint</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_IMPLEMENTS">implements</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">AuthenticationEntryPointInterface</token>
+      </line>
+      <line no="12">
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="13">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PRIVATE">private</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">UrlGeneratorInterface</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$urlGenerator</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="14"/>
+      <line no="15">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">__construct</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">UrlGeneratorInterface</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$urlGenerator</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="16">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="17">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">urlGenerator</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$urlGenerator</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="18">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="19"/>
+      <line no="20">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">start</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">Request</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$request</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">AuthenticationException</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$authException</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">null</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">RedirectResponse</token>
+      </line>
+      <line no="21">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="22">
+        <token name="T_COMMENT">// add a custom flash message and redirect to the login page</token>
+      </line>
+      <line no="23">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">// @phpstan-ignore-next-line</token>
+      </line>
+      <line no="24">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$request</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getSession</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getFlashBag</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">add</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'warning'</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'Vous devez d\'abord vous connecter</token>
+      </line>
+      <line no="25">
+        <token name="T_CONSTANT_ENCAPSED_STRING">        pour acc&#xE9;der &#xE0; cette page'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="26"/>
+      <line no="27">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">RedirectResponse</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">urlGenerator</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">generate</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'app_login'</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="28">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="29">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="30"/>
+    </source>
+  </file>
+</phpunit>
