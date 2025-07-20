@@ -175,9 +175,16 @@ cache-clear:
 	@echo "${BLUE}Vidage du cache...${RESET}"
 	$(CONSOLE) cache:clear
 
+setup-db-test:
+	@echo "${BLUE}Configuration de la base de données pour les tests...${RESET}"
+	$(CONSOLE) doctrine:database:create --env=test --if-not-exists
+	$(CONSOLE) doctrine:migrations:migrate --env=test --no-interaction
+	$(CONSOLE) doctrine:fixtures:load --env=test --no-interaction
+
 tests:
 	@echo "${BLUE}Exécution des tests...${RESET}"
-	vendor/bin/phpunit
+	php bin/phpunit -c phpunit.xml.dist --testdox
+	#vendor/bin/phpunit
 
 lint:
 	@echo "${BLUE}Vérification de la qualité du code...${RESET}"

@@ -1,4 +1,4 @@
-//import './bootstrap.js';
+import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -10,7 +10,6 @@
 import './styles/app.scss';
 
 // start the Stimulus application
-import './bootstrap.js';
 //Icons From Bootstrap
 //Bootstrap https://getbootstrap.com/
 import './vendor/bootstrap/bootstrap.index.js';
