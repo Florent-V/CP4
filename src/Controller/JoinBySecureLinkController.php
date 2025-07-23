@@ -73,7 +73,7 @@ class JoinBySecureLinkController extends AbstractController
     private function redirectWithError(string $message): Response
     {
         $this->addFlash('error', $message);
-        return $this->redirectToRoute('app_join_with_code');
+        return $this->redirectToRoute('app_home');
     }
 
     /**
