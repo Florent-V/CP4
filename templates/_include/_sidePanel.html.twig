@@ -39,7 +39,10 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a class="nav-link my-3" href="{{ path('app_splitter_join_by_code') }}">Rejoindre un groupe<i class="bi bi-box-arrow-in-right"></i></a>
+                <a class="nav-link my-3" href="{{ path('app_join_with_code') }}">
+                    <twig:ux:icon name="line-md:log-in" height="24" width="24" class="me-2"/>
+                    Rejoindre avec un code
+                </a>
                 <!-- Dark/Light mode toggle -->
                 <div class="d-flex gap-2 my-2">
                     <button id="theme-toggle" class="btn btn-outline-secondary d-flex align-items-center" type="button" title="Changer de thème">

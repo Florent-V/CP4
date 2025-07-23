@@ -38,7 +38,7 @@ class JoinWithCodeController extends AbstractController
             return $this->processJoinRequest($form, $shareCodeManager, $entityManager, $user);
         }
 
-        return $this->render('share_code/join.html.twig', [
+        return $this->render('join/join_code.html.twig', [
             'form' => $form,
         ]);
     }

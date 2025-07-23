@@ -94,29 +94,177 @@
 
         {% if app.user %}
             <!-- Modal pour partage du groupe -->
-            <div class="modal fade defaultForm" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel"
-                 aria-hidden="true">
+            <div class="modal fade share-modal" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel"
+                 aria-hidden="true"
+                 data-controller="share-modal"
+                 data-share-modal-splitter-id-value="{{ splitter.id }}"
+                 data-share-modal-entity-type-value="splitter"
+                 data-share-modal-entity-id-value="{{ splitter.id }}"
+                 data-share-modal-qr-url-value="{{ url('app_share_qr_code', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
+                 data-share-modal-email-url-value="{{ path('app_splitter_share', {'id': splitter.id}) }}"
+                 data-share-modal-splitter-name-value="{{ splitter.name }}">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div id="modal" class="modal-content">
+                    <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="shareModalLabel">Partagez votre groupe</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Fermer"></button>
+                            <h1 class="modal-title fs-5" id="shareModalLabel">
+                                <twig:ux:icon name="solar:share-bold" height="20" width="20" class="me-2"/>
+                                Partager {{ splitter.name }}
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                         </div>
-                        <div class="modal-body d-flex flex-column justify-content-between gap-2"
-                             data-controller="clipboard" data-clipboard-success-content-value="Copié !">
-                            <input class="form-control" type="text"
-                                   value="{{ url('app_splitter_guest_show', {'id': splitter.id, 'unique_id': splitter.uniqueId}) }}"
-                                   data-clipboard-target="source" readonly>
-                            <button type="button" class="btn btn-primary align-self-center mt-2" data-action="clipboard#copy"
-                                    data-clipboard-target="button">Copier
-                            </button>
+                        <div class="modal-body">
+
+                            <!-- Tuiles de partage -->
+                            <div class="share-tiles">
+
+                                <!-- Tuile Email -->
+                                <div class="share-tile share-tile-email"
+                                     data-share-modal-target="tile"
+                                     data-share-type="email"
+                                     data-action="click->share-modal#selectTile">
+                                    <div class="share-tile-content">
+                                        <div class="share-tile-icon">
+                                            <twig:ux:icon name="material-symbols:mail-outline-rounded" height="48" width="48"/>
+                                        </div>
+                                        <h5 class="share-tile-title">Partage par email</h5>
+                                        <p class="share-tile-description">
+                                            Envoyez une invitation personnalisée par email
+                                        </p>
+                                        <div class="share-tile-action">
+                                            <twig:ux:icon name="mingcute:send-plane-line" height="16" width="16" class="me-1"/>
+                                            Invitation sécurisée
+                                        </div>
+                                    </div>
+                                    <div class="share-tile-spinner">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Chargement...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tuile Code -->
+                                <div class="share-tile share-tile-code"
+                                     data-share-modal-target="tile"
+                                     data-share-type="code"
+                                     data-action="click->share-modal#selectTile">
+                                    <div class="share-tile-content">
+                                        <div class="share-tile-icon">
+                                            <twig:ux:icon name="tabler:location-code" height="48" width="48"/>
+                                        </div>
+                                        <h5 class="share-tile-title">Code à 6 chiffres</h5>
+                                        <p class="share-tile-description">
+                                            Générez un code temporaire facile à partager
+                                        </p>
+                                        <div class="share-tile-action">
+                                            <twig:ux:icon name="mdi-light:clock" height="16" width="16" class="me-1"/>
+                                            Expire en 1h
+                                        </div>
+                                    </div>
+                                    <div class="share-tile-spinner">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Génération...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tuile QR Code -->
+                                <div class="share-tile share-tile-qr"
+                                     data-share-modal-target="tile"
+                                     data-share-type="qr"
+                                     data-action="click->share-modal#selectTile">
+                                    <div class="share-tile-content">
+                                        <div class="share-tile-icon">
+                                            <twig:ux:icon name="material-symbols:qr-code-2-rounded" height="48" width="48"/>
+                                        </div>
+                                        <h5 class="share-tile-title">QR Code</h5>
+                                        <p class="share-tile-description">
+                                            Scannez pour accéder instantanément
+                                        </p>
+                                        <div class="share-tile-action">
+                                            <twig:ux:icon name="ph:device-mobile-camera" height="16" width="16" class="me-1"/>
+                                            Scan mobile
+                                        </div>
+                                    </div>
+                                    <div class="share-tile-spinner">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Génération...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Zone de résultat -->
+                            <div data-share-modal-target="result" class="share-result">
+
+                                <!-- Résultat Code -->
+                                <div id="code-result" class="share-result-content" style="display: none;">
+                                    <div class="text-center">
+                                        <h6>Votre code de partage :</h6>
+                                        <div data-share-modal-target="codeDisplay" class="share-code-display"></div>
+                                        <div data-share-modal-target="codeInfo" class="text-muted small mb-3"></div>
+                                        <button type="button" class="btn btn-primary copy-button"
+                                                data-copy-target="code"
+                                                data-action="click->share-modal#copy">
+                                            <twig:ux:icon name="solar:copy-bold" height="16" width="16" class="me-2"/>
+                                            Copier le code
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Résultat QR Code -->
+                                <div id="qr-result" class="share-result-content" style="display: none;">
+                                    <div class="text-center">
+                                        <h6>Votre QR Code :</h6>
+                                        <div data-share-modal-target="qrDisplay" class="share-qr-display"></div>
+                                        <div data-share-modal-target="qrInfo" class="text-muted small mb-3"></div>
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <button type="button" class="btn btn-primary copy-button"
+                                                    data-copy-target="url"
+                                                    data-action="click->share-modal#copy">
+                                                <twig:ux:icon name="solar:link-bold" height="16" width="16" class="me-2"/>
+                                                Copier le lien
+                                            </button>
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-action="click->share-modal#downloadQr">
+                                                <twig:ux:icon name="solar:download-bold" height="16" width="16" class="me-2"/>
+                                                Télécharger
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Résultat Email -->
+                                <div id="email-result" class="share-result-content" style="display: none;">
+                                    <div class="text-center">
+                                        <h6>Lien sécurisé généré :</h6>
+                                        <div data-share-modal-target="emailResult" class="text-muted small mb-3">
+                                            <!-- Le contenu sera injecté par JavaScript -->
+                                        </div>
+                                        <button type="button" class="btn btn-primary copy-button"
+                                                data-copy-target="url"
+                                                data-action="click->share-modal#copy">
+                                            <twig:ux:icon name="solar:link-bold" height="16" width="16" class="me-2"/>
+                                            Copier le lien
+                                        </button>
+                                        <p class="mt-3 text-success">
+                                            <twig:ux:icon name="solar:check-circle-bold" height="20" width="20" class="me-2"/>
+                                            Partagez ce lien sécurisé par email ou message !
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary">
-                                <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}"
-                                   title="Partager par mail">Partager par Mail</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary"
+                                    data-share-modal-target="resetBtn"
+                                    data-action="click->share-modal#reset"
+                                    style="display: none;">
+                                <twig:ux:icon name="solar:restart-bold" height="16" width="16" class="me-2"/>
+                                Nouveau partage
                             </button>
                         </div>
                     </div>
