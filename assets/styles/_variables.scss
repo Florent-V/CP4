@@ -21,14 +21,14 @@
   --color-danger: #e74c3c;
   --color-bg-light: #f8f9fa;
   --color-bg-dark: #212529;
-  --bs-primary: var(--color-primary);
-  --bs-secondary: var(--color-secondary);
-  --bs-success: var(--color-success);
-  --bs-info: var(--color-info);
-  --bs-warning: var(--color-warning);
-  --bs-danger: var(--color-danger);
-  --bs-light: var(--color-bg-light);
-  --bs-dark: var(--color-bg-dark);
+  --bs-primary: var(--color-primary) !important;
+  --bs-secondary: var(--color-secondary) !important;
+  --bs-success: var(--color-success) !important;
+  --bs-info: var(--color-info) !important;
+  --bs-warning: var(--color-warning) !important;
+  --bs-danger: var(--color-danger) !important;
+  --bs-light: var(--color-bg-light) !important;
+  --bs-dark: var(--color-bg-dark) !important;
 }
 [data-theme="dark"] {
   --color-bg: #1a2233;
@@ -49,26 +49,26 @@
   --color-danger: #e74c3c;
   --color-bg-light: #f8f9fa;
   --color-bg-dark: #212529;
-  --bs-primary: var(--color-primary);
-  --bs-secondary: var(--color-secondary);
-  --bs-success: var(--color-success);
-  --bs-info: var(--color-info);
-  --bs-warning: var(--color-warning);
-  --bs-danger: var(--color-danger);
-  --bs-light: var(--color-bg-light);
-  --bs-dark: var(--color-bg-dark);
+  --bs-primary: var(--color-primary) !important;
+  --bs-secondary: var(--color-secondary) !important;
+  --bs-success: var(--color-success) !important;
+  --bs-info: var(--color-info) !important;
+  --bs-warning: var(--color-warning) !important;
+  --bs-danger: var(--color-danger) !important;
+  --bs-light: var(--color-bg-light) !important;
+  --bs-dark: var(--color-bg-dark) !important;
 }
-[data-theme="light"] {
-  /* Pour forcer le light si besoin */
-  --bs-primary: var(--color-primary);
-  --bs-secondary: var(--color-secondary);
-  --bs-success: var(--color-success);
-  --bs-info: var(--color-info);
-  --bs-warning: var(--color-warning);
-  --bs-danger: var(--color-danger);
-  --bs-light: var(--color-bg-light);
-  --bs-dark: var(--color-bg-dark);
-}
+//[data-theme="light"] {
+//  /* Pour forcer le light si besoin */
+//  --bs-primary: var(--color-primary) !important;
+//  --bs-secondary: var(--color-secondary) !important;
+//  --bs-success: var(--color-success) !important;
+//  --bs-info: var(--color-info) !important;
+//  --bs-warning: var(--color-warning) !important;
+//  --bs-danger: var(--color-danger) !important;
+//  --bs-light: var(--color-bg-light) !important;
+//  --bs-dark: var(--color-bg-dark) !important;
+//}
 
 // Palette moderne et originale pour Bootstrap (SCSS, non dynamique)
 $primary: #6366f1 !default;      // Indigo vibrant

@@ -14,6 +14,38 @@ export default class extends Controller {
     connect()
     {
         this.currentShareData = {}
+        // Cache des icônes pour réutilisation
+        this.iconCache = this.cacheIcons()
+    }
+
+    /**
+     * Met en cache les icônes UX disponibles pour utilisation en JavaScript
+     */
+    cacheIcons()
+    {
+        const iconTemplates = document.getElementById('icon-templates')
+        const cache = {}
+
+        if (iconTemplates) {
+            const icons = iconTemplates.querySelectorAll('[data-icon-name]')
+            icons.forEach(icon => {
+                const iconName = icon.dataset.iconName
+                cache[iconName] = icon.cloneNode(true)
+            })
+        }
+
+        return cache
+    }
+
+    /**
+     * Récupère une icône depuis le cache
+     */
+    getIcon(iconName)
+    {
+        if (this.iconCache[iconName]) {
+            return this.iconCache[iconName].cloneNode(true)
+        }
+        return null
     }
 
     // Gestion des clics sur les tuiles
@@ -180,7 +212,6 @@ export default class extends Controller {
     {
         this.qrDisplayTarget.innerHTML = `<img src="${data.qrImage}" alt="QR Code" class="img-fluid">`
         this.qrInfoTarget.innerHTML = `
-            <strong>${this.currentShareData.entityDisplayName}</strong><br>
             Scannez avec votre téléphone
         `
         this.showResult('qr')
@@ -200,7 +231,7 @@ export default class extends Controller {
                 </div>
                 <div class="share-meta mt-3">
                     <small class="text-muted">
-                        <i class="iconify me-1" data-icon="solar:clock-circle-bold"></i>
+                        ${this.getIcon('clock')?.outerHTML || '<i class="fas fa-clock me-1"></i>'}
                         Expire le ${data.expiresAt}
                     </small>
                 </div>
@@ -268,9 +299,16 @@ export default class extends Controller {
         try {
             await navigator.clipboard.writeText(text)
 
-            // Animation de feedback
+            // Animation de feedback avec icône UX
             const originalContent = button.innerHTML
-            button.innerHTML = `<i class="iconify" data-icon="solar:check-circle-bold"></i> Copié !`
+            const checkIcon = this.getIcon('check-success')
+
+            if (checkIcon) {
+                button.innerHTML = checkIcon.outerHTML + ' Copié !'
+            } else {
+                button.innerHTML = '✓ Copié !'
+            }
+
             button.classList.add('copied')
 
             setTimeout(() => {
@@ -279,7 +317,7 @@ export default class extends Controller {
             }, 2000)
         } catch (err) {
             console.error('Erreur de copie:', err)
-            alert('Erreur lors de la copie')
+            alert('❌ Erreur lors de la copie')
         }
     }
 
