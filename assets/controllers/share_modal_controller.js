@@ -6,8 +6,9 @@ export default class extends Controller {
         splitterId: String,
         entityType: String,
         entityId: String,
+        codeUrl: String,
         qrUrl: String,
-        emailUrl: String,
+        linkUrl: String,
         splitterName: String
     }
 
@@ -79,7 +80,7 @@ export default class extends Controller {
     async handleCodeShare(tile)
     {
         try {
-            const response = await fetch(`/api/share/code/${this.entityTypeValue}/${this.entityIdValue}`, {
+            const response = await fetch(this.codeUrlValue, {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -113,7 +114,7 @@ export default class extends Controller {
     async handleEmailShare(tile)
     {
         try {
-            const response = await fetch(`/api/share/link/${this.entityTypeValue}/${this.entityIdValue}`, {
+            const response = await fetch(this.linkUrlValue, {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -149,22 +150,7 @@ export default class extends Controller {
     async handleQRShare(tile)
     {
         try {
-            // D'abord générer le lien sécurisé
-            const linkResponse = await fetch(`/api/share/link/${this.entityTypeValue}/${this.entityIdValue}`, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            })
-
-            const linkData = await linkResponse.json()
-
-            if (!linkData.success) {
-                throw new Error(linkData.message || 'Erreur lors de la génération du lien')
-            }
-
-            // Puis générer le QR code
+            // Générer le QR code directement
             const qrResponse = await fetch(this.qrUrlValue, {
                 method: 'GET',
                 headers: {
@@ -179,12 +165,12 @@ export default class extends Controller {
                 this.currentShareData = {
                     type: 'qr',
                     qrImage: qrData.qrImage,
-                    shareUrl: linkData.shareUrl,
-                    expiresAt: linkData.expiresAt,
-                    entityDisplayName: linkData.entityDisplayName
+                    shareUrl: qrData.shareUrl,
+                    expiresAt: qrData.expiresAt,
+                    entityDisplayName: qrData.entityDisplayName
                 }
 
-                this.showQRResult(qrData, linkData.shareUrl)
+                this.showQRResult(qrData, qrData.shareUrl)
             } else {
                 throw new Error(qrData.message || 'Erreur lors de la génération du QR code')
             }
