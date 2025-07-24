@@ -215,12 +215,10 @@ export default class extends Controller {
                         <a href="${fullUrl}" target="_blank" class="share-link">${fullUrl}</a>
                     </div>
                 </div>
-                <div class="share-meta mt-3">
-                    <small class="text-muted">
+                <small class="text-muted">
                         ${this.getIcon('clock')?.outerHTML || '<i class="fas fa-clock me-1"></i>'}
                         Expire le ${data.expiresAt}
                     </small>
-                </div>
             </div>
         `
         this.showResult('email')
@@ -353,5 +351,14 @@ export default class extends Controller {
     {
         alert('❌ ' + message)
         this.resetAllTiles()
+    }
+
+    redirectToEmailPage()
+    {
+        // Construire l'URL vers la page d'envoi d'email
+        const emailPageUrl = `/share/email/${this.entityTypeValue}/${this.entityIdValue}`
+
+        // Rediriger vers la page (la modale disparaîtra automatiquement)
+        window.location.href = emailPageUrl
     }
 }
