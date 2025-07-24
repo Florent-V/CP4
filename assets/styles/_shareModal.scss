@@ -1,7 +1,7 @@
 // Styles pour la modale de partage unifiée
 // Compatible thème clair/sombre avec variables existantes
 // Style personnalisé pour la modale de partage (shareModal)
-.modal#shareModal {
+.modal#shareModal, #shareZone {
     .modal-dialog {
         transition: box-shadow 0.3s;
         max-width: 800px;
