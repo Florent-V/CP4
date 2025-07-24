@@ -2,21 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Splitter;
-use App\Entity\User;
-use App\Form\JoinSplitterFormType;
 use App\Form\SearchBarFormType;
-use App\Form\ShareSplitterFormType;
-use App\Form\SplitterFormType;
 use App\Repository\SplitterRepository;
-use App\Service\BalanceCalculator;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/splitter')]
