@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\Share\Api;
 
+use App\Enum\Role;
 use App\Enum\ShareCodeType;
 use App\Service\ShareCodeManager;
 use App\Service\ShareEntityValidator;
@@ -10,7 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use App\Enum\Role;
 
 /**
  * Contrôleur API pour la génération de liens sécurisés
@@ -38,9 +38,13 @@ class ShareLinkController extends AbstractController
         $shareCode = $shareCodeManager->generateShareCode($entity, true, ShareCodeType::LINK);
 
         // Générer l'URL sécurisée
-        $secureUrl = $this->generateUrl('app_join_by_secure_link', [
+        $secureUrl = $this->generateUrl(
+            'app_join_by_secure_link',
+            [
             'token' => $shareCode->getCode()
-        ], UrlGeneratorInterface::ABSOLUTE_URL);
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
 
         // Formater la réponse
         $response = $validator->formatShareResponse($entity, $shareCode, 'link', [

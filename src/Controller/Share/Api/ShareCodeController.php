@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\Share\Api;
 
+use App\Enum\Role;
 use App\Enum\ShareCodeType;
 use App\Service\ShareCodeManager;
 use App\Service\ShareEntityValidator;
@@ -9,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use App\Enum\Role;
 
 /**
  * Contrôleur API pour la génération de codes de partage à 6 chiffres
