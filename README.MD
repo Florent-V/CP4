@@ -23,7 +23,7 @@ Cette application permet de **gérer les dépenses entre plusieurs personnes** d
 
 - **Symfony 7**
 - **PHP 8.2+**
-- **Doctrine ORM**
+- **Doctrine ORM** avec les extensions **Gedmo** (`Timestampable`, `Blameable`, `SoftDeleteable`) pour le suivi des données.
 - **Symfony UX** :
     - `LiveComponent`
     - `TwigComponent`
@@ -43,13 +43,16 @@ Cette application permet de **gérer les dépenses entre plusieurs personnes** d
 
 ## 🚀 Fonctionnalités principales
 
+- **Gestion complète des utilisateurs** :
+    - Inscription avec vérification d'e-mail et réinitialisation de mot de passe.
+    - Profil personnalisable avec avatar.
 - Création et gestion de groupes de dépenses ("splitters")
-- Ajout, édition et suppression de dépenses
+- Ajout, édition et suppression de dépenses avec **téléversement de justificatif (photo)**
 - Répartition automatique des soldes et calcul des remboursements
 - Gestion des membres (invitation, partage de lien)
 - Vue historique et synthèse par date ou par membre
 - Interface responsive et moderne (mode clair/foncé)
-- Export, notifications mail, PWA (offline, installable)
+- Export, notifications mail, **PWA** (offline, installable)
 
 
 ## 🚀 Installation
