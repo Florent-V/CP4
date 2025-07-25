@@ -73,10 +73,14 @@ setup: install up db-create db-migrate db-fixtures start sass-watch
 install:
 	@echo "${BLUE}Installation des dépendances...${RESET}"
 	$(COMPOSER) install
+	@echo "${BLUE}Installation des dépendances asset mapper...${RESET}"
+	$(CONSOLE) importmap:install
 
 update:
 	@echo "${BLUE}Mise à jour des dépendances...${RESET}"
 	$(COMPOSER) update
+	@echo "${BLUE}Mise à jour des dépendances asset mapper...${RESET}"
+	$(CONSOLE) importmap:update
 
 # -------------- 🎯  Gestion du serveur 🎯  --------------
 
@@ -141,6 +145,10 @@ db-fixtures:
 
 db-recreate: db-reset db-migrate db-fixtures
 	@echo "${GREEN}Base de données recréée avec succès !${RESET}"
+
+clean-code:
+	@echo "${BLUE}Nettoyage des codes de partage...${RESET}"
+	$(CONSOLE) app:cleanup-expired-share-codes
 
 # -------------- 🔁 Gestion des migrations 🔁 --------------
 
@@ -210,6 +218,7 @@ prod-deploy:
 	$(CONSOLE) d:m:m --no-interaction --no-debug
 	$(CONSOLE) sass:build
 	$(CONSOLE) asset-map:compile --env=prod
+	$(CONSOLE) messenger:consume async scheduler_default -vv
 
 # Pour éviter les conflits avec des fichiers du même nom
 .PHONY: help setup install update start stop restart up down db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build assets-watch cache-clear tests lint grumphp-run grumphp-git prod-deploy

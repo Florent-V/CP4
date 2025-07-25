@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partager {{ entity.displayName }} par email - Kopeck{% endblock %}
+
+{% block body %}
+    <main class="container-md splitterForm">
+
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <a class="nav-link" href="{{ path('app_splitter_show', {id: entityId}) }}" title="Retour">
+                <twig:ux:icon name="ep:back" height="30" width="30"/>
+            </a>
+            <div class="text-center flex-fill">
+                <twig:ux:icon name="material-symbols:mail-outline-rounded" height="64" width="64" class="text-primary mb-3"/>
+                <h1 class="h2 mb-0">Partager par email</h1>
+            </div>
+            <div style="width: 30px;"></div> <!-- Espaceur pour équilibrer -->
+        </div>
+
+        <div class="justify-content-center">
+
+            <!-- Aperçu de l'entité partagée -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">
+                        <twig:ux:icon name="heroicons:eye" height="16" width="16" class="me-1"/>
+                        Vous partagez :
+                    </h6>
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                            <twig:ux:icon name="tabler:receipt-2" height="24" width="24" class="text-white"/>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">{{ entity.displayName }}</h5>
+                            <small class="text-muted">
+                                {{ entityType|title }} • Partagé par {{ app.user.firstName ~ ' ' ~ app.user.lastName }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulaire principal -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {{ form_start(form, {
+                        'attr': {
+                            'class': 'needs-validation',
+                            'novalidate': true
+                        }
+                    }) }}
+
+                    <!-- Champ Email -->
+                    <div class="mb-4">
+                        {{ form_row(form.email, {
+                            label_attr: {'class': 'form-label fw-semibold'},
+                            attr: {
+                                placeholder: 'Dépense pour',
+                            },
+                            row_attr: {
+                                class: 'form-floating mb-3'
+                            }
+                        }) }}
+
+                        <div class="form-text text-muted">
+                            <twig:ux:icon name="heroicons:information-circle" height="16" width="16" class="me-1"/>
+                            Un lien sécurisé sera envoyé à cette adresse
+                        </div>
+                    </div>
+
+                    <!-- Bouton d'envoi -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <twig:ux:icon name="mingcute:send-plane-line" height="20" width="20" class="me-2"/>
+                            Envoyer l'invitation
+                        </button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <!-- Informations supplémentaires -->
+            <div class="text-center mt-4">
+                <div class="card border-0 info-card">
+                    <div class="card-body py-3">
+                        <h6 class="card-title mb-2">
+                            <twig:ux:icon name="heroicons:information-circle" height="20" width="20" class="me-2"/>
+                            À propos du partage sécurisé
+                        </h6>
+                        <small class="text-muted">
+                            Un email sera envoyé avec un lien sécurisé. Le destinataire pourra accéder directement
+                            au contenu partagé. Votre message personnalisé sera inclus dans l'email.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bouton retour -->
+            <div class="text-center mt-3">
+                <a href="{{ path('app_splitter_show', {id: entityId}) }}" class="btn btn-outline-secondary">
+                    <twig:ux:icon name="ep:back" height="16" width="16" class="me-2"/>
+                    Retour au groupe
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Validation côté client
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+{% endblock %}

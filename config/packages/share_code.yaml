@@ -1,0 +1,7 @@
+# Configuration du système de codes de partage
+parameters:
+    # Configuration du système de partage de codes
+    app.share_code.expiration_duration: 3600  # 1 heure
+    app.share_code.code_length: 6             # Codes saisie manuelle
+    app.share_code.token_length: 32           # Tokens sécurisés
+    app.share_code.max_generation_attempts: 100  # Tentatives max

@@ -13,6 +13,7 @@
     "doctrine/doctrine-bundle": "^2.8",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/orm": "^3.3",
+    "endroid/qr-code-bundle": "^6.0",
     "knplabs/knp-paginator-bundle": "^6.1",
     "phpdocumentor/reflection-docblock": "^5.3",
     "phpstan/phpdoc-parser": "^2.1",
@@ -31,6 +32,7 @@
     "symfony/http-client": "7.3.*",
     "symfony/intl": "7.3.*",
     "symfony/mailer": "7.3.*",
+    "symfony/messenger": "7.3.*",
     "symfony/mime": "7.3.*",
     "symfony/monolog-bundle": "^3.0",
     "symfony/notifier": "7.3.*",
@@ -38,6 +40,7 @@
     "symfony/property-access": "7.3.*",
     "symfony/property-info": "7.3.*",
     "symfony/runtime": "7.3.*",
+    "symfony/scheduler": "7.3.*",
     "symfony/security-bundle": "7.3.*",
     "symfony/serializer": "7.3.*",
     "symfony/stimulus-bundle": "^2.23",
@@ -66,7 +69,8 @@
     "allow-plugins": {
       "symfony/flex": true,
       "symfony/runtime": true,
-      "phpro/grumphp": true
+      "phpro/grumphp": true,
+      "endroid/installer": true
     },
     "sort-packages": true
   },

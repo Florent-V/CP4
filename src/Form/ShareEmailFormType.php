@@ -6,16 +6,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
-class ShareSplitterFormType extends AbstractType
+class ShareEmailFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class, [
-                    'label' => '@',
-                    'attr' => ['placeholder' => 'name@mail.fr'],
-                    'row_attr' => ['class' => 'input-group'],
+                'label' => 'Email du destinataire',
+                'attr' => [
+                    'placeholder' => 'email@exemple.com',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(message: 'L\'email est requis'),
+                    new Assert\Email(message: 'Format d\'email invalide')
+                ]
             ])
         ;
     }

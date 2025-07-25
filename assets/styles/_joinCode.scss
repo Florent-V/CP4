@@ -1,0 +1,49 @@
+// Style pour la page JoinCode
+.join-code-page {
+  .form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); // Fallback pour le shadow
+  }
+
+  .code-input {
+    letter-spacing: 0.2em;
+  }
+
+  @media (max-width: 576px) {
+    .code-input {
+      letter-spacing: 0.1em;
+    }
+    .code-input::placeholder {
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .text-adaptive {
+    color: var(--color-text);
+  }
+
+  .form-control::placeholder {
+    color: var(--color-text);
+    opacity: 0.7;
+  }
+
+  .btn-primary {
+    color: var(--color-card) !important;
+  }
+
+  /* Tuile "Comment ça marche ?" adaptée au thème */
+  .info-card {
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+
+    .card-title {
+      color: var(--color-text);
+    }
+
+    .text-muted {
+      color: var(--color-text) !important;
+      opacity: 0.7;
+    }
+  }
+}
