@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ExpenseFormType extends AbstractType
 {
@@ -28,18 +28,24 @@ class ExpenseFormType extends AbstractType
 
         $builder
             ->add('name')
-            ->add('pictureFile', VichFileType::class, [
+            ->add('pictureFile', VichImageType::class, [
                 'label' => 'Photo',
-                'attr' => ['placeholder' => 'photo'],
                 'required' => false,
                 'allow_delete' => true,
                 'download_uri' => true,
+                'image_uri' => true,
+                'asset_helper' => true,
+                'attr' => [
+                    'accept' => 'image/jpeg, image/png, image/gif',
+                ],
             ])
             ->add('madeAt', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('amount', MoneyType::class)
+            ->add('amount', MoneyType::class, [
+                'currency' => false,
+            ])
             ->add('paidBy', EntityType::class, [
                 'class' => Member::class,
                 'query_builder' => function (MemberRepository $memberRepository) {
