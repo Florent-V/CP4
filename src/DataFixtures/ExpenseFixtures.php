@@ -2,7 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AppUser;
 use App\Entity\Expense;
+use App\Entity\ExpenseCategory;
+use App\Entity\Member;
+use App\Entity\Splitter;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -29,19 +33,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 'expenseCategory_' . $faker->numberBetween(
                     1,
                     ExpenseCategoryFixtures::$expenseCategoryIndex
-                )
+                ),
+                ExpenseCategory::class
             )
         );
         $expense->setCreatedAt($faker->dateTime);
         $expense->setMadeAt($faker->dateTime);
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
-        $expense->setPaidBy($this->getReference('member_11'));
-        $expense->setAddedBy($this->getReference('appUser_1'));
-        $expense->setSplitter($this->getReference('splitter_1'));
-        $expense->addBeneficiary($this->getReference('member_11'));
-        $expense->addBeneficiary($this->getReference('member_21'));
-        $expense->addBeneficiary($this->getReference('member_31'));
+        $expense->setPaidBy($this->getReference('member_11', Member::class));
+        $expense->setAddedBy($this->getReference('appUser_1', AppUser::class));
+        $expense->setSplitter($this->getReference('splitter_1', Splitter::class));
+        $expense->addBeneficiary($this->getReference('member_11', Member::class));
+        $expense->addBeneficiary($this->getReference('member_21', Member::class));
+        $expense->addBeneficiary($this->getReference('member_31', Member::class));
         $manager->persist($expense);
     }
 
@@ -55,19 +60,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 'expenseCategory_' . $faker->numberBetween(
                     1,
                     ExpenseCategoryFixtures::$expenseCategoryIndex
-                )
+                ),
+                ExpenseCategory::class
             )
         );
         $expense->setCreatedAt($faker->dateTime);
         $expense->setMadeAt($faker->dateTime);
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
-        $expense->setPaidBy($this->getReference('member_21'));
-        $expense->setAddedBy($this->getReference('appUser_2'));
-        $expense->setSplitter($this->getReference('splitter_1'));
-        $expense->addBeneficiary($this->getReference('member_11'));
-        $expense->addBeneficiary($this->getReference('member_21'));
-        $expense->addBeneficiary($this->getReference('member_41'));
+        $expense->setPaidBy($this->getReference('member_21', Member::class));
+        $expense->setAddedBy($this->getReference('appUser_2', AppUser::class));
+        $expense->setSplitter($this->getReference('splitter_1', Splitter::class));
+        $expense->addBeneficiary($this->getReference('member_11', Member::class));
+        $expense->addBeneficiary($this->getReference('member_21', Member::class));
+        $expense->addBeneficiary($this->getReference('member_41', Member::class));
         $manager->persist($expense);
     }
 
@@ -81,19 +87,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 'expenseCategory_' . $faker->numberBetween(
                     1,
                     ExpenseCategoryFixtures::$expenseCategoryIndex
-                )
+                ),
+                ExpenseCategory::class
             )
         );
         $expense->setCreatedAt($faker->dateTime);
         $expense->setMadeAt($faker->dateTime);
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
-        $expense->setPaidBy($this->getReference('member_12'));
-        $expense->setAddedBy($this->getReference('appUser_1'));
-        $expense->setSplitter($this->getReference('splitter_2'));
-        $expense->addBeneficiary($this->getReference('member_12'));
-        $expense->addBeneficiary($this->getReference('member_51'));
-        $expense->addBeneficiary($this->getReference('member_61'));
+        $expense->setPaidBy($this->getReference('member_12', Member::class));
+        $expense->setAddedBy($this->getReference('appUser_1', AppUser::class));
+        $expense->setSplitter($this->getReference('splitter_2', Splitter::class));
+        $expense->addBeneficiary($this->getReference('member_12', Member::class));
+        $expense->addBeneficiary($this->getReference('member_51', Member::class));
+        $expense->addBeneficiary($this->getReference('member_61', Member::class));
         $manager->persist($expense);
     }
 
@@ -107,19 +114,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 'expenseCategory_' . $faker->numberBetween(
                     1,
                     ExpenseCategoryFixtures::$expenseCategoryIndex
-                )
+                ),
+                ExpenseCategory::class
             )
         );
         $expense->setCreatedAt($faker->dateTime);
         $expense->setMadeAt($faker->dateTime);
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
-        $expense->setPaidBy($this->getReference('member_22'));
-        $expense->setAddedBy($this->getReference('appUser_2'));
-        $expense->setSplitter($this->getReference('splitter_2'));
-        $expense->addBeneficiary($this->getReference('member_22'));
-        $expense->addBeneficiary($this->getReference('member_12'));
-        $expense->addBeneficiary($this->getReference('member_61'));
+        $expense->setPaidBy($this->getReference('member_22', Member::class));
+        $expense->setAddedBy($this->getReference('appUser_2', AppUser::class));
+        $expense->setSplitter($this->getReference('splitter_2', Splitter::class));
+        $expense->addBeneficiary($this->getReference('member_22', Member::class));
+        $expense->addBeneficiary($this->getReference('member_12', Member::class));
+        $expense->addBeneficiary($this->getReference('member_61', Member::class));
         $manager->persist($expense);
     }
 
@@ -133,19 +141,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 'expenseCategory_' . $faker->numberBetween(
                     1,
                     ExpenseCategoryFixtures::$expenseCategoryIndex
-                )
+                ),
+                ExpenseCategory::class
             )
         );
         $expense->setCreatedAt($faker->dateTime);
         $expense->setMadeAt($faker->dateTime);
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
-        $expense->setPaidBy($this->getReference('member_12'));
-        $expense->setAddedBy($this->getReference('appUser_1'));
-        $expense->setSplitter($this->getReference('splitter_2'));
-        $expense->addBeneficiary($this->getReference('member_12'));
-        $expense->addBeneficiary($this->getReference('member_22'));
-        $expense->addBeneficiary($this->getReference('member_51'));
+        $expense->setPaidBy($this->getReference('member_12', Member::class));
+        $expense->setAddedBy($this->getReference('appUser_1', AppUser::class));
+        $expense->setSplitter($this->getReference('splitter_2', Splitter::class));
+        $expense->addBeneficiary($this->getReference('member_12', Member::class));
+        $expense->addBeneficiary($this->getReference('member_22', Member::class));
+        $expense->addBeneficiary($this->getReference('member_51', Member::class));
         $manager->persist($expense);
     }
 
@@ -164,19 +173,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 'expenseCategory_' . $faker->numberBetween(
                     1,
                     ExpenseCategoryFixtures::$expenseCategoryIndex
-                )
+                ),
+                ExpenseCategory::class
             )
         );
         $expense->setCreatedAt($faker->dateTime);
         $expense->setMadeAt($faker->dateTime);
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
-        $expense->setPaidBy($this->getReference('member_32'));
-        $expense->setAddedBy($this->getReference('appUser_3'));
-        $expense->setSplitter($this->getReference('splitter_3'));
-        $expense->addBeneficiary($this->getReference('member_32'));
-        $expense->addBeneficiary($this->getReference('member_42'));
-        $expense->addBeneficiary($this->getReference('member_52'));
+        $expense->setPaidBy($this->getReference('member_32', Member::class));
+        $expense->setAddedBy($this->getReference('appUser_3', AppUser::class));
+        $expense->setSplitter($this->getReference('splitter_3', Splitter::class));
+        $expense->addBeneficiary($this->getReference('member_32', Member::class));
+        $expense->addBeneficiary($this->getReference('member_42', Member::class));
+        $expense->addBeneficiary($this->getReference('member_52', Member::class));
         $manager->persist($expense);
     }
 
@@ -190,19 +200,20 @@ class ExpenseFixtures extends Fixture implements DependentFixtureInterface
                 'expenseCategory_' . $faker->numberBetween(
                     1,
                     ExpenseCategoryFixtures::$expenseCategoryIndex
-                )
+                ),
+                ExpenseCategory::class
             )
         );
         $expense->setCreatedAt($faker->dateTime);
         $expense->setMadeAt($faker->dateTime);
         $expense->setAmount($faker->randomFloat(2, 10, 100));
         $expense->setDevise('€');
-        $expense->setPaidBy($this->getReference('member_52'));
-        $expense->setAddedBy($this->getReference('appUser_5'));
-        $expense->setSplitter($this->getReference('splitter_3'));
-        $expense->addBeneficiary($this->getReference('member_52'));
-        $expense->addBeneficiary($this->getReference('member_62'));
-        $expense->addBeneficiary($this->getReference('member_32'));
+        $expense->setPaidBy($this->getReference('member_52', Member::class));
+        $expense->setAddedBy($this->getReference('appUser_5', AppUser::class));
+        $expense->setSplitter($this->getReference('splitter_3', Splitter::class));
+        $expense->addBeneficiary($this->getReference('member_52', Member::class));
+        $expense->addBeneficiary($this->getReference('member_62', Member::class));
+        $expense->addBeneficiary($this->getReference('member_32', Member::class));
         $manager->persist($expense);
     }
 

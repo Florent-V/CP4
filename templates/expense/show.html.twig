@@ -4,73 +4,78 @@
 
 {% block body %}
 
-    <main class="expenseView container-md">
+    <main
+            class="expenseView container-md"
+    >
 
-        <div class="d-flex justify-content-between align-items-center my-3">
-            <h1>{{ expense.name }}</h1>
-
-            <div class="d-flex align-items-center gap-4">
-                {% if splitter.owner == app.user.appUser or expense.addedBy == app.user.appUser %}
-                    <a class="nav-link" href="{{ path('app_expense_edit', {'expense_id': expense.id, 'splitter_id': splitter.id}) }}" title="Editer le groupe"><i class="bi bi-pencil-square"></i></a>
-
-                    <twig:Form:DeleteForm
-                            entity='expense'
-                            id='{{ splitter.id }}'
-                            id2='{{ expense.id }}'
-                            title="Supprimer la dépense"
-                    />
-                {% endif %}
-
-                <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour">
-                    <i class="bi bi-arrow-return-left"></i>
-                </a>
-
+        <div class="splitter-header d-flex justify-content-between align-items-center my-2">
+            <a class="nav-link" href="{{ path('app_splitter_show', {'id': expense.splitter.id}) }}" title="Retour home">
+                <twig:ux:icon name="ep:back" height="24" width="24"/>
+            </a>
+            <div class="d-flex gap-3 align-items-center">
+                <twig:ux:icon name="{{ expense.category.icon }}" height="50" width="50" aria-hidden="true" />
+                <h1 class="splitter-title">{{ expense.name }}</h1>
+            </div>
+            <div class="dropdown action-menu">
+                <button class="btn btn-icon p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <twig:ux:icon name="pepicons-pencil:dots-y" height="24" width="24"/>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow">
+                    {% if splitter.owner == app.user.appUser or expense.addedBy == app.user.appUser %}
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" title="Editer la dépense"
+                               href="{{ path('app_expense_edit', {'expense_id': expense.id, 'splitter_id': splitter.id}) }}">
+                                <twig:ux:icon name="ic:twotone-edit" height="24" width="24"/>
+                                <span>Modifier</span>
+                            </a>
+                        </li>
+                        <li>
+                            <div style="cursor:pointer;" class="dropdown-item d-flex align-items-center gap-2">
+                                {% include 'expense/_delete_form.html.twig' %}
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
-
-
-        <div class="expenseCard">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title">Informations de la dépense</h2>
+        <div class="expense-detail">
+            <h2 class="expense-title">Informations de la dépense</h2>
+            <div class="expense-info">
+                <div class="info-item">
+                    <p class="info-label">Payé par :</p>
+                    <p class="info-value">{{ expense.paidBy.nickname }}</p>
                 </div>
-                <div class="list-group list-group-flush">
-                    <div class="list-group-item">
-                        <p>Payé par :</p>
-                        <p>{{ expense.paidBy.nickname }}</p>
-                    </div>
-                    <div class="list-group-item">
-                        <p>Le :</p>
-                        <p>{{ expense.madeAt|date("d/m/Y") }}</p>
-                    </div>
-                    <div class="list-group-item">
-                        <p>Catégorie :</p>
-                        <p>{{ expense.category.name }}</p>
-                    </div>
-                    <div class="list-group-item">
-                        <p>Montant :</p>
-                        <p>{{ expense.amount ~ ' ' ~ expense.devise }}</p>
-                    </div>
-                    <div class="list-group-item">
-                        <p><i class="bi bi-person-fill"></i> Bénéficiaires :</p>
-                        <p>
-                            {% for beneficiary in expense.beneficiaries %}
-                                <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}
-                            {% endfor %}
+                <div class="info-item">
+                    <p class="info-label">Le :</p>
+                    <p class="info-value">{{ expense.madeAt|date("d/m/Y") }}</p>
+                </div>
+                <div class="info-item">
+                    <p class="info-label">Catégorie :</p>
+                    <p class="info-value">{{ expense.category.name }}</p>
+                </div>
+                <div class="info-item">
+                    <p class="info-label">Montant :</p>
+                    <p class="info-value">{{ expense.amount ~ ' ' ~ expense.devise }}</p>
+                </div>
+                <div class="info-item">
+                    <p class="info-label"><i class="bi bi-person-fill"></i> Bénéficiaires :</p>
+                    <p class="info-value">
+                        {% for beneficiary in expense.beneficiaries %}
+                            <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+                {% if expense.picture %}
+                    <div class="info-item">
+                        <p class="info-label">Photo :</p>
+                        <p class="info-value">
+                            <img src="{{ vich_uploader_asset(expense, 'pictureFile') }}" alt="Photo de la dépense" class="expense-photo">
                         </p>
                     </div>
-                    {% if expense.picture %}
-                        <div class="list-group-item">
-                            <p>Photo :</p>
-                            <p>
-                                <img src="{{ vich_uploader_asset(expense, 'pictureFile') }}" alt="Photo de la dépense">
-                            </p>
-                        </div>
-                    {% endif %}
-                </div>
+                {% endif %}
             </div>
-
         </div>
+
     </main>
 
 {% endblock %}

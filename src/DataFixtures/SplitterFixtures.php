@@ -2,7 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AppUser;
+use App\Entity\Member;
 use App\Entity\Splitter;
+use App\Entity\SplitterCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -23,17 +26,18 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
             'splitterCategory_' .
-            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex)
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex),
+            SplitterCategory::class
         ));
-        $group->addMember($this->getReference('member_11'));
-        $group->addMember($this->getReference('member_21'));
-        $group->addMember($this->getReference('member_31'));
-        $group->addMember($this->getReference('member_41'));
-        $group->addFavoritedByUser($this->getReference('appUser_1'));
-        $group->addFavoritedByUser($this->getReference('appUser_2'));
-        $group->addFavoritedByUser($this->getReference('appUser_3'));
-        $group->addFavoritedByUser($this->getReference('appUser_4'));
-        $group->setOwner($this->getReference('appUser_1'));
+        $group->addMember($this->getReference('member_11', Member::class));
+        $group->addMember($this->getReference('member_21', Member::class));
+        $group->addMember($this->getReference('member_31', Member::class));
+        $group->addMember($this->getReference('member_41', Member::class));
+        $group->addFavoritedByUser($this->getReference('appUser_1', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_2', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_3', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_4', AppUser::class));
+        $group->setOwner($this->getReference('appUser_1', AppUser::class));
         $manager->persist($group);
         $this->addReference('splitter_' . self::$splitExpense, $group);
 
@@ -44,17 +48,18 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
             'splitterCategory_' .
-            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex)
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex),
+            SplitterCategory::class
         ));
-        $group->addMember($this->getReference('member_12'));
-        $group->addMember($this->getReference('member_22'));
-        $group->addMember($this->getReference('member_51'));
-        $group->addMember($this->getReference('member_61'));
-        $group->addFavoritedByUser($this->getReference('appUser_1'));
-        $group->addFavoritedByUser($this->getReference('appUser_2'));
-        $group->addFavoritedByUser($this->getReference('appUser_5'));
-        $group->addFavoritedByUser($this->getReference('appUser_6'));
-        $group->setOwner($this->getReference('appUser_2'));
+        $group->addMember($this->getReference('member_12', Member::class));
+        $group->addMember($this->getReference('member_22', Member::class));
+        $group->addMember($this->getReference('member_51', Member::class));
+        $group->addMember($this->getReference('member_61', Member::class));
+        $group->addFavoritedByUser($this->getReference('appUser_1', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_2', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_5', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_6', AppUser::class));
+        $group->setOwner($this->getReference('appUser_2', AppUser::class));
         $manager->persist($group);
         $this->addReference('splitter_' . self::$splitExpense, $group);
 
@@ -65,17 +70,18 @@ class SplitterFixtures extends Fixture implements DependentFixtureInterface
         $group->setUniqueId(md5(uniqid(strval(time()), true)));
         $group->setCategory($this->getReference(
             'splitterCategory_' .
-            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex)
+            $faker->numberBetween(1, SplitterCategoryFixtures::$splitCategoryIndex),
+            SplitterCategory::class
         ));
-        $group->addMember($this->getReference('member_42'));
-        $group->addMember($this->getReference('member_52'));
-        $group->addMember($this->getReference('member_62'));
-        $group->addMember($this->getReference('member_32'));
-        $group->addFavoritedByUser($this->getReference('appUser_3'));
-        $group->addFavoritedByUser($this->getReference('appUser_4'));
-        $group->addFavoritedByUser($this->getReference('appUser_5'));
-        $group->addFavoritedByUser($this->getReference('appUser_6'));
-        $group->setOwner($this->getReference('appUser_3'));
+        $group->addMember($this->getReference('member_42', Member::class));
+        $group->addMember($this->getReference('member_52', Member::class));
+        $group->addMember($this->getReference('member_62', Member::class));
+        $group->addMember($this->getReference('member_32', Member::class));
+        $group->addFavoritedByUser($this->getReference('appUser_3', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_4', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_5', AppUser::class));
+        $group->addFavoritedByUser($this->getReference('appUser_6', AppUser::class));
+        $group->setOwner($this->getReference('appUser_3', AppUser::class));
         $manager->persist($group);
         $this->addReference('splitter_' . self::$splitExpense, $group);
 

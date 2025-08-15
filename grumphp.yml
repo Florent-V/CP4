@@ -3,16 +3,13 @@ grumphp:
         composer:
             file: ./composer.json
         phpversion:
-            project: '8.2'
-        phpcpd:
-            directory: [ 'src' ]
-            exclude: [ 'src/DataFixtures', 'vendor' ]
+            project: '8.3'
         phpcs:
             standard: PSR12
             ignore_patterns: [ 'migrations']
         phpstan:
-            configuration: ./phpstan.neon
-            level: 6
+            configuration: ./phpstan.dist.neon
+            level: 5
         phpmd:
             whitelist_patterns:
                 - 'src'

@@ -4,69 +4,290 @@
 
 {% block body %}
 
-    <main class="splitterView container-md">
+    <main
+            {{ stimulus_controller('splitterTabs') }}
+            class="splitterView container-md"
+    >
+
         <!-- Header : title + icons -->
-        <div class="d-flex justify-content-between align-items-center my-3">
-            <h1 class="m-0">{{ splitter.name }}</h1>
-
-            <div class="d-flex align-items-center gap-4">
-
-                {% if not app.user or (splitter not in app.user.appUser.favoriteSplitters)  %}
-                    <div>
-                        <button type="button" class="btn btn-info">
-                            <a class="nav-link" href="{{ path('app_splitter_join', {'id': splitter.id}) }}" title="Rejoindre">Rejoindre</a>
-                        </button>
-                    </div>
-                {% endif %}
-                {% if app.user %}
-                    {% if splitter in app.user.appUser.favoriteSplitters %}
-                        <a class="nav-link" href="{{ path('app_splitter_leave', {'id': splitter.id}) }}" title="Quitter le Splitter"><i class="bi bi-box-arrow-right"></i></a>
-                    {% endif %}
-
-                    <a class="nav-link" href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}" title="ajouter une dépense"><i class="bi bi-bag-plus-fill"></i></a>
-
-                    <div style="cursor:pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="bi bi-share-fill"></i>
-                    </div>
-
-                    {% if splitter.owner == app.user.appUser %}
-                        <a class="nav-link" href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" title="Editer le splitter"><i class="bi bi-pencil-square"></i></a>
-                        <twig:Form:DeleteForm
-                                entity='splitter'
-                                id='{{ splitter.id }}'
-                                title="Supprimer le groupe"
-                        />
-                    {% endif %}
-                    <a class="nav-link" href="{{ path('app_splitter_show_history', {'id': splitter.id}) }}" title="Voir historique">
-                        {{ ux_icon('material-symbols:history', {height: '1.3rem', width: '1.3rem', 'aria-hidden': true}) }}
-                    </a>
-
-                    <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
-                        <i class="bi bi-arrow-return-left"></i>
-                    </a>
-
-                {% endif %}
+        <div class="splitter-header d-flex justify-content-between align-items-center my-2">
+            <a class="nav-link" href="{{ path('app_home') }}" title="Retour home">
+                <twig:ux:icon name="ep:back" height="24" width="24"/>
+            </a>
+            <div class="d-flex gap-3 align-items-center">
+                <twig:ux:icon name="{{ splitter.category.icon }}" height="50" width="50" aria-hidden="true"/>
+                <h1 class="splitter-title">{{ splitter.name }}</h1>
             </div>
-
+            <div class="dropdown action-menu">
+                <button class="btn btn-icon p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <twig:ux:icon name="pepicons-pencil:dots-y" height="24" width="24"/>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow">
+                    {% if not app.user or (splitter not in app.user.appUser.favoriteSplitters) %}
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" title="Rejoindre"
+                               href="{{ path('app_splitter_join', {'id': splitter.id}) }}">
+                                <i class="bi bi-pencil"></i> <span>Rejoindre</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if app.user %}
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" title="ajouter une dépense"
+                               href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}">
+                                <twig:ux:icon name="icon-park-twotone:add-web" height="24" width="24"/>
+                                <span>Ajouter une dépense</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" title="Voir historique"
+                               href="{{ path('app_splitter_show_history', {'id': splitter.id}) }}">
+                                <twig:ux:icon name="material-symbols:history-rounded" height="24" width="24"/>
+                                <span>Historique</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" title="Voir historique"
+                               href="{{ path('app_splitter_affect', {'id': splitter.id}) }}">
+                                <twig:ux:icon name="tdesign:member" height="24" width="24"/>
+                                <span>Sélectionner qui je suis</span>
+                            </a>
+                        </li>
+                        <li>
+                            <div style="cursor:pointer;" class="dropdown-item d-flex align-items-center gap-2"
+                                 data-bs-toggle="modal" data-bs-target="#shareModal">
+                                <twig:ux:icon name="material-symbols:share-outline" height="24" width="24"/>
+                                <span>Partager le groupe</span>
+                            </div>
+                        </li>
+                        {% if splitter.owner == app.user.appUser %}
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center gap-2" title="Editer le splitter"
+                                   href="{{ path('app_splitter_edit', {'id': splitter.id}) }}">
+                                    <twig:ux:icon name="ic:twotone-edit" height="24" width="24"/>
+                                    <span>Modifier</span>
+                                </a>
+                            </li>
+                            <li>
+                                <div style="cursor:pointer;" class="dropdown-item d-flex align-items-center gap-2">
+                                    <twig:Form:DeleteForm
+                                            entity='splitter'
+                                            id='{{ splitter.id }}'
+                                            title="Supprimer le groupe"
+                                            label="Supprimer"
+                                    />
+{#                                    <span>Supprimer</span>#}
+                                </div>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" title="Quitter le Splitter"
+                               href="{{ path('app_splitter_leave', {'id': splitter.id}) }}">
+                                <twig:ux:icon name="mingcute:exit-line" height="24" width="24"/>
+                                <span>Quitter le groupe</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
 
         {% if app.user %}
             <!-- Modal pour partage du groupe -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade share-modal" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel"
+                 aria-hidden="true"
+                 data-controller="share-modal"
+                 data-share-modal-splitter-id-value="{{ splitter.id }}"
+                 data-share-modal-entity-type-value="splitter"
+                 data-share-modal-entity-id-value="{{ splitter.id }}"
+                 data-share-modal-code-url-value="{{ url('api_share_code', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
+                 data-share-modal-qr-url-value="{{ url('api_share_qr_code', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
+                 data-share-modal-link-url-value="{{ url('api_share_link', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
+                 data-share-modal-splitter-name-value="{{ splitter.name }}"
+            >
                 <div class="modal-dialog modal-dialog-centered">
-                    <div id="modal" class="modal-content">
+                    <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Partagez votre groupe</h1>
+                            <h1 class="modal-title fs-5" id="shareModalLabel">
+                                <twig:ux:icon name="solar:share-bold" height="20" width="20" class="me-2"/>
+                                Partager {{ splitter.name }}
+                            </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                         </div>
-                        <div class="modal-body d-flex flex-column justify-content-between gap-2" data-controller="clipboard" data-clipboard-success-content-value="Copié !">
-                            <input class="form-control" type="text" value="{{ url('app_splitter_guest_show', {'id': splitter.id, 'unique_id': splitter.uniqueId}) }}" data-clipboard-target="source" readonly>
-                            <button type="button" class="btn btn-primary align-self-center" data-action="clipboard#copy" data-clipboard-target="button">Copier</button>
+                        <div class="modal-body">
+
+                            <!-- Tuiles de partage -->
+                            <div class="share-tiles">
+
+                                <!-- Tuile Lien Sécurisé (ancienne tuile email) -->
+                                <div class="share-tile share-tile-email"
+                                     data-share-modal-target="tile"
+                                     data-share-type="email"
+                                     data-action="click->share-modal#selectTile">
+                                    <div class="share-tile-content">
+                                        <div class="share-tile-icon">
+                                            <twig:ux:icon name="heroicons:link" height="48" width="48"/>
+                                        </div>
+                                        <h5 class="share-tile-title">Lien sécurisé</h5>
+                                        <p class="share-tile-description">
+                                            Générez un lien temporaire et sécurisé
+                                        </p>
+                                        <div class="share-tile-action">
+                                            <twig:ux:icon name="heroicons:shield-check" height="16" width="16" class="me-1"/>
+                                            Lien unique
+                                        </div>
+                                    </div>
+                                    <div class="share-tile-spinner">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Génération...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tuile Code -->
+                                <div class="share-tile share-tile-code"
+                                     data-share-modal-target="tile"
+                                     data-share-type="code"
+                                     data-action="click->share-modal#selectTile">
+                                    <div class="share-tile-content">
+                                        <div class="share-tile-icon">
+                                            <twig:ux:icon name="tabler:location-code" height="48" width="48"/>
+                                        </div>
+                                        <h5 class="share-tile-title">Code à 6 chiffres</h5>
+                                        <p class="share-tile-description">
+                                            Générez un code temporaire facile à partager
+                                        </p>
+                                        <div class="share-tile-action">
+                                            <twig:ux:icon name="mdi-light:clock" height="16" width="16" class="me-1"/>
+                                            Expire en 1h
+                                        </div>
+                                    </div>
+                                    <div class="share-tile-spinner">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Génération...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tuile QR Code -->
+                                <div class="share-tile share-tile-qr"
+                                     data-share-modal-target="tile"
+                                     data-share-type="qr"
+                                     data-action="click->share-modal#selectTile">
+                                    <div class="share-tile-content">
+                                        <div class="share-tile-icon">
+                                            <twig:ux:icon name="material-symbols:qr-code-2-rounded" height="48" width="48"/>
+                                        </div>
+                                        <h5 class="share-tile-title">QR Code</h5>
+                                        <p class="share-tile-description">
+                                            Scannez pour accéder instantanément
+                                        </p>
+                                        <div class="share-tile-action">
+                                            <twig:ux:icon name="ph:device-mobile-camera" height="16" width="16" class="me-1"/>
+                                            Scan mobile
+                                        </div>
+                                    </div>
+                                    <div class="share-tile-spinner">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Génération...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tuile Email (Redirection) -->
+                                <div class="share-tile share-tile-email-redirect"
+                                     data-share-modal-target="tile"
+                                     data-share-type="email-redirect"
+                                     data-action="click->share-modal#redirectToEmailPage">
+                                    <div class="share-tile-content">
+                                        <div class="share-tile-icon">
+                                            <twig:ux:icon name="material-symbols:mail-outline-rounded" height="48" width="48"/>
+                                        </div>
+                                        <h5 class="share-tile-title">Envoyer par email</h5>
+                                        <p class="share-tile-description">
+                                            Envoyez une invitation personnalisée par email
+                                        </p>
+                                        <div class="share-tile-action">
+                                            <twig:ux:icon name="mingcute:send-plane-line" height="16" width="16" class="me-1"/>
+                                            Invitation personnalisée
+                                        </div>
+                                    </div>
+                                    <div class="share-tile-spinner">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Redirection...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Zone de résultat -->
+                            <div data-share-modal-target="result" class="share-result">
+
+                                <!-- Résultat Code -->
+                                <div id="code-result" class="share-result-content" style="display: none;">
+                                    <div class="text-center">
+                                        <h6>Votre code de partage :</h6>
+                                        <div data-share-modal-target="codeDisplay" class="share-code-display"></div>
+                                        <div data-share-modal-target="codeInfo" class="text-muted small mb-3"></div>
+                                        <button type="button" class="btn btn-primary copy-button"
+                                                data-copy-target="code"
+                                                data-action="click->share-modal#copy">
+                                            <twig:ux:icon name="solar:copy-bold" height="16" width="16" class="me-2"/>
+                                            Copier le code
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Résultat QR Code -->
+                                <div id="qr-result" class="share-result-content" style="display: none;">
+                                    <div class="text-center">
+                                        <h6>Votre QR Code :</h6>
+                                        <div data-share-modal-target="qrDisplay" class="share-qr-display"></div>
+                                        <div data-share-modal-target="qrInfo" class="text-muted small mb-3"></div>
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <button type="button" class="btn btn-primary copy-button"
+                                                    data-copy-target="url"
+                                                    data-action="click->share-modal#copy">
+                                                <twig:ux:icon name="solar:link-bold" height="16" width="16" class="me-2"/>
+                                                Copier le lien
+                                            </button>
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-action="click->share-modal#downloadQr">
+                                                <twig:ux:icon name="solar:download-bold" height="16" width="16" class="me-2"/>
+                                                Télécharger
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Résultat Email -->
+                                <div id="email-result" class="share-result-content" style="display: none;">
+                                    <div class="text-center">
+                                        <h6>Lien sécurisé généré :</h6>
+                                        <div data-share-modal-target="emailResult" class="text-muted small mb-3">
+                                            <!-- Le contenu sera injecté par JavaScript -->
+                                        </div>
+                                        <button type="button" class="btn btn-primary copy-button"
+                                                data-copy-target="url"
+                                                data-action="click->share-modal#copy">
+                                            <twig:ux:icon name="solar:link-bold" height="16" width="16" class="me-2"/>
+                                            Copier le lien
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary">
-                                <a class="nav-link" href="{{ path('app_splitter_share', {'id': splitter.id}) }}" title="Partager par mail">Partager par Mail</a>
+                            <button type="button" class="btn btn-primary"
+                                    data-share-modal-target="resetBtn"
+                                    data-action="click->share-modal#reset"
+                                    style="display: none;">
+                                <twig:ux:icon name="solar:restart-bold" height="16" width="16" class="me-2"/>
+                                Nouveau partage
                             </button>
                         </div>
                     </div>
@@ -74,105 +295,198 @@
             </div>
         {% endif %}
 
-        <p>
+        <p class="splitter-members mb-0">
             Membres :
             {% for member in splitter.members %}
                 {{ member.nickname }}{% if not loop.last %}, {% endif %}
             {% endfor %}
         </p>
 
-        <p>Description : {{ splitter.description }}</p>
+        <p class="mb-0">Description : {{ splitter.description }}</p>
 
-
-        <ul class="nav nav-tabs d-flex" id="myTab" role="tablist">
-            <li class="card nav-item" role="presentation">
-                <a class="nav-link active p-0" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">
-                    <div class="card-header">
-                        <h3 class="card-title">Dépenses</h3>
-                    </div>
-                </a>
-            </li>
-            <li class="card nav-item" role="presentation">
-                <a class="nav-link p-0" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">
-                    <div class="card-header">
-                        <h3 class="card-title">Balance</h3>
-                    </div>
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                <div class="expenseCard">
-                    <div class="card mb-4">
-                        <ul class="list-group list-group-flush">
-                            {% for expense in splitter.expenses|sort((a, b) => b.madeAt <=> a.madeAt) %}
-                                <li class="list-group-item expenseItemList">
-                                    <div class="expenseDate">
-                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
-                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
-                                    </div>
-                                    <div class="expenseInfos flex-grow-1">
-                                        <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>
-                                        <p>
-                                            <i class="bi bi-person-fill"></i>Bénéficiaires :
-                                            {% for beneficiary in expense.beneficiaries %}
-                                                <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}
-                                            {% endfor %}
-                                        </p>
-                                    </div>
-                                    <div class="expenseAmount">
-                                        <span>{{ expense.amount ~ expense.devise }}</span>
-                                    </div>
-                                    <a class="linkExpense" href="{{ path(('app_expense_show'), {'expense_id': expense.id, 'splitter_id': splitter.id}) }}" title="Cliquer pour éditer"></a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+        <div class="custom-tabs mb-4">
+            <div class="d-flex tab-header">
+                <div class="flex-fill tab active" data-tab="depenses">Dépenses</div>
+                <div class="flex-fill tab" data-tab="balances">Balances</div>
+                <div class="flex-fill tab" data-tab="photos">Photos</div>
             </div>
+            <div class="tab-content">
+                <div id="depenses" class="tab-pane active">
+                    <div class="expense-header">
+                        <div class="total-member">
+                            {% set current_member = get_member_for_user(splitter.members) %}
 
-            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-                <div class="balanceCard">
-                    <div class="card mb-4">
-                        <ul class="list-group list-group-flush">
-                            {% for member in splitter.members %}
-                                <li class="list-group-item balanceItemList">
-                                    <div class="memberName">
-                                        <p>{{ member.nickname }}</p>
+                            {% if current_member %}
+                                <p class="text-info text-center">
+                                    Vous avez dépensé {{ ((memberTotals[current_member.id])|default(0))|round(2) }} €
+                                </p>
+                            {% elseif app.user %}
+                                {#                                    <a #}
+                                {#                                        href="{{ path('app_splitter_affect', {'id': splitter.id}) }}" #}
+                                {#                                        class="btn btn-outline-warning" #}
+                                {#                                    > #}
+                                {#                                        Choisir un Membre #}
+                                {#                                    </a> #}
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="text-warning text-center">Aucun membre ne vous est associé.</div>
+                                    <div class="dropdown action-menu">
+                                        <button class="btn btn-outline-warning dropdown-toggle" type="button"
+                                                id="chooseMemberDropdown" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            Choisir un Membre
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow"
+                                            aria-labelledby="chooseMemberDropdown">
+                                            {% for member in splitter.members %}
+                                                <li>
+                                                    <form method="POST" action="{{ path('app_splitter_associate_member', {
+                                                        splitterId: splitter.id,
+                                                        memberId: member.id
+                                                    }) }}" style="display: inline;">
+                                                        <input type="hidden" name="_token"
+                                                               value="{{ csrf_token('associate_member' ~ member.id) }}">
+                                                        <button type="submit"
+                                                                class="dropdown-item d-flex align-items-center gap-2">
+                                                            {{ member.nickname }}
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
-                                    <div>
-                                        <span class="badge {{ balancePerId[member.id] < 0 ? "bg-warning text-dark" : "bg-success" }}">{{ balancePerId[member.id]|round(2) }}€</span>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                </div>
+                            {% else %}
+                                <a
+                                        href="{{ path('app_login') }}"
+                                        class="btn btn-outline-warning"
+                                >
+                                    Identifiez-vous pour voir vos dépenses
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        <div class="total-group">
+                            <p class="text-info text-center">
+                                Total des dépenses groupe: {{ groupTotal }}€
+                            </p>
+                        </div>
                     </div>
+
+                    <div class="expense-list">
+                        {% for date, expenses in expensesByDate %}
+                            <div class="expense-date">
+                                {{ (date)|date('d M Y') }}
+                            </div>
+                            {% for expense in expenses %}
+                                <div class="expense-card d-flex justify-content-between align-items-center gap-4">
+                                    <div>
+                                        <twig:ux:icon name="{{ expense.category.icon }}" height="50" width="50"
+                                                      aria-hidden="true"/>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="expense-title">{{ expense.name }}</div>
+                                        <div class="expense-payer">Payé par: {{ expense.paidBy.nickname }}</div>
+                                    </div>
+
+                                    <div class="expense-amount">{{ expense.amount }} {{ expense.devise }}</div>
+                                    <a class="linkExpense"
+                                       href="{{ path(('app_expense_show'), {'expense_id': expense.id, 'splitter_id': splitter.id}) }}"
+                                       title="Cliquer pour éditer"></a>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+
                 </div>
 
-                <div class="balanceCard">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h3 class="card-title">Régler les dettes !</h3>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            {% for transfer in transfers %}
-                                <li class="list-group-item d-flex align-items-center gap-3">
-                                    <div class="memberName py-1">
-                                        <p class="m-0">
-                                            <span class="fw-bold">{{ transfer['from'].nickname }}</span>
-                                            doit
-                                            <span class="text-decoration-underline">{{ transfer['amount']|round(2) }}€</span>
-                                            à
-                                            <span class="fw-bold">{{ transfer['to'].nickname }}</span>
-                                        </p>
+                <div id="balances" class="tab-pane">
+
+                    {% if current_member %}
+                        {% set balance = balancePerId[current_member.id] ?? 0 %}
+                        <div class="balance-list">
+                            <div class="balance-card">
+                                {% if balance > 0 %}
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <div class="fs-2">🤑</div>
+                                        <div>On vous doit <span class="fw-bold">{{ (balance)|round(2) }} €</span></div>
                                     </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                {% elseif balance < 0 %}
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <div class="fs-2">💸</div>
+                                        <div>Vous devez <span class="fw-bold">{{ (-balance)|round(2) }} €</span></div>
+                                    </div>
+                                {% else %}
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <div class="fs-2">⚖️</div>
+                                        <div>Votre balance est à zéro.</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    <div class="balance-list">
+                        <div class="balance-subtitle">
+                            Balances
+                        </div>
+                        {% for member in splitter.members %}
+                            <div class="balance-card">
+                                <div class="member-name">
+                                    {{ member.nickname }}
+                                    {% if is_current_user_member(member) %}
+                                        <span class="badge bg-info ms-2">moi</span>
+                                    {% endif %}
+                                </div>
+                                <div class="balance-amount">
+                                    <span class="badge {{ balancePerId[member.id] < 0 ? 'bg-warning text-dark' : 'bg-success' }}">
+                                        {{ (balancePerId[member.id])|round(2) }}€
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="balance-list">
+                        <div class="balance-subtitle">Régler les dettes !</div>
+                        {% for transfer in transfers %}
+                            <div class="balance-card">
+                                <div>
+                                    <span class="debt-from">{{ transfer['from'].nickname }}</span>
+                                    doit
+                                    <span class="debt-amount">{{ (transfer['amount'])|round(2) }}€</span>
+                                    à
+                                    <span class="debt-to">{{ transfer['to'].nickname }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+                <div id="photos" class="tab-pane">
+                    <div class="photo-placeholder">
+                        <!-- Placeholder pour les photos -->
+                        <p>Les photos seront affichées ici.</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="floating-add-button">
+            <a class="add-button d-flex align-items-center gap-2" title="ajouter une dépense"
+               href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}">
+                <twig:ux:icon name="material-symbols:add-rounded" height="40" width="40"/>
+            </a>
+        </div>
+
+    </main>
+
+    {# Icônes cachées pour JavaScript #}
+    <div class="d-none" id="icon-templates">
+        <twig:ux:icon name="solar:check-circle-bold" height="16" width="16" class="me-1" data-icon-name="check-success"/>
+        <twig:ux:icon name="solar:clock-circle-bold" height="16" width="16" class="me-1" data-icon-name="clock"/>
+        <twig:ux:icon name="solar:copy-bold" height="16" width="16" class="me-2" data-icon-name="copy"/>
+    </div>
 
 {% endblock %}

@@ -2,8 +2,6 @@
 
 {% block content %}
     <div class="overview">
-
-
         <div>
             {{ form_start(form) }}
             {{ form_widget(form) }}
@@ -12,13 +10,10 @@
         </div>
 
         <div class="splits row">
-
             {% for split in splitters %}
                 <div class="col-md-6 col-xxl-4">
-                    <div class="card mb-4">
-
+                    <div class="splitter-material mb-4 position-relative">
                         <a class="link-card" href="{{ path('app_splitter_show', {id: split.id}) }}"></a>
-
                         <div class="cardIcons">
                             {% if split.owner == app.user.appUser %}
                                 <a href="{{ path('app_splitter_edit', {'id': split.id}) }}">
@@ -29,25 +24,27 @@
                                 <i class="bi bi-plus-lg"></i>
                             </a>
                         </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <div>
+                                <twig:ux:icon name="{{ split.category.icon }}" height="50" width="50"
+                                              aria-hidden="true"/>
+                            </div>
 
-                        <div class="card-header">
-                            <h4 class="card-title">{{ split.name }}</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                Créé par :
-                                    {{ split.owner.user.firstname ~ ' ' ~ split.owner.user.lastname }}
-                            </h6>
-                            <h6 class="card-subtitle mb-2 text-muted one-line-text">
-                                {{ split.description ?? 'Pas de description' }}
-                            </h6>
-                            <h6 class="card-subtitle mb-2 text-muted one-line-text">
-                                Membres :
-                                {% for member in split.members %}
-                                    {{ member.nickname }}{% if not loop.last %}, {% endif %}
-                                {% endfor %}
-                            </h6>
+                            <div class="splitter-header">
+                                <h4 class="splitter-title">{{ split.name }}</h4>
+                                <div class="splitter-meta">
+                                    <span class="splitter-owner">Créé par : {{ split.owner.user.firstname ~ ' ' ~ split.owner.user.lastname }}</span>
+                                    <span class="splitter-members one-line-text">
+                                    Membres :
+                                    {% for member in split.members %}
+                                        {{ member.nickname }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </span>
+                                </div>
+                            </div>
                         </div>
 
-                        <ul class="list-group list-group-flush">
+                        <ul class="home-expense-list list-group list-group-flush">
                             {% for expense in split.expenses|sort((a, b) => b.madeAt <=> a.madeAt)|slice(0, 3) %}
                                 <li class="list-group-item expenseItemList">
                                     <div class="expenseDate">
@@ -64,24 +61,19 @@
                                 </li>
                             {% endfor %}
                         </ul>
-
                     </div>
-
                 </div>
             {% endfor %}
-
-
         </div>
 
         <div class="container d-flex justify-content-center">{{ knp_pagination_render(splitters) }}</div>
 
-        <div id="addSplitterBtn">
-            <a class="btn btn-primary rounded-circle" href="{{ path('app_splitter_new') }}">
-                <i class="bi bi-plus-lg"></i>
+        <div class="floating-add-button">
+            <a class="add-button d-flex align-items-center gap-2" title="ajouter une dépense"
+               href="{{ path('app_splitter_new') }}">
+                <twig:ux:icon name="material-symbols:add-rounded" height="40" width="40"/>
             </a>
         </div>
-
-
     </div>
 
 {% endblock %}

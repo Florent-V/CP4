@@ -2,22 +2,13 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Splitter;
-use App\Entity\User;
-use App\Form\JoinSplitterType;
-use App\Form\SearchBarType;
-use App\Form\ShareSplitterType;
-use App\Form\SplitterType;
+use App\Form\SearchBarFormType;
 use App\Repository\SplitterRepository;
-use App\Service\BalanceCalculator;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/splitter')]
 class SplitterController extends AbstractController
@@ -29,7 +20,7 @@ class SplitterController extends AbstractController
         PaginatorInterface $paginator
     ): Response {
 
-        $form = $this->createForm(SearchBarType::class);
+        $form = $this->createForm(SearchBarFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

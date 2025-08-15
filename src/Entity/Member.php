@@ -43,10 +43,14 @@ class Member
     #[ORM\ManyToMany(targetEntity: Expense::class, mappedBy: 'beneficiaries')]
     private Collection $expenses;
 
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: AppUserMember::class, orphanRemoval: true)]
+    private Collection $appUserMembers;
+
     public function __construct()
     {
         $this->paidExpenses = new ArrayCollection();
         $this->expenses = new ArrayCollection();
+        $this->appUserMembers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,5 +149,13 @@ class Member
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, AppUserMember>
+     */
+    public function getAppUserMembers(): Collection
+    {
+        return $this->appUserMembers;
     }
 }

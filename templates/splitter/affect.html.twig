@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Qui êtes-vous dans ce groupe ?{% endblock %}
+
+{% block body %}
+    <main class="container-md splitterForm">
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a
+                    class="nav-link"
+                    href="{{ path('app_splitter_show', {'id': splitter.id}) }}"
+                    title="Retourner au groupe {{ splitter.name }}"
+            >
+                <twig:ux:icon name="ep:back" height="30" width="30"/>
+            </a>
+            <h1 class="text-center my-2">Choisissez qui vous êtes dans le groupe</h1>
+        </div>
+
+        {% if selectedMember %}
+            <div class="alert alert-info mb-2">
+                Vous êtes actuellement identifié comme : <strong>{{ selectedMember.nickname }}</strong>
+            </div>
+        {% endif %}
+
+        {{ form_start(memberSelectionForm) }}
+            {{ form_row(memberSelectionForm.member) }}
+        <div class="centerBtn mt-4">
+            <button class="btn btn-success valid-btn" type="submit">Valider mon identité</button>
+        </div>
+        {{ form_end(memberSelectionForm) }}
+    </main>
+{% endblock %}

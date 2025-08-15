@@ -1,4 +1,81 @@
 // customize some Bootstrap variables
 
-$dark: #212121;
-$light: #DDDDDD;
+// Thèmes modernes avec accents de couleur
+:root {
+  /* Light Theme */
+  --color-bg: #f7f9fb;
+  --color-bg-alt: #e4ecfa;
+  --color-text: #23272f;
+  --color-primary: #3a8dde;
+  --color-primary-hover: #256bb5;
+  --color-secondary: #38c6a6;
+  --color-secondary-hover: #2a9c82;
+  --color-accent: #f7b32b;
+  --color-card: #ffffff;
+  --color-border: #dbeafe;
+  --color-navbar: #f7f9fb;
+  --color-navbar-text: #23272f;
+  --color-success: #2ecc71;
+  --color-info: #3498db;
+  --color-warning: #f1c40f;
+  --color-danger: #e74c3c;
+  --color-bg-light: #f8f9fa;
+  --color-bg-dark: #212529;
+  --bs-primary: var(--color-primary) !important;
+  --bs-secondary: var(--color-secondary) !important;
+  --bs-success: var(--color-success) !important;
+  --bs-info: var(--color-info) !important;
+  --bs-warning: var(--color-warning) !important;
+  --bs-danger: var(--color-danger) !important;
+  --bs-light: var(--color-bg-light) !important;
+  --bs-dark: var(--color-bg-dark) !important;
+}
+[data-theme="dark"] {
+  --color-bg: #1a2233;
+  --color-bg-alt: #232c43;
+  --color-text: #e2e6ee;
+  --color-primary: #7c5fff;
+  --color-primary-hover: #5736b5;
+  --color-secondary: #3a8dde;
+  --color-secondary-hover: #256bb5;
+  --color-accent: #f7b32b;
+  --color-card: #232c43;
+  --color-border: #343d5b;
+  --color-navbar: #232c43;
+  --color-navbar-text: #e2e6ee;
+  --color-success: #2ecc71;
+  --color-info: #3498db;
+  --color-warning: #f1c40f;
+  --color-danger: #e74c3c;
+  --color-bg-light: #f8f9fa;
+  --color-bg-dark: #212529;
+  --bs-primary: var(--color-primary) !important;
+  --bs-secondary: var(--color-secondary) !important;
+  --bs-success: var(--color-success) !important;
+  --bs-info: var(--color-info) !important;
+  --bs-warning: var(--color-warning) !important;
+  --bs-danger: var(--color-danger) !important;
+  --bs-light: var(--color-bg-light) !important;
+  --bs-dark: var(--color-bg-dark) !important;
+}
+//[data-theme="light"] {
+//  /* Pour forcer le light si besoin */
+//  --bs-primary: var(--color-primary) !important;
+//  --bs-secondary: var(--color-secondary) !important;
+//  --bs-success: var(--color-success) !important;
+//  --bs-info: var(--color-info) !important;
+//  --bs-warning: var(--color-warning) !important;
+//  --bs-danger: var(--color-danger) !important;
+//  --bs-light: var(--color-bg-light) !important;
+//  --bs-dark: var(--color-bg-dark) !important;
+//}
+
+// Palette moderne et originale pour Bootstrap (SCSS, non dynamique)
+$primary: #6366f1 !default;      // Indigo vibrant
+$secondary: #7dd3fc !default;    // Bleu ciel doux
+$success: #2ecc71 !default;      // Turquoise frais
+$info: #818cf8 !default;         // Bleu lavande
+$warning: #fbbf24 !default;      // Jaune safran
+$danger: #f43f5e !default;       // Rose framboise
+$light: #f1f5f9 !default;        // Gris perle très clair
+$dark: #0f172a !default;         // Bleu nuit profond

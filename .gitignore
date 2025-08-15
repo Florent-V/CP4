@@ -13,11 +13,6 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
-
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
@@ -43,3 +38,11 @@ phpstan.neon
 /public/sw.js
 /public/workbox/
 ###< symfony/pwa ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+.phpunit.cache
+junit.xml
+xml-coverage/
+###< phpunit/phpunit ###

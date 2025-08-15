@@ -4,8 +4,13 @@
 
 {% block body %}
 
-    <main class="splitterView container-xl">
-        <h1>Historique de {{ splitter.name }}</h1>
+    <main class="container-md splitterView">
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour Groupe">
+                <twig:ux:icon name="ep:back" height="30" width="30"/>
+            </a>
+            <h1 class="text-center my-2">Historique de {{ splitter.name }}</h1>
+        </div>
 
         <h2>Historique du groupe :</h2>
         {% if splitterLogs is not empty %}

@@ -10,7 +10,7 @@
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
 
-        <div class="sign_card d-flex">
+        <div class="sign_card d-flex justify-content-center">
 
             <div class="sign_img d-none d-lg-block">
                 <img src="{{ asset('images/login.gif') }}" alt="gif of donald with money"/>
@@ -20,7 +20,7 @@
 
                 <h1 class="text-center mb-4">Inscrivez-vous</h1>
 
-                {{ component('Form:RegistrationForm') }}
+                {{ component('registration_form') }}
 
                 <div class="mt-4">
                     <div class="w-100 text-center">Déjà un compte ?<a href="{{ path('app_login') }}">Connectez vous</a></div>

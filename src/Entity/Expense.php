@@ -49,7 +49,7 @@ class Expense
     #[Vich\UploadableField(mapping: 'expense_picture', fileNameProperty: 'picture')]
     #[Assert\File(
         maxSize: '10M',
-        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'],
     )]
     private ?File $pictureFile = null;
 

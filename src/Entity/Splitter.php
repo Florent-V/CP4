@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Trait\BlameableEntity;
+use App\Interface\ShareableEntityInterface;
 use App\Repository\SplitterRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +12,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -21,7 +23,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity(repositoryClass: SplitterRepository::class)]
 #[Gedmo\Loggable]
 #[SoftDeleteable]
-class Splitter
+class Splitter implements ShareableEntityInterface
 {
     use TimestampableEntity;
     use BlameableEntity;
@@ -55,8 +57,8 @@ class Splitter
     private ?string $description = null;
 
     #[ORM\OneToMany(
-        mappedBy: 'splitter',
         targetEntity: Expense::class,
+        mappedBy: 'splitter',
         cascade: ['persist', 'remove'],
         orphanRemoval: true
     )]
@@ -66,8 +68,8 @@ class Splitter
     private ?string $uniqueId = null;
 
     #[ORM\OneToMany(
-        mappedBy: 'splitter',
         targetEntity: Member::class,
+        mappedBy: 'splitter',
         cascade: ['persist', 'remove'],
         orphanRemoval: true
     )]
@@ -243,5 +245,38 @@ class Splitter
         $this->owner = $owner;
 
         return $this;
+    }
+
+    public function getShareableType(): string
+    {
+        return self::class;
+    }
+
+    public function getDisplayName(): string
+    {
+        return $this->name ?? 'Splitter';
+    }
+
+    public function canBeAccessedBy(mixed $user): bool
+    {
+        return true;
+    }
+
+    public function canBeSharedBy(UserInterface $user): bool
+    {
+        // Seul le propriétaire ou un membre peut partager le splitter
+        if ($user instanceof User && $user->getAppUser()) {
+            return $this->getOwner() === $user->getAppUser() ||
+                   $user->getAppUser()->getFavoriteSplitters()->contains($this);
+        }
+        return false;
+    }
+
+    public function grantAccessTo(mixed $user): void
+    {
+        // Ajouter l'utilisateur aux favoris pour qu'il ait accès au splitter
+        if ($user instanceof User && $user->getAppUser()) {
+            $this->addFavoritedByUser($user->getAppUser());
+        }
     }
 }

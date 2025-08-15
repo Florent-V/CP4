@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     upload_directory: '%kernel.project_dir%/public/images/'
+    
+    # Email configuration
+    app.mail_from: 'kopeck@f5t.com'
 
 services:
     # default configuration for services in *this* file
@@ -18,8 +21,15 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-#            - '../src/Entity/'
+            - '../src/Entity/'
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\ShareCodeManager:
+        arguments:
+            $expirationDuration: '%app.share_code.expiration_duration%'
+            $codeLength: '%app.share_code.code_length%'
+            $tokenLength: '%app.share_code.token_length%'
+            $maxAttempts: '%app.share_code.max_generation_attempts%'

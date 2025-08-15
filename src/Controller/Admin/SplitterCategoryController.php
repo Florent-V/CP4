@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\SplitterCategory;
-use App\Form\SplitterCategoryType;
+use App\Form\SplitterCategoryFormType;
 use App\Repository\SplitterCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ class SplitterCategoryController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $splitterCategory = new SplitterCategory();
-        $form = $this->createForm(SplitterCategoryType::class, $splitterCategory);
+        $form = $this->createForm(SplitterCategoryFormType::class, $splitterCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +56,7 @@ class SplitterCategoryController extends AbstractController
         SplitterCategory $splitterCategory,
         EntityManagerInterface $entityManager
     ): Response {
-        $form = $this->createForm(SplitterCategoryType::class, $splitterCategory);
+        $form = $this->createForm(SplitterCategoryFormType::class, $splitterCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

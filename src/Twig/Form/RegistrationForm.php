@@ -19,7 +19,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent]
+#[AsLiveComponent('registration_form')]
 class RegistrationForm extends AbstractController
 {
     use ComponentWithFormTrait;
@@ -51,8 +51,6 @@ class RegistrationForm extends AbstractController
         EmailVerifier $emailVerifier
     ): Response {
         $this->submitForm();
-        //dd($this->getForm()->getData());
-//        dd($this->getForm()->get('plainPassword')->getData());
 
         /** @var User $user */
         $user = $this->getForm()->getData();

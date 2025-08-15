@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation - {{ entity.displayName }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fb;
+            color: #23272f;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3a8dde 0%, #256bb5 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .invitation-card {
+            background: #f7f9fb;
+            border: 2px solid #e4ecfa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .entity-name {
+            color: #3a8dde;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .sender-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3a8dde 0%, #256bb5 100%);
+            color: white !important;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 20px 0;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .custom-message {
+            background: #e4ecfa;
+            border-left: 4px solid #3a8dde;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e4ecfa;
+        }
+
+        .link-fallback {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            word-break: break-all;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="emoji">🎯</span> Invitation de Partage</h1>
+        </div>
+
+        <div class="content">
+            <p>Bonjour,</p>
+
+            <p><strong>{{ senderName }}</strong> vous invite à rejoindre :</p>
+
+            <div class="invitation-card">
+                <div class="entity-name">{{ entity.displayName }}</div>
+
+                <a href="{{ shareUrl }}" class="cta-button">
+                    <span class="emoji">🚀</span> Rejoindre maintenant
+                </a>
+            </div>
+
+{#            {% if customMessage %}#}
+{#                <div class="custom-message">#}
+{#                    <strong>Message personnel :</strong><br>#}
+{#                    {{ customMessage|nl2br }}#}
+{#                </div>#}
+{#            {% endif %}#}
+
+            <p>Cliquez sur le bouton ci-dessus pour accéder directement à la ressource partagée.</p>
+
+            <div class="link-fallback">
+                <strong>Lien direct :</strong><br>
+                <a href="{{ shareUrl }}">{{ shareUrl }}</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Cet email a été envoyé automatiquement depuis votre application Kopeck.</p>
+            <p>Si vous ne souhaitez plus recevoir ce type d'invitation, contactez l'expéditeur.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,14 +9,24 @@
 
         <table class="table">
             <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ splitter_category.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ splitter_category.name }}</td>
-            </tr>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ splitter_category.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ splitter_category.name }}</td>
+                </tr>
+                <tr>
+                    <th>Icon</th>
+                    <td>{{ splitter_category.icon }}</td>
+                </tr>
+                <tr>
+                    <th>Icon Preview</th>
+                    <td>
+                        <twig:ux:icon name="{{ splitter_category.icon }}" height="50" width="50" aria-hidden="true"/>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
