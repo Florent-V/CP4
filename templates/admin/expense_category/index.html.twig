@@ -1,43 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ExpenseCategory index{% endblock %}
+{% block title %}Gestion des Catégories de Dépense{% endblock %}
 
 {% block body %}
-    <h1>ExpenseCategory index</h1>
+<div class="admin-dashboard p-4">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="admin-header d-flex flex-column flex-md-row align-items-center justify-content-between mb-4">
+            <div>
+                <h1 class="h2 fw-bold">Gestion des Catégories de Dépense</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Catégories de Dépense</li>
+                    </ol>
+                </nav>
+            </div>
+            <a href="{{ path('admin_app_expense_category_new') }}" class="btn btn-primary mt-3 mt-md-0">
+                <twig:ux:icon name="bi:plus-lg" class="me-1"  width="16" height="16" />
+                <span>Nouvelle Catégorie</span>
+            </a>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Icon</th>
-                <th>Icon Preview</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for expense_category in expense_categories %}
-            <tr>
-                <td>{{ expense_category.id }}</td>
-                <td>{{ expense_category.name }}</td>
-                <td>{{ expense_category.type }}</td>
-                <td>{{ expense_category.icon }}</td>
-                <td>
-                    <twig:ux:icon name="{{ expense_category.icon }}" height="50" width="50" aria-hidden="true" />
-                </td>
-                <td>
-                    <a href="{{ path('admin_app_expense_category_show', {'id': expense_category.id}) }}">show</a>
-                    <a href="{{ path('admin_app_expense_category_edit', {'id': expense_category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('admin_app_expense_category_new') }}">Create new</a>
+        <!-- Content Panel -->
+        <div class="admin-content-panel">
+            <div class="table-responsive">
+                <table class="table table-hover admin-table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Icon Preview</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for expense_category in expense_categories %}
+                        <tr>
+                            <td><span class="fw-bold">#{{ expense_category.id }}</span></td>
+                            <td>{{ expense_category.name }}</td>
+                            <td><span class="badge bg-info-subtle text-info-emphasis rounded-pill">{{ expense_category.type }}</span></td>
+                            <td>
+                                <twig:ux:icon name="{{ expense_category.icon }}" height="32" width="32" />
+                            </td>
+                            <td class="text-end">
+                                <div class="action-buttons">
+                                    <a href="{{ path('admin_app_expense_category_show', {'id': expense_category.id}) }}" class="btn btn-sm btn-icon" title="Voir">
+                                        <twig:ux:icon name="bi:eye-fill"  width="16" height="16" />
+                                    </a>
+                                    <a href="{{ path('admin_app_expense_category_edit', {'id': expense_category.id}) }}" class="btn btn-sm btn-icon" title="Modifier">
+                                        <twig:ux:icon name="bi:pencil-fill"  width="16" height="16" />
+                                    </a>
+                                    {{ include('admin/expense_category/_delete_form.html.twig') }}
+                                    {# Add delete form here if it exists for consistency #}
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <p class="mb-0 text-muted">Aucune catégorie de dépense trouvée.</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
