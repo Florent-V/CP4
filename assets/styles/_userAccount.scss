@@ -69,4 +69,51 @@
     .group-list-item:hover {
         background-color: var(--color-border);
     }
+
+    /* Themed form controls and buttons */
+    .form-control,
+    .form-select {
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        border-color: var(--color-border);
+
+        &:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 1px var(--color-primary);
+        }
+
+        &::placeholder {
+            color: var(--color-text);
+            opacity: 0.6;
+        }
+    }
+
+    .form-floating > label {
+        color: var(--color-text);
+        opacity: 0.6;
+    }
+
+    .btn-primary {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: #FFFFFF;
+        transition: all 0.2s ease-in-out;
+
+        &:hover, &:focus {
+            background-color: var(--color-primary-hover);
+            border-color: var(--color-primary-hover);
+            color: #FFFFFF;
+        }
+    }
+
+    .btn-light {
+        background-color: var(--color-bg-alt);
+        border-color: var(--color-border);
+        color: var(--color-text);
+
+        &:hover, &:focus {
+            background-color: var(--color-border);
+            border-color: var(--color-border);
+        }
+    }
 }

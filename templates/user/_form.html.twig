@@ -1,6 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <div class="centerBtn">
-        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    <div class="d-flex justify-content-start gap-2 mt-4">
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        <a href="{{ path('app_user_account') }}" class="btn btn-light">Annuler</a>
     </div>
 {{ form_end(form) }}
