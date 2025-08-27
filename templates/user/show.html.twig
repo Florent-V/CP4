@@ -1,77 +1,123 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon compte{% endblock %}
+{% block title %}Mon Compte - {{ user.pseudo }}{% endblock %}
 
 {% block body %}
+<main class="profile-page container-md my-4">
 
-    <main class="account container-md">
-
-        <div class="d-flex justify-content-between align-items-center my-3">
-            <h1>Mon compte</h1>
-
-            <a class="nav-link" href="{{ path('app_home') }}">
-                <i class="bi bi-arrow-return-left"></i>
-            </a>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a class="btn btn-primary" href="{{ path('admin_app_user_index') }}">
-                    <i class="bi bi-arrow-return-left"></i> Retour au tableau des Utilisateurs
-                </a>
-            {% endif %}
-
+    <!-- Header : avatar, name + actions -->
+    <div class="profile-header d-flex justify-content-between align-items-center">
+        <a class="nav-link" href="{{ path('app_home') }}" title="Retour à l'accueil">
+            <twig:ux:icon name="ep:back" height="24" width="24"/>
+        </a>
+        <div class="d-flex flex-column align-items-center">
+            <img src="{{ user.picture ? vich_uploader_asset(user, 'pictureFile') : asset('images/profil/Default_Profile_Picture.png') }}"
+                 alt="Photo de profil de {{ user.pseudo }}"
+                 class="profile-avatar mb-2">
+            <h1 class="profile-name">{{ user.firstName ~ ' ' ~ user.lastName }}</h1>
+            <p class="text-muted">@{{ user.pseudo }}</p>
         </div>
-
-        <div class="showCard">
-            <div class="card">
+        <div class="dropdown action-menu">
+            <button class="btn btn-icon p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <twig:ux:icon name="pepicons-pencil:dots-y" height="24" width="24"/>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
                 {% if app.user == user %}
-                    <div class="cardIcons">
-                        <a href="{{ path('app_user_edit') }}" title="Editer mon profil">
-                            <i class="bi bi-pencil-square"></i>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2" href="{{ path('app_user_edit') }}">
+                            <twig:ux:icon name="ic:twotone-edit" height="20" width="20"/>
+                            <span>Modifier le profil</span>
                         </a>
-                    </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <div class="dropdown-item d-flex align-items-center gap-2 text-danger" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                             <twig:ux:icon name="solar:trash-bin-trash-bold" height="20" width="20"/>
+                             <span>Supprimer le compte</span>
+                        </div>
+                    </li>
                 {% endif %}
-                <div class="card-header">
-                    <h3 class="card-title">Informations du compte</h3>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <p>Prénom et Nom</p>
-                        <p>{{ user.firstName ~ ' ' ~ user.lastName }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                     <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2" href="{{ path('admin_app_user_index') }}">
+                            <twig:ux:icon name="solar:shield-user-bold" height="20" width="20"/>
+                            <span>Admin Utilisateurs</span>
+                        </a>
                     </li>
-                    <li class="list-group-item">
-                        <p>Photo de Profil</p>
-                        <p>
-                            <img src="{{ user.picture ? vich_uploader_asset(user, 'pictureFile') : asset('images/profil/Default_Profile_Picture.png') }}" alt="{% if user.picture %}Photo de profil{% else %}Photo de profil par défaut{% endif %}">
-                        </p>
-                    </li>
-                    <li class="list-group-item">
-                        <p>Pseudo</p>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <nav class="profile-tabs nav nav-tabs justify-content-center mb-4">
+        <a class="nav-link active" data-bs-toggle="tab" href="#profil">Profil</a>
+        <a class="nav-link" data-bs-toggle="tab" href="#groups">Mes Groupes ({{ user.appUser.favoriteSplitters|length }})</a>
+        <a class="nav-link" data-bs-toggle="tab" href="#settings">Paramètres</a>
+    </nav>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="profil">
+            <div class="info-card">
+                <div class="row">
+                    <div class="col-md-6 info-group">
+                        <label>Pseudo</label>
                         <p>{{ user.pseudo }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <p>Email</p>
+                    </div>
+                    <div class="col-md-6 info-group">
+                        <label>Email</label>
                         <p>{{ user.email }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <p>Téléphone</p>
-                        <p>{{ user.phone }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <p>Nombre de groupes :</p>
-                        <p>{{ user.appUser.favoriteSplitters|length }}</p>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="col-md-6 info-group">
+                        <label>Téléphone</label>
+                        <p>{{ user.phone ?: 'Non renseigné' }}</p>
+                    </div>
+                </div>
             </div>
         </div>
-        {% if app.user == user %}
-            <div class="centerBtn">
-                {{ include('user/_delete_form.html.twig') }}
+        <div class="tab-pane fade" id="groups">
+            <div class="info-card">
+                {% if user.appUser.favoriteSplitters is not empty %}
+                    {% for splitter in user.appUser.favoriteSplitters %}
+                        <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}" class="group-list-item">
+                            <twig:ux:icon name="{{ splitter.category.icon }}" height="24" width="24" class="me-3"/>
+                            <span>{{ splitter.name }}</span>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center m-0">Vous n'êtes dans aucun groupe.</p>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
+        <div class="tab-pane fade" id="settings">
+            <div class="info-card text-center">
+                <p class="text-muted m-0">La section des paramètres sera bientôt disponible ici.</p>
+            </div>
+        </div>
+    </div>
 
+</main>
 
-
-    </main>
-
-
+{% if app.user == user %}
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        {{ include('user/_delete_form.html.twig', {'button_class': 'btn btn-danger'}) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}
