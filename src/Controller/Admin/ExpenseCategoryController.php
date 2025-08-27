@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/expense/category')]
+#[Route('/expense-category')]
 final class ExpenseCategoryController extends AbstractController
 {
     #[Route(name: 'app_expense_category_index', methods: ['GET'])]
@@ -34,7 +34,7 @@ final class ExpenseCategoryController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute(
-                'app_expense_category_index',
+                'admin_app_expense_category_index',
                 [],
                 Response::HTTP_SEE_OTHER
             );
@@ -67,7 +67,7 @@ final class ExpenseCategoryController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute(
-                'app_expense_category_index',
+                'admin_app_expense_category_index',
                 [],
                 Response::HTTP_SEE_OTHER
             );
@@ -96,7 +96,7 @@ final class ExpenseCategoryController extends AbstractController
         }
 
         return $this->redirectToRoute(
-            'app_expense_category_index',
+            'admin_app_expense_category_index',
             [],
             Response::HTTP_SEE_OTHER
         );

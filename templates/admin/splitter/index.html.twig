@@ -1,65 +1,102 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Splitter index{% endblock %}
+{% block title %}Gestion des Groupes{% endblock %}
 
 {% block body %}
+<div class="admin-dashboard p-4">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="admin-header d-flex flex-column flex-md-row align-items-center justify-content-between mb-4">
+            <div>
+                <h1 class="h2 fw-bold">Gestion des Groupes</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Groupes</li>
+                    </ol>
+                </nav>
+                <p class="text-muted mb-0">Total : {{ splitters.getTotalItemCount }}</p>
+            </div>
+            {# <a href="#" class="btn btn-primary mt-3 mt-md-0"> ... Bouton Créer ... </a> #}
+        </div>
 
-<main class="adminContainer">
+        <!-- Search Panel -->
+        <div class="admin-content-panel mb-4">
+            {{ form_start(form) }}
+            <div class="row g-2 align-items-end">
+                <div class="col-md">
+                    {{ form_row(form.search) }}
+                </div>
+                <div class="col-md-auto">
+                    <button class="btn btn-light w-100">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
 
-    <div class="head my-3">
-        <h1>Liste des groupes. Total : {{ splitters.getTotalItemCount }}</h1>
-
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-primary" type="submit">Go !</button>
-        {{ form_end(form) }}
-
-    </div>
-
-    <table style="color: #FFFFFF" class="table">
-        <thead>
-        <tr>
-            <th>{{ knp_pagination_sortable(splitters, 'Id', 'u.id') }}</th>
-            <th{% if splitters.isSorted('s.name') %} class="sorted"{% endif %}>
-                {{ knp_pagination_sortable(splitters, 'Nom', 's.name') }}
-            </th>
-            <th{% if splitters.isSorted('s.description') %} class="sorted"{% endif %}>
-                {{ knp_pagination_sortable(splitters, 'Description', 's.description') }}
-            </th>
-            <th>Membres</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for splitter in splitters %}
-            <tr>
-                <td>{{ splitter.id }}</td>
-                <td>{{ splitter.name }}</td>
-                <td>{{ splitter.description }}</td>
-                <td>
-                    {% for member in splitter.members %}
-                        {{ member.nickname }},
+        <!-- Content Panel -->
+        <div class="admin-content-panel">
+            <div class="table-responsive">
+                <table class="table table-hover admin-table">
+                    <thead>
+                        <tr>
+                            <th>{{ knp_pagination_sortable(splitters, 'Id', 's.id') }}</th>
+                            <th{% if splitters.isSorted('s.name') %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(splitters, 'Nom', 's.name') }}
+                            </th>
+                            <th>Description</th>
+                            <th>Membres</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for splitter in splitters %}
+                        <tr>
+                            <td><span class="fw-bold">#{{ splitter.id }}</span></td>
+                            <td>{{ splitter.name }}</td>
+                            <td>{{ splitter.description|slice(0, 50) }}{% if splitter.description|length > 50 %}...{% endif %}</td>
+                            <td>
+                                {% for member in splitter.members|slice(0, 3) %}
+                                    <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">{{ member.nickname }}</span>
+                                {% endfor %}
+                                {% if splitter.members|length > 3 %}
+                                    <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">+{{ splitter.members|length - 3 }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <div class="action-buttons">
+                                    <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}" class="btn btn-sm btn-icon" title="Voir">
+                                        <twig:ux:icon name="bi:eye-fill"  width="16" height="16" />
+                                    </a>
+                                    <a href="{{ path('app_splitter_edit', {'id': splitter.id}) }}" class="btn btn-sm btn-icon" title="Modifier">
+                                        <twig:ux:icon name="bi:pencil-fill"  width="16" height="16" />
+                                    </a>
+                                    <div class="d-inline-block" title="Supprimer">
+                                        <twig:Form:DeleteForm
+                                            entity='splitter'
+                                            id='{{ splitter.id }}'
+                                            title="Supprimer le groupe"
+                                        />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <p class="mb-0 text-muted">Aucun groupe trouvé.</p>
+                            </td>
+                        </tr>
                     {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}">show</a>
-                    <a href="{{ path('app_splitter_edit', {'id': splitter.id}) }}">edit</a>
-                    <a href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}">Add Expense</a>
-                    <twig:Form:DeleteForm
-                            entity='splitter'
-                            id='{{ splitter.id }}'
-                            title="Supprimer le groupe"
-                    />
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-</main>
-
+                    </tbody>
+                </table>
+            </div>
+            {% if splitters.pageCount > 1 %}
+                <div class="d-flex justify-content-center mt-4">
+                    {{ knp_pagination_render(splitters) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,11 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New ExpenseCategory{% endblock %}
+{% block title %}Nouvelle Catégorie de Dépense{% endblock %}
 
 {% block body %}
-    <h1>Create new ExpenseCategory</h1>
+<div class="admin-dashboard p-4">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="admin-header d-flex flex-column flex-md-row align-items-center justify-content-between mb-4">
+            <div>
+                <h1 class="h2 fw-bold">Nouvelle Catégorie de Dépense</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('admin_app_expense_category_index') }}">Catégories de Dépense</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Nouvelle</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
 
-    {{ include('admin/expense_category/_form.html.twig') }}
-
-    <a href="{{ path('admin_app_expense_category_index') }}">back to list</a>
+        <!-- Content Panel -->
+        <div class="admin-content-panel">
+            {{ include('admin/expense_category/_form.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}

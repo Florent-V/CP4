@@ -1,82 +1,103 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Gestion des Utilisateurs{% endblock %}
 
 {% block body %}
-
-    <main class="adminContainer">
-
-        <div class="head my-3">
-            <h1>Liste des Utilisateurs. Total : {{ users.getTotalItemCount }}</h1>
-
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn btn-primary" type="submit">Go !</button>
-            {{ form_end(form) }}
-
+<div class="admin-dashboard p-4">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="admin-header d-flex flex-column flex-md-row align-items-center justify-content-between mb-4">
+            <div>
+                <h1 class="h2 fw-bold">Gestion des Utilisateurs</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Utilisateurs</li>
+                    </ol>
+                </nav>
+                <p class="text-muted mb-0">Total : {{ users.getTotalItemCount }}</p>
+            </div>
+            {# <a href="#" class="btn btn-primary mt-3 mt-md-0"> ... Bouton Créer ... </a> #}
         </div>
 
-        <table class="table">
-            <thead>
-            <tr>
-                {# sorting of properties based on query components #}
-                <th>{{ knp_pagination_sortable(users, 'Id', 'u.id') }}</th>
-                <th{% if users.isSorted('u.email') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Email', 'u.email') }}
-                </th>
-                <th{% if users.isSorted('u.roles') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Rôles', 'u.roles') }}
-                </th>
-                <th{% if users.isSorted('u.pseudo') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Pseudo', 'u.pseudo') }}
-                </th>
-                <th{% if users.isSorted('u.firstName') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Prénom', 'u.firstName') }}
-                </th>
-                <th{% if users.isSorted('u.lastName') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Nom', 'u.lastName') }}
-                </th>
-                <th{% if users.isSorted('u.isVerified') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Vérifié ?', 'u.isVerified') }}
-                </th>
-                <th{% if users.isSorted('u.phone') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Téléphone', 'u.phone') }}
-                </th>
-                <th{% if users.isSorted('u.picture') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(users, 'Photo', 'u.picture') }}
-                </th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                    <td>{{ user.pseudo }}</td>
-                    <td>{{ user.firstName }}</td>
-                    <td>{{ user.lastName }}</td>
-                    <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-                    <td>{{ user.phone }}</td>
-                    <td>{{ user.picture }}</td>
-                    <td class="d-flex gap-2">
-                        <a href="{{ path('admin_app_user_show', {'id': user.id}) }}">show</a>
-                        <a href="{{ path('admin_app_user_edit', {'id': user.id}) }}">edit</a>
-                        {{ include('admin/user/_delete_form.html.twig') }}
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="11">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <!-- Search Panel -->
+        <div class="admin-content-panel mb-4">
+            {{ form_start(form) }}
+            <div class="row g-2 align-items-end">
+                <div class="col-md">
+                    {{ form_row(form.search) }}
+                </div>
+                <div class="col-md-auto">
+                    <button class="btn btn-light w-100">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
 
-        <div class="container d-flex justify-content-center">{{ knp_pagination_render(users) }}</div>
-
-
-    </main>
-
+        <!-- Content Panel -->
+        <div class="admin-content-panel">
+            <div class="table-responsive">
+                <table class="table table-hover admin-table">
+                    <thead>
+                        <tr>
+                            <th>{{ knp_pagination_sortable(users, 'Id', 'u.id') }}</th>
+                            <th{% if users.isSorted('u.email') %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(users, 'Email', 'u.email') }}
+                            </th>
+                            <th>Rôles</th>
+                            <th>Pseudo</th>
+                            <th>Vérifié ?</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td><span class="fw-bold">#{{ user.id }}</span></td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% for role in user.roles %}
+                                    <span class="badge bg-info-subtle text-info-emphasis rounded-pill">{{ role }}</span>
+                                {% endfor %}
+                            </td>
+                            <td>{{ user.pseudo }}</td>
+                            <td>
+                                {% if user.isVerified %}
+                                    <span class="badge bg-success-subtle text-success-emphasis rounded-pill">Oui</span>
+                                {% else %}
+                                    <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">Non</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <div class="action-buttons">
+                                    <a href="{{ path('admin_app_user_show', {'id': user.id}) }}" class="btn btn-sm btn-icon" title="Voir">
+                                        <twig:ux:icon name="bi:eye-fill"  width="16" height="16" />
+                                    </a>
+                                    <a href="{{ path('admin_app_user_edit', {'id': user.id}) }}" class="btn btn-sm btn-icon" title="Modifier">
+                                        <twig:ux:icon name="bi:pencil-fill"  width="16" height="16" />
+                                    </a>
+                                    <div class="d-inline-block" title="Supprimer">
+                                        {{ include('admin/user/_delete_form.html.twig') }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <p class="mb-0 text-muted">Aucun utilisateur trouvé.</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if users.pageCount > 1 %}
+                <div class="d-flex justify-content-center mt-4">
+                    {{ knp_pagination_render(users) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
