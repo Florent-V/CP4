@@ -164,4 +164,22 @@
       color: #FFFFFF;
     }
   }
+
+  /* Custom form control styles */
+  .form-control,
+  .form-select {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+
+    &:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 1px var(--color-primary);
+    }
+
+    &::placeholder {
+      color: var(--color-text);
+      opacity: 0.6;
+    }
+  }
 }
