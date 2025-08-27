@@ -1,0 +1,154 @@
+/* /assets/styles/_adminDashboard.scss */
+.admin-dashboard {
+  background-color: var(--color-bg);
+  min-height: 100vh;
+
+  .display-4 {
+    color: var(--color-text);
+  }
+
+  .admin-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--color-card);
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+      border-color: var(--color-primary);
+    }
+  }
+
+  .admin-card__icon-wrapper {
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--color-bg-alt);
+  }
+
+  .admin-card__icon {
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+  }
+
+  .admin-card:hover .admin-card__icon {
+    transform: scale(1.1);
+    color: var(--color-primary-hover);
+  }
+
+  .admin-card__content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .admin-card__title {
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .admin-card__description {
+    color: var(--color-text);
+    opacity: 0.8;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+  }
+
+  .admin-card__link {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--color-primary);
+    transition: color 0.2s ease;
+
+    svg {
+      transition: transform 0.2s ease;
+      margin-left: 0.25rem;
+    }
+  }
+
+  .admin-card:hover .admin-card__link {
+    color: var(--color-primary-hover);
+
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  /* Styles for CRUD index pages */
+  .admin-header {
+    h1 {
+      color: var(--color-text);
+    }
+    .breadcrumb-item a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    .breadcrumb-item.active {
+      color: var(--color-text);
+      opacity: 0.7;
+    }
+  }
+
+  .admin-content-panel {
+    background-color: var(--color-card);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .admin-table {
+    // Redefine Bootstrap's table variables to match the theme
+    --bs-table-bg: var(--color-card);
+    --bs-table-color: var(--color-text);
+    --bs-table-border-color: var(--color-border);
+    --bs-table-hover-bg: var(--color-bg-alt);
+    --bs-table-hover-color: var(--color-text);
+
+    thead {
+      th {
+        border-bottom-width: 2px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.8rem;
+      }
+    }
+
+    tbody td {
+      vertical-align: middle;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    .btn-icon {
+      background-color: transparent;
+      border: 1px solid transparent;
+      color: var(--color-text);
+      opacity: 0.6;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        opacity: 1;
+        color: var(--color-primary);
+        background-color: var(--color-bg-alt);
+      }
+    }
+
+    form {
+        display: inline-block;
+    }
+  }
+}
