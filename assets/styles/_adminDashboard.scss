@@ -151,4 +151,17 @@
         display: inline-block;
     }
   }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #FFFFFF;
+    transition: all 0.2s ease-in-out;
+
+    &:hover, &:focus {
+      background-color: var(--color-primary-hover);
+      border-color: var(--color-primary-hover);
+      color: #FFFFFF;
+    }
+  }
 }
