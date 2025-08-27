@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/splitter/category')]
+#[Route('/splitter-category')]
 class SplitterCategoryController extends AbstractController
 {
     #[Route('/', name: 'app_splitter_category_index', methods: ['GET'])]
@@ -33,7 +33,11 @@ class SplitterCategoryController extends AbstractController
             $entityManager->persist($splitterCategory);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_app_splitter_category_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'admin_app_splitter_category_index',
+                [],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('admin/splitter_category/new.html.twig', [
@@ -62,7 +66,11 @@ class SplitterCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_app_splitter_category_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'admin_app_splitter_category_index',
+                [],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('admin/splitter_category/edit.html.twig', [
@@ -82,6 +90,10 @@ class SplitterCategoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_app_splitter_category_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute(
+            'admin_app_splitter_category_index',
+            [],
+            Response::HTTP_SEE_OTHER
+        );
     }
 }

@@ -1,4 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="d-flex justify-content-start gap-2 mt-4">
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        <a href="{{ path('admin_app_splitter_category_index') }}" class="btn btn-light">Retour à la liste</a>
+    </div>
 {{ form_end(form) }}
