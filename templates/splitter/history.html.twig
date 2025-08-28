@@ -73,11 +73,9 @@
                 <h1 class="text-center my-2">Historique de {{ splitter.name }}</h1>
             </div>
 
-            {% set all_logs = splitterLogs|merge(expenseLogs)|merge(deletedExpenseLogs)|sort((a, b) => b.loggedAt <=> a.loggedAt) %}
-
-            {% if all_logs is not empty %}
+            {% if historyItems is not empty %}
                 <div class="timeline">
-                    {% for log in all_logs %}
+                    {% for log in historyItems %}
                         <div class="timeline-item">
                             <div class="timeline-icon {% if log.action == 'remove' %}is-danger{% endif %}">
                                 {% if log.action == 'create' %}

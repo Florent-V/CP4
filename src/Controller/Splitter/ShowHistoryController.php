@@ -5,10 +5,7 @@ namespace App\Controller\Splitter;
 use App\Entity\Splitter;
 use App\Entity\User;
 use App\Enum\Role;
-use App\Repository\LogEntryRepository;
-use App\Entity\Expense;
-use App\Repository\ExpenseRepository;
-use App\Repository\SplitterRepository;
+use App\Service\HistoryService;
 use App\Service\SplitterAccessManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +25,7 @@ class ShowHistoryController extends AbstractController
 {
     public function __invoke(
         Splitter $splitter,
-        LogEntryRepository $logEntryRepository,
-        ExpenseRepository $expenseRepository,
+        HistoryService $historyService,
         SplitterAccessManager $accessManager
     ): Response {
         /**
@@ -38,36 +34,11 @@ class ShowHistoryController extends AbstractController
         $user = $this->getUser();
         $accessManager->checkReadAccess($splitter, $user);
 
-        // Récupérer les logs du Splitter
-        $splitterLogs = $logEntryRepository->findLogsWithUserInfoBySplitterId($splitter->getId());
-
-        // Récupérer les logs des Expenses associées
-        $expenseIds = $splitter->getExpenses()->map(fn($expense) => $expense->getId())->toArray();
-        $expenseLogs = $logEntryRepository->findLogsForMultipleEntities(Expense::class, $expenseIds);
-
-        // Récupérer les dépenses soft-deleted
-        $softDeletedExpenses = $expenseRepository->findSoftDeletedInSplitter($splitter->getId());
-
-        // Normaliser les dépenses supprimées pour les afficher comme des logs
-        $deletedExpenseLogs = [];
-        foreach ($softDeletedExpenses as $deletedExpense) {
-            $deletedExpenseLogs[] = [
-                'action' => 'remove',
-                'loggedAt' => $deletedExpense['deletedAt'],
-                'expenseName' => $deletedExpense['name'],
-                'firstName' => 'Action système', // Pas d'info sur qui a supprimé
-                'userEmail' => null,
-                'data' => [
-                    'montant' => $deletedExpense['amount'] . ' ' . $deletedExpense['devise'],
-                ],
-            ];
-        }
+        $historyItems = $historyService->getCombinedHistoryForSplitter($splitter);
 
         return $this->render('splitter/history.html.twig', [
             'splitter' => $splitter,
-            'splitterLogs' => $splitterLogs,
-            'expenseLogs' => $expenseLogs,
-            'deletedExpenseLogs' => $deletedExpenseLogs,
+            'historyItems' => $historyItems,
         ]);
     }
 }
