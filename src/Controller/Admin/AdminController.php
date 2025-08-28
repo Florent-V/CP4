@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AdminController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'app_index')]
     public function index(): Response
     {
         // Liste des sections de l’admin à afficher
@@ -16,37 +16,37 @@ class AdminController extends AbstractController
             [
                 'name' => 'User',
                 'route' => 'admin_app_user_index',
-                'icon' => 'user.svg',
+                'icon' => 'mdi:user',
                 'description' => 'Gérer les utilisateurs'
             ],
             [
                 'name' => 'Member',
                 'route' => 'admin_app_member_index',
-                'icon' => 'member.svg',
+                'icon' => 'material-symbols:group',
                 'description' => 'Gérer les membres'
             ],
             [
                 'name' => 'Splitter',
                 'route' => 'admin_app_splitter_index',
-                'icon' => 'splitter.svg',
+                'icon' => 'material-symbols:ad-group-rounded',
                 'description' => 'Gérer les splitters'
             ],
             [
                 'name' => 'Expense',
                 'route' => 'admin_app_expense_index',
-                'icon' => 'expense.svg',
+                'icon' => 'arcticons:expense-manager-2',
                 'description' => 'Gérer les dépenses'
             ],
             [
                 'name' => 'Expense Category',
                 'route' => 'admin_app_expense_category_index',
-                'icon' => 'expense-category.svg',
+                'icon' => 'mdi:tag',
                 'description' => 'Gérer les catégories de dépenses'
             ],
             [
                 'name' => 'Splitter Category',
                 'route' => 'admin_app_splitter_category_index',
-                'icon' => 'splitter-category.svg',
+                'icon' => 'mdi:category-plus-outline',
                 'description' => 'Gérer les catégories de splitter'
             ],
         ];

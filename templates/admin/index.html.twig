@@ -16,7 +16,9 @@
                         <a href="{{ path(section.route) }}" class="admin-card text-decoration-none">
                             <div class="admin-card__icon-wrapper">
                                 <div class="admin-card__icon">
-                                    {% include '_icons/' ~ section.icon %}
+                                    <twig:ux:icon name="{{ section.icon }}" height="80" width="80" />
+{#                                    <twig:ux:icon name="mdi:user" height="80" width="80" />#}
+{#                                    {% include '_icons/' ~ section.icon %}#}
                                 </div>
                             </div>
                             <div class="admin-card__content">
