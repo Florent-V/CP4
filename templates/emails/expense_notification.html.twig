@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification de Dépense</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fb;
+            color: #23272f;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #3a8dde 0%, #256bb5 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .expense-card {
+            background: #f7f9fb;
+            border: 2px solid #e4ecfa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .expense-title {
+            color: #3a8dde;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .expense-details {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .expense-details strong {
+            color: #333;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e4ecfa;
+        }
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>
+            {% if action == 'created' %}
+                <span class="emoji">✨</span> Nouvelle Dépense
+            {% elseif action == 'updated' %}
+                <span class="emoji">🔄</span> Dépense Mise à Jour
+            {% else %}
+                <span class="emoji">🗑️</span> Dépense Supprimée
+            {% endif %}
+        </h1>
+    </div>
+
+    <div class="content">
+        <p>Bonjour,</p>
+
+        <p>
+            Une dépense a été
+            {% if action == 'created' %}
+                ajoutée
+            {% elseif action == 'updated' %}
+                mise à jour
+            {% else %}
+                supprimée
+            {% endif %}
+            dans le groupe <strong>{{ splitter.name }}</strong>.
+        </p>
+
+        <div class="expense-card">
+            <div class="expense-title">{{ expense.name }}</div>
+            <div class="expense-details">
+                <strong>Montant :</strong> {{ expense.amount }} {{ expense.devise }}<br>
+                <strong>Payé par :</strong> {{ expense.paidBy.nickName }}<br>
+                <strong>Date :</strong> {{ expense.madeAt|date('d/m/Y') }}
+            </div>
+        </div>
+
+        <p>Vous recevez cet email car vous êtes membre du groupe {{ splitter.name }}.</p>
+    </div>
+
+    <div class="footer">
+        <p>Cet email a été envoyé automatiquement depuis votre application Splitter.</p>
+    </div>
+</div>
+</body>
+</html>

@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -73,6 +74,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('search', '%' . $search . '%');
         }
         return $qb->getQuery();
+    }
+
+    public function findEmailsBySplitter(Uuid $splitterId): array
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u.email')
+            ->innerJoin('u.appUser', 'au')
+            ->innerJoin('au.favoriteSplitters', 's')
+            ->where('s.id = :splitterId')
+            ->setParameter('splitterId', $splitterId, 'uuid')
+            ->getQuery();
+
+        return array_column($qb->getScalarResult(), 'email');
     }
 
 //    /**
