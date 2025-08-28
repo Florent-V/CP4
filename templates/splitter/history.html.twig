@@ -1,78 +1,155 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_dashboard.html.twig' %}
 
 {% block title %}Historique de {{ splitter.name }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+            border-left: 3px solid var(--color-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: -2.5rem; /* Ajustement pour centrer l'icône sur la ligne */
+            top: 50%; /* On positionne le haut de l'icône à 50% de la hauteur de l'item */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            color: white;
+            /* On translate en X et Y pour un centrage parfait horizontal et vertical */
+            transform: translate(-50%, -50%);
+        }
+
+        .timeline-icon.is-danger {
+            background-color: var(--color-danger);
+        }
+
+        .timeline-item .card {
+            background-color: var(--color-card);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .change-key {
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        .change-value {
+            font-family: monospace;
+            background-color: var(--color-bg-alt);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour au groupe">
+                    <twig:ux:icon name="ep:back" height="30" width="30"/>
+                </a>
+                <h1 class="text-center my-2">Historique de {{ splitter.name }}</h1>
+            </div>
 
-    <main class="container-md splitterView">
-        <div class="d-flex align-items-center gap-3 mb-4">
-            <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour Groupe">
-                <twig:ux:icon name="ep:back" height="30" width="30"/>
-            </a>
-            <h1 class="text-center my-2">Historique de {{ splitter.name }}</h1>
+            {% if historyItems is not empty %}
+                <div class="timeline">
+                    {% for log in historyItems %}
+                        <div class="timeline-item">
+                            <div class="timeline-icon {% if log.action == 'remove' %}is-danger{% endif %}">
+                                {% if log.action == 'create' %}
+                                    <twig:ux:icon name="bi:plus-lg" width="16" height="16"/>
+                                {% elseif log.action == 'update' %}
+                                    <twig:ux:icon name="bi:pencil-fill" width="16" height="16"/>
+                                {% elseif log.action == 'remove' %}
+                                    <twig:ux:icon name="bi:trash3-fill" width="16" height="16"/>
+                                {% else %}
+                                    <twig:ux:icon name="bi:info-lg" width="16" height="16"/>
+                                {% endif %}
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h5 class="card-title mb-1">
+                                                {% if log.action == 'remove' %}
+                                                    Dépense supprimée : <span class="text-danger">{{ log.expenseName }}</span>
+                                                {% elseif log.expenseName is defined %}
+                                                    {% if log.action == 'create' %}
+                                                        Nouvelle dépense : <span class="text-primary">{{ log.expenseName }}</span>
+                                                    {% else %}
+                                                        Mise à jour de : <span class="text-primary">{{ log.expenseName }}</span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if log.action == 'create' %}
+                                                        Création du groupe
+                                                    {% else %}
+                                                        Mise à jour du groupe
+                                                    {% endif %}
+                                                {% endif %}
+                                            </h5>
+                                            <p class="card-subtitle text-muted small">
+                                                Par
+                                                <span class="fw-bold">{{ log.firstName|default(log.userEmail) }}</span>
+                                                le {{ log.loggedAt|date('d/m/Y à H:i') }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        {% if log.data is not empty %}
+                                            <p class="mb-2">Détails des changements :</p>
+                                            <ul class="list-unstyled mb-0">
+                                                {% for key, value in log.data %}
+                                                    <li>
+                                                        <span class="change-key">{{ key|capitalize }}</span> :
+                                                        {% if value is iterable %}
+                                                            <span class="change-value">{{ value|join(', ') }}</span>
+                                                        {% else %}
+                                                            <span class="change-value">{{ value|default('N/A') }}</span>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <p class="fst-italic text-muted small">Aucun détail de modification enregistré.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center p-5 border rounded bg-light">
+                    <twig:ux:icon name="bi:clock-history" width="50" height="50" class="text-muted mb-3"/>
+                    <h4 class="text-muted">Aucun historique</h4>
+                    <p class="text-muted">Il n'y a pas encore d'activité enregistrée pour ce groupe ou ses dépenses.</p>
+                </div>
+            {% endif %}
         </div>
-
-        <h2>Historique du groupe :</h2>
-        {% if splitterLogs is not empty %}
-            <ul>
-                {% for log in splitterLogs %}
-                    <li>
-                        <strong>{{ log.action }}</strong> ({{ log.loggedAt|date('d/m/Y H:i') }}) :
-                        <ul>
-                            {% for key, value in log.data %}
-                                <li>
-                                    <strong>{{ key }}:</strong>
-                                    {% if value is iterable %}
-                                        <ul>
-                                            {% for sub_key, sub_value in value %}
-                                                <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% else %}
-                                        {{ value }}
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Aucun log pour ce splitter.</p>
-        {% endif %}
-
-        <h2>Historique des dépenses associées</h2>
-        {% if expenseLogs is not empty %}
-            <ul>
-                {% for log in expenseLogs %}
-                    <li>
-                        <strong>{{ log.action }}</strong> ({{ log.loggedAt|date('d/m/Y H:i') }}) :
-                        dépense : {{ log.expenseName }} ({{ log.expenseAmount ~ log.expenseDevise }})
-                        <ul>
-                            {% for key, value in log.data %}
-                                <li>
-                                    <strong>{{ key }}:</strong>
-                                    {% if value is iterable %}
-                                        <ul>
-                                            {% for sub_key, sub_value in value %}
-                                                <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% else %}
-                                        {{ value }}
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        <br>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Aucun historique pour les expenses associées.</p>
-        {% endif %}
-
-        <a href="{{ path('app_splitter_show', {id: splitter.id}) }}">Retour au Splitter</a>
-    </main>
-
+    </div>
+</div>
 {% endblock %}
