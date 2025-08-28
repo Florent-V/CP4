@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Enum\Role;
 use App\Repository\LogEntryRepository;
 use App\Entity\Expense;
+use App\Repository\ExpenseRepository;
+use App\Repository\SplitterRepository;
 use App\Service\SplitterAccessManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,7 @@ class ShowHistoryController extends AbstractController
     public function __invoke(
         Splitter $splitter,
         LogEntryRepository $logEntryRepository,
+        ExpenseRepository $expenseRepository,
         SplitterAccessManager $accessManager
     ): Response {
         /**
@@ -42,10 +45,29 @@ class ShowHistoryController extends AbstractController
         $expenseIds = $splitter->getExpenses()->map(fn($expense) => $expense->getId())->toArray();
         $expenseLogs = $logEntryRepository->findLogsForMultipleEntities(Expense::class, $expenseIds);
 
+        // Récupérer les dépenses soft-deleted
+        $softDeletedExpenses = $expenseRepository->findSoftDeletedInSplitter($splitter->getId());
+
+        // Normaliser les dépenses supprimées pour les afficher comme des logs
+        $deletedExpenseLogs = [];
+        foreach ($softDeletedExpenses as $deletedExpense) {
+            $deletedExpenseLogs[] = [
+                'action' => 'remove',
+                'loggedAt' => $deletedExpense['deletedAt'],
+                'expenseName' => $deletedExpense['name'],
+                'firstName' => 'Action système', // Pas d'info sur qui a supprimé
+                'userEmail' => null,
+                'data' => [
+                    'montant' => $deletedExpense['amount'] . ' ' . $deletedExpense['devise'],
+                ],
+            ];
+        }
+
         return $this->render('splitter/history.html.twig', [
             'splitter' => $splitter,
             'splitterLogs' => $splitterLogs,
-            'expenseLogs' => $expenseLogs
+            'expenseLogs' => $expenseLogs,
+            'deletedExpenseLogs' => $deletedExpenseLogs,
         ]);
     }
 }

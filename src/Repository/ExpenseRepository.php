@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Expense;
-use App\Entity\Splitter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
@@ -41,6 +40,26 @@ class ExpenseRepository extends ServiceEntityRepository
         }
     }
 
+    public function findSoftDeletedInSplitter(Uuid $splitterId): array
+    {
+        // We temporarily disable the softdeleteable filter to access soft-deleted records
+        $this->getEntityManager()->getFilters()->disable('softdeleteable');
+
+        $qb = $this->createQueryBuilder('e')
+            ->where('e.splitter = :splitterId')
+            ->andWhere('e.deletedAt IS NOT NULL')
+            // we force type parameter to 'uuid'. It's the only way that works reliably.
+            ->setParameter('splitterId', $splitterId, 'uuid')
+            ->select('e.name', 'e.amount', 'e.devise', 'e.deletedAt')
+            ->getQuery();
+
+        $result = $qb->getResult();
+
+        // We re-enable the softdeleteable filter
+        $this->getEntityManager()->getFilters()->enable('softdeleteable');
+
+        return $result;
+    }
 
 //    /**
 //     * @return Expense[] Returns an array of Expense objects
