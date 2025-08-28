@@ -32,7 +32,7 @@ class LoginController extends AbstractController
     public function redirectAfterLogin(): Response
     {
         if ($this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_app_splitter_index');
+            return $this->redirectToRoute('admin_app_index');
         }
         return $this->redirectToRoute('app_home');
     }
