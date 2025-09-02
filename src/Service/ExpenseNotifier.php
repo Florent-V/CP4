@@ -6,6 +6,7 @@ use App\Entity\Expense;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 
 readonly class ExpenseNotifier
 {
@@ -36,7 +37,6 @@ readonly class ExpenseNotifier
         };
 
         $email = (new TemplatedEmail())
-            ->from('no-reply@splitter.com')
             ->to(...$recipients)
             ->subject($subject)
             ->htmlTemplate('emails/expense_notification.html.twig')
