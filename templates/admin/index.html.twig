@@ -1,26 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin - Accueil{% endblock %}
+{% block title %}Admin - Dashboard{% endblock %}
 
 {% block body %}
-    <div class="container py-5">
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-8 text-center">
-                <h1 class="display-4 mb-3">Interface d'administration</h1>
-                <p class="lead text-muted">Bienvenue sur l’espace d’administration. Choisissez une section :</p>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="list-group shadow">
-                    {% for section in sections %}
-                        <a href="{{ path(section.route) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center admin-link">
-                            <span>{{ section.name }}</span>
-                            <span class="badge bg-primary rounded-pill">&rarr;</span>
+    <div class="admin-dashboard">
+        <div class="container py-5">
+            <header class="text-center mb-5">
+                <h1 class="display-4 fw-bolder">Tableau de Bord</h1>
+                <p class="lead text-muted">Gérez les entités de l'application depuis cette interface.</p>
+            </header>
+
+            <div class="row g-4">
+                {% for section in sections %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <a href="{{ path(section.route) }}" class="admin-card text-decoration-none">
+                            <div class="admin-card__icon-wrapper">
+                                <div class="admin-card__icon">
+                                    <twig:ux:icon name="{{ section.icon }}" height="80" width="80" />
+                                </div>
+                            </div>
+                            <div class="admin-card__content">
+                                <h3 class="admin-card__title h5 mb-1">{{ section.name }}</h3>
+                                <p class="admin-card__description small text-muted">{{ section.description }}</p>
+                                <span class="admin-card__link">
+                                    Gérer
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                                    </svg>
+                                </span>
+                            </div>
                         </a>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 {% endblock %}
+

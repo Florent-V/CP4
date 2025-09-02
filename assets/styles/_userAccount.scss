@@ -1,37 +1,119 @@
-.account {
-    .card {
-        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+.profile-page {
+    color: var(--color-text);
+    .profile-header {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: 1.5rem;
     }
-    .list-group-item p:first-of-type {
-        font-weight: bold;
+    .profile-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--color-border);
     }
-    .list-group-item p:last-of-type {
-        text-align: right;
+    .profile-name {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--color-text);
     }
-    .link {
+    .action-menu .dropdown-item {
+        color: var(--color-text);
+    }
+    .action-menu .dropdown-item:hover {
+        background-color: var(--color-bg-alt);
+    }
+    .profile-tabs .nav-link {
+        color: var(--color-text);
+        opacity: 0.7;
+        border: none;
+        border-bottom: 2px solid transparent;
+    }
+    .profile-tabs .nav-link.active {
+        opacity: 1;
+        color: var(--color-primary);
+        border-bottom-color: var(--color-primary);
+        background-color: transparent;
+    }
+    .info-card {
+        background-color: var(--color-card);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        border: 1px solid var(--color-border);
+    }
+    .info-group {
+        margin-bottom: 1rem;
+    }
+    .info-group label {
+        font-size: 0.8rem;
+        color: var(--color-text);
+        opacity: 0.7;
+        text-transform: uppercase;
+    }
+    .info-group p {
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0;
+    }
+    .group-list-item {
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        background-color: var(--color-bg-alt);
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--color-text);
+        text-decoration: none;
+        transition: background-color 0.2s ease;
     }
-    .link a {
-        margin: auto;
+    .group-list-item:hover {
+        background-color: var(--color-border);
     }
-    .deleteForm {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-    }
-    .badge.text-bg-light {
-        border: 1px solid $primary;
-    }
-    .cardIcons {
-        @include absolute-icons;
-        i {
-            font-size: 1.2rem;
-            color: var(--color-text);;
+
+    /* Themed form controls and buttons */
+    .form-control,
+    .form-select {
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        border-color: var(--color-border);
+
+        &:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 1px var(--color-primary);
+        }
+
+        &::placeholder {
+            color: var(--color-text);
+            opacity: 0.6;
         }
     }
-    img {
-        width: 200px;
-        height: auto;
+
+    .form-floating > label {
+        color: var(--color-text);
+        opacity: 0.6;
+    }
+
+    .btn-primary {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: #FFFFFF;
+        transition: all 0.2s ease-in-out;
+
+        &:hover, &:focus {
+            background-color: var(--color-primary-hover);
+            border-color: var(--color-primary-hover);
+            color: #FFFFFF;
+        }
+    }
+
+    .btn-light {
+        background-color: var(--color-bg-alt);
+        border-color: var(--color-border);
+        color: var(--color-text);
+
+        &:hover, &:focus {
+            background-color: var(--color-border);
+            border-color: var(--color-border);
+        }
     }
 }

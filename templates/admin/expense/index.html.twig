@@ -1,49 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Expense index{% endblock %}
+{% block title %}Gestion des Dépenses{% endblock %}
 
 {% block body %}
-    <h1>Expense index</h1>
+<div class="admin-dashboard p-4">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="admin-header d-flex flex-column flex-md-row align-items-center justify-content-between mb-4">
+            <div>
+                <h1 class="h2 fw-bold">Gestion des Dépenses</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Dépenses</li>
+                    </ol>
+                </nav>
+            </div>
+            {# Assuming a route 'admin_app_expense_new' exists for creating a new expense #}
+{#            #}{# <a href="{{ path('admin_app_expense_new') }}" class="btn btn-primary mt-3 mt-md-0">#}
+{#                <twig:ux:icon name="bi:plus-lg" class="me-1"  width="16" height="16" />#}
+{#                Nouvelle Dépense#}
+{#            </a> #}
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>CreatedAt</th>
-                <th>MadeAt</th>
-                <th>Amount</th>
-                <th>Picture</th>
-                <th>Devise</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for expense in expenses %}
-            <tr>
-                <td>{{ expense.id }}</td>
-                <td>{{ expense.name }}</td>
-                <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
-                <td>{{ expense.madeAt ? expense.madeAt|date('Y-m-d') : '' }}</td>
-                <td>{{ expense.amount }}</td>
-                <td>{{ expense.picture }}</td>
-                <td>{{ expense.devise }}</td>
-                <td>
-                    <a href="{{ path('app_expense_show', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}">show</a>
-                    <a href="{{ path('app_expense_edit', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}">edit</a>
-                    <twig:Form:DeleteForm
-                            entity='expense'
-                            id='{{ expense.splitter.id }}'
-                            id2='{{ expense.id }}'
-                            title="Supprimer la dépense"
-                    />
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <!-- Content Panel -->
+        <div class="admin-content-panel">
+            <div class="table-responsive">
+                <table class="table table-hover admin-table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Créé le</th>
+                            <th>Effectué le</th>
+                            <th>Montant</th>
+                            <th>Devise</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for expense in expenses %}
+                        <tr>
+                            <td><span class="fw-bold">#{{ expense.id }}</span></td>
+                            <td>{{ expense.name }}</td>
+                            <td>{{ expense.createdAt ? expense.createdAt|date('d/m/Y') : '' }}</td>
+                            <td>{{ expense.madeAt ? expense.madeAt|date('d/m/Y') : '' }}</td>
+                            <td>{{ expense.amount|number_format(2, ',', ' ') }}</td>
+                            <td><span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">{{ expense.devise }}</span></td>
+                            <td class="text-end">
+                                <div class="action-buttons">
+                                    <a href="{{ path('app_expense_show', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}" class="btn btn-sm btn-icon" title="Voir">
+                                        <twig:ux:icon name="bi:eye-fill"  width="16" height="16" />
+                                    </a>
+                                    <a href="{{ path('app_expense_edit', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}" class="btn btn-sm btn-icon" title="Modifier">
+                                        <twig:ux:icon name="bi:pencil-fill"  width="16" height="16" />
+                                    </a>
+                                    <div class="d-inline-block" title="Supprimer">
+                                        <twig:Form:DeleteForm
+                                            entity='expense'
+                                            id='{{ expense.splitter.id }}'
+                                            id2='{{ expense.id }}'
+                                            title="Supprimer la dépense"
+                                        />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center py-5">
+                                <p class="mb-0 text-muted">Aucune dépense trouvée.</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

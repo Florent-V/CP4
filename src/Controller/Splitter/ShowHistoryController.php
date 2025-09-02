@@ -5,8 +5,7 @@ namespace App\Controller\Splitter;
 use App\Entity\Splitter;
 use App\Entity\User;
 use App\Enum\Role;
-use App\Repository\LogEntryRepository;
-use App\Entity\Expense;
+use App\Service\HistoryService;
 use App\Service\SplitterAccessManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +25,7 @@ class ShowHistoryController extends AbstractController
 {
     public function __invoke(
         Splitter $splitter,
-        LogEntryRepository $logEntryRepository,
+        HistoryService $historyService,
         SplitterAccessManager $accessManager
     ): Response {
         /**
@@ -35,17 +34,11 @@ class ShowHistoryController extends AbstractController
         $user = $this->getUser();
         $accessManager->checkReadAccess($splitter, $user);
 
-        // Récupérer les logs du Splitter
-        $splitterLogs = $logEntryRepository->findLogsWithUserInfoBySplitterId($splitter->getId());
-
-        // Récupérer les logs des Expenses associées
-        $expenseIds = $splitter->getExpenses()->map(fn($expense) => $expense->getId())->toArray();
-        $expenseLogs = $logEntryRepository->findLogsForMultipleEntities(Expense::class, $expenseIds);
+        $historyItems = $historyService->getCombinedHistoryForSplitter($splitter);
 
         return $this->render('splitter/history.html.twig', [
             'splitter' => $splitter,
-            'splitterLogs' => $splitterLogs,
-            'expenseLogs' => $expenseLogs
+            'historyItems' => $historyItems,
         ]);
     }
 }

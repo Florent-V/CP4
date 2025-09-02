@@ -14,6 +14,7 @@ class ExpenseCategoryFormType extends AbstractType
         $builder
             ->add('name')
             ->add('type')
+            ->add('icon')
         ;
     }
 
