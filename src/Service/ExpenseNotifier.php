@@ -37,6 +37,7 @@ readonly class ExpenseNotifier
         };
 
         $email = (new TemplatedEmail())
+            ->from(new Address('kopeck@f5t.fr', 'Kopeck'))
             ->to(...$recipients)
             ->subject($subject)
             ->htmlTemplate('emails/expense_notification.html.twig')
