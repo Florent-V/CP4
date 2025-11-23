@@ -46,7 +46,7 @@ readonly class BalanceCalculator
             $balancePerId[$toId] -= $amount;
         }
 
-        //Caculate balance
+        //Calculate balance - the sum of all balances should be 0
         $average = ($total / count($balancePerId));
         foreach ($balancePerId as $id => $amount) {
             $balancePerId[$id] = $amount - $average;
