@@ -475,8 +475,8 @@
                             <div class="balance-subtitle">Transferts effectués</div>
                             {% for transfer in splitter.transfers %}
                                 <div class="balance-card">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <div class="flex-grow-1">
                                             <div>
                                                 <span class="debt-from">{{ transfer.fromMember.nickname }}</span>
                                                 a donné
@@ -492,13 +492,14 @@
                                             </div>
                                         </div>
                                         {% if app.user and (splitter.owner == app.user.appUser or transfer.addedBy == app.user.appUser) %}
-                                            <div>
-                                                <form method="post" action="{{ path('app_transfer_delete', {'splitter_id': splitter.id, 'transfer_id': transfer.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce transfert ?');">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transfer.id) }}">
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                        <twig:ux:icon name="mdi:delete" height="16" width="16"/>
-                                                    </button>
-                                                </form>
+                                            <div class="ms-3">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-outline-danger"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteTransferModal{{ transfer.id }}"
+                                                        title="Supprimer ce transfert">
+                                                    <twig:ux:icon name="mdi:delete" height="16" width="16"/>
+                                                </button>
                                             </div>
                                         {% endif %}
                                     </div>
@@ -525,6 +526,81 @@
         </div>
 
     </main>
+
+    {# Modales de confirmation de suppression des transferts #}
+    {% if app.user and splitter.transfers|length > 0 %}
+        {% for transfer in splitter.transfers %}
+            {% if splitter.owner == app.user.appUser or transfer.addedBy == app.user.appUser %}
+                <div class="modal fade" id="deleteTransferModal{{ transfer.id }}" tabindex="-1" aria-labelledby="deleteTransferModalLabel{{ transfer.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="deleteTransferModalLabel{{ transfer.id }}">
+                                    <twig:ux:icon name="mdi:alert-circle-outline" height="20" width="20" class="me-2"/>
+                                    Supprimer le transfert
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center mb-4">
+                                    <div class="delete-icon-container mb-3">
+                                        <twig:ux:icon name="mdi:bank-transfer-out" height="64" width="64" class="text-danger"/>
+                                    </div>
+                                    <p class="fs-6 mb-2">Êtes-vous sûr de vouloir supprimer ce transfert ?</p>
+                                </div>
+
+                                <div class="transfer-info-card p-3 mb-3">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <twig:ux:icon name="mdi:account-arrow-right" height="20" width="20" class="me-2 text-primary"/>
+                                            <strong class="me-2">{{ transfer.fromMember.nickname }}</strong>
+                                        </div>
+                                        <twig:ux:icon name="mdi:arrow-right" height="20" width="20" class="text-muted"/>
+                                        <div class="d-flex align-items-center">
+                                            <strong class="ms-2 me-2">{{ transfer.toMember.nickname }}</strong>
+                                            <twig:ux:icon name="mdi:account-arrow-left" height="20" width="20" class="text-success"/>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <span class="amount-badge">{{ (transfer.amount)|round(2) }}€</span>
+                                    </div>
+                                    <div class="text-muted small text-center mt-2">
+                                        <twig:ux:icon name="mdi:calendar" height="14" width="14" class="me-1"/>
+                                        {{ transfer.madeAt|date('d/m/Y') }}
+                                        {% if transfer.description %}
+                                            <span class="mx-2">•</span>
+                                            <twig:ux:icon name="mdi:message-text" height="14" width="14" class="me-1"/>
+                                            {{ transfer.description }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-warning d-flex align-items-start mb-0" role="alert">
+                                    <twig:ux:icon name="mdi:information-outline" height="20" width="20" class="me-2 flex-shrink-0 mt-1"/>
+                                    <div class="small">
+                                        Cette action est <strong>irréversible</strong>. Le transfert sera définitivement supprimé de l'historique du groupe.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <twig:ux:icon name="mdi:close" height="16" width="16" class="me-1"/>
+                                    Annuler
+                                </button>
+                                <form method="post" action="{{ path('app_transfer_delete', {'splitter_id': splitter.id, 'transfer_id': transfer.id}) }}" class="d-inline">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transfer.id) }}">
+                                    <button type="submit" class="btn btn-danger">
+                                        <twig:ux:icon name="mdi:delete-forever" height="16" width="16" class="me-1"/>
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
     {# Icônes cachées pour JavaScript #}
     <div class="d-none" id="icon-templates">

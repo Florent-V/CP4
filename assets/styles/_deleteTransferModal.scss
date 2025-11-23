@@ -1,0 +1,153 @@
+// Styles pour les modales de suppression de transferts
+// Compatible thème clair/sombre avec variables existantes
+
+.modal {
+    .modal-dialog {
+        transition: box-shadow 0.3s;
+    }
+
+    .modal-content {
+        background: var(--color-card);
+        color: var(--color-text);
+        border-radius: 1.2rem;
+        border: 1.5px solid var(--color-border);
+        box-shadow: 0 6px 32px 0 rgba(60, 60, 100, 0.13), 0 1.5px 8px 0 var(--color-primary);
+        transition: background 0.3s, color 0.3s, border 0.3s;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-bg-alt);
+        color: var(--color-text);
+        border-radius: 1.2rem 1.2rem 0 0;
+        padding: 1.2rem 1.5rem 1rem 1.5rem;
+
+        .btn-close {
+            filter: var(--bs-btn-close-filter, none);
+
+            [data-theme="dark"] & {
+                filter: invert(1);
+            }
+        }
+    }
+
+    .modal-title {
+        color: var(--color-text);
+        font-weight: 600;
+        font-size: 1.35rem;
+        letter-spacing: 0.01em;
+    }
+
+    .modal-body {
+        background: var(--color-card);
+        color: var(--color-text);
+        padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+    }
+
+    .modal-footer {
+        border-top: 1px solid var(--color-border);
+        background: var(--color-bg-alt);
+        border-radius: 0 0 1.2rem 1.2rem;
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+
+    .btn {
+        border-radius: 0.8rem;
+        font-weight: 500;
+        font-size: 1.05rem;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.12s;
+        padding: 0.5rem 1.2rem;
+
+        &:hover, &:focus {
+            filter: brightness(0.93) saturate(1.08);
+            transform: translateY(-1px) scale(1.03);
+        }
+
+        &.btn-danger {
+            background-color: var(--bs-danger);
+            border-color: var(--bs-danger);
+            color: white;
+            box-shadow: 0 2px 12px 0 rgba(231, 76, 60, 0.25);
+        }
+
+        &.btn-secondary {
+            background-color: var(--bs-secondary);
+            border-color: var(--bs-secondary);
+            color: white;
+            box-shadow: 0 2px 12px 0 rgba(125, 211, 252, 0.25);
+        }
+    }
+}
+
+// Container pour l'icône de suppression
+.delete-icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--color-bg-alt);
+    border: 2px solid var(--color-border);
+
+    .iconify {
+        opacity: 0.9;
+    }
+}
+
+// Card d'information du transfert
+.transfer-info-card {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--bs-border-radius-lg);
+    transition: background 0.3s, border 0.3s;
+
+    .amount-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.8rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        letter-spacing: 0.02em;
+    }
+}
+
+// Alert warning personnalisé
+.alert-warning {
+    background: rgba(var(--bs-warning-rgb, 251, 191, 36), 0.1);
+    border: 1px solid rgba(var(--bs-warning-rgb, 251, 191, 36), 0.3);
+    color: var(--color-text);
+    border-radius: var(--bs-border-radius);
+
+    [data-theme="dark"] & {
+        background: rgba(var(--bs-warning-rgb, 251, 191, 36), 0.15);
+        border-color: rgba(var(--bs-warning-rgb, 251, 191, 36), 0.4);
+    }
+
+    .iconify {
+        color: var(--bs-warning);
+    }
+}
+
+// Animation fade in
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal.fade .modal-dialog {
+    animation: fadeInUp 0.3s ease;
+}
+
