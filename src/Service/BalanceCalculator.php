@@ -34,6 +34,18 @@ readonly class BalanceCalculator
             }
         }
 
+        //Apply transfers: from gives money to to
+        foreach ($splitter->getTransfers() as $transfer) {
+            $amount = $transfer->getAmount();
+            $fromId = $transfer->getFromMember()->getId();
+            $toId = $transfer->getToMember()->getId();
+            
+            // The person giving money increases their balance (they've paid their debt)
+            $balancePerId[$fromId] += $amount;
+            // The person receiving money decreases their balance (they've received what they were owed)
+            $balancePerId[$toId] -= $amount;
+        }
+
         //Caculate balance
         $average = ($total / count($balancePerId));
         foreach ($balancePerId as $id => $amount) {

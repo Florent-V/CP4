@@ -1,0 +1,57 @@
+{{ form_start(form) }}
+
+    <div class="input-group mb-3">
+        <div class="form-floating flex-grow-1">
+            {{ form_widget(form.amount) }}
+            {{ form_label(form.amount, 'Montant') }}
+        </div>
+        <div class="input-group-text btn btn-secondary btn-square d-flex justify-content-center align-items-center">
+            <twig:ux:icon name="material-symbols:euro" height="24" width="24"/>
+        </div>
+    </div>
+    {{ form_errors(form.amount) }}
+
+    {{ form_row(form.madeAt, {
+        label: 'Date du transfert',
+        attr: {
+            placeholder: '2023-12-31',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.fromMember, {
+        label: 'Membre qui donne l\'argent',
+        attr: {
+            placeholder: 'Sélectionner un membre',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.toMember, {
+        label: 'Membre qui reçoit l\'argent',
+        attr: {
+            placeholder: 'Sélectionner un membre',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    {{ form_row(form.description, {
+        label: 'Description (optionnel)',
+        attr: {
+            placeholder: 'Ex: Remboursement restaurant',
+        },
+        row_attr: {
+            class: 'form-floating mb-3'
+        }
+    }) }}
+
+    <div class="centerBtn">
+        <button class="btn btn-success valid-btn">{{ button_label|default('Enregistrer le transfert') }}</button>
+    </div>
+{{ form_end(form) }}
