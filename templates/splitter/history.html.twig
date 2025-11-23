@@ -95,12 +95,29 @@
                                         <div>
                                             <h5 class="card-title mb-1">
                                                 {% if log.action == 'remove' %}
-                                                    Dépense supprimée : <span class="text-danger">{{ log.expenseName }}</span>
+                                                    {% if log.expenseName is defined %}
+                                                        Dépense supprimée : <span class="text-danger">{{ log.expenseName }}</span>
+                                                    {% elseif log.transferName is defined %}
+                                                        Transfert supprimé : <span class="text-danger">{{ log.transferName }}</span>
+                                                    {% endif %}
                                                 {% elseif log.expenseName is defined %}
                                                     {% if log.action == 'create' %}
                                                         Nouvelle dépense : <span class="text-primary">{{ log.expenseName }}</span>
                                                     {% else %}
                                                         Mise à jour de : <span class="text-primary">{{ log.expenseName }}</span>
+                                                    {% endif %}
+                                                {% elseif log.transferName is defined or log.transferAmount is defined %}
+                                                    {% if log.action == 'create' %}
+                                                        Nouveau transfert :
+                                                        <span class="text-primary">
+                                                            {{ log.fromMemberName|default('?') }} → {{ log.toMemberName|default('?') }}
+                                                            ({{ log.transferAmount|default('?') }} €)
+                                                        </span>
+                                                    {% else %}
+                                                        Mise à jour du transfert :
+                                                        <span class="text-primary">
+                                                            {{ log.fromMemberName|default('?') }} → {{ log.toMemberName|default('?') }}
+                                                        </span>
                                                     {% endif %}
                                                 {% else %}
                                                     {% if log.action == 'create' %}

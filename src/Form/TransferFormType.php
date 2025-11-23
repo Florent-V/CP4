@@ -26,9 +26,6 @@ class TransferFormType extends AbstractType
             ->add('amount', MoneyType::class, [
                 'currency' => false,
                 'label' => 'Montant',
-                'attr' => [
-                    'placeholder' => '0.00',
-                ],
             ])
             ->add('madeAt', DateType::class, [
                 'widget' => 'single_text',
