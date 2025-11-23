@@ -40,6 +40,13 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" title="ajouter un transfert"
+                               href="{{ path('app_transfer_new', {'splitter_id': splitter.id}) }}">
+                                <twig:ux:icon name="mdi:bank-transfer" height="24" width="24"/>
+                                <span>Enregistrer un transfert</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="Voir historique"
                                href="{{ path('app_splitter_show_history', {'id': splitter.id}) }}">
                                 <twig:ux:icon name="material-symbols:history-rounded" height="24" width="24"/>
@@ -462,6 +469,43 @@
                         {% endfor %}
 
                     </div>
+
+                    {% if splitter.transfers|length > 0 %}
+                        <div class="balance-list">
+                            <div class="balance-subtitle">Transferts effectués</div>
+                            {% for transfer in splitter.transfers %}
+                                <div class="balance-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div>
+                                                <span class="debt-from">{{ transfer.fromMember.nickname }}</span>
+                                                a donné
+                                                <span class="debt-amount">{{ (transfer.amount)|round(2) }}€</span>
+                                                à
+                                                <span class="debt-to">{{ transfer.toMember.nickname }}</span>
+                                            </div>
+                                            <div class="text-muted small">
+                                                {{ transfer.madeAt|date('d/m/Y') }}
+                                                {% if transfer.description %}
+                                                    - {{ transfer.description }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        {% if app.user and (splitter.owner == app.user.appUser or transfer.addedBy == app.user.appUser) %}
+                                            <div>
+                                                <form method="post" action="{{ path('app_transfer_delete', {'splitter_id': splitter.id, 'transfer_id': transfer.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce transfert ?');">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transfer.id) }}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <twig:ux:icon name="mdi:delete" height="16" width="16"/>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
                 </div>
                 <div id="photos" class="tab-pane">
