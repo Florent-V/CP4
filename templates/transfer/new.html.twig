@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau transfert{% endblock %}
+
+{% block body %}
+
+    <main class="container-md expenseForm">
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour Splitter">
+                <twig:ux:icon name="ep:back" height="30" width="30"/>
+            </a>
+            <h1 class="text-center my-2">Enregistrer un transfert d'argent</h1>
+        </div>
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="alert alert-info">
+            <strong>Info :</strong> Un transfert permet d'enregistrer un remboursement entre deux membres sans augmenter le total des dépenses du groupe.
+        </div>
+
+        {{ include('transfer/_form.html.twig') }}
+
+    </main>
+
+{% endblock %}

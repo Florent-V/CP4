@@ -20,6 +20,9 @@ use Gedmo\Mapping\Annotation\SoftDeleteable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+/**
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ */
 #[ORM\Entity(repositoryClass: SplitterRepository::class)]
 #[Gedmo\Loggable]
 #[SoftDeleteable]
@@ -86,11 +89,20 @@ class Splitter implements ShareableEntityInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?AppUser $owner = null;
 
+    #[ORM\OneToMany(
+        targetEntity: Transfer::class,
+        mappedBy: 'splitter',
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true
+    )]
+    private Collection $transfers;
+
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
         $this->members = new ArrayCollection();
         $this->favoritedByUsers = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
         $this->setCreatedAt(new DateTime());
         $this->setUpdatedAt(new DateTime());
     }
@@ -278,5 +290,35 @@ class Splitter implements ShareableEntityInterface
         if ($user instanceof User && $user->getAppUser()) {
             $this->addFavoritedByUser($user->getAppUser());
         }
+    }
+
+    /**
+     * @return Collection<int, Transfer>
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfer $transfer): self
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers->add($transfer);
+            $transfer->setSplitter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfer $transfer): self
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getSplitter() === $this) {
+                $transfer->setSplitter(null);
+            }
+        }
+
+        return $this;
     }
 }

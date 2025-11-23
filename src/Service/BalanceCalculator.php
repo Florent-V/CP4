@@ -34,7 +34,19 @@ readonly class BalanceCalculator
             }
         }
 
-        //Caculate balance
+        //Apply transfers: from gives money to to
+        foreach ($splitter->getTransfers() as $transfer) {
+            $amount = $transfer->getAmount();
+            $fromId = $transfer->getFromMember()->getId();
+            $toId = $transfer->getToMember()->getId();
+
+            // The person giving money increases their balance (they've paid their debt)
+            $balancePerId[$fromId] += $amount;
+            // The person receiving money decreases their balance (they've received what they were owed)
+            $balancePerId[$toId] -= $amount;
+        }
+
+        //Calculate balance - the sum of all balances should be 0
         $average = ($total / count($balancePerId));
         foreach ($balancePerId as $id => $amount) {
             $balancePerId[$id] = $amount - $average;
@@ -62,20 +74,25 @@ readonly class BalanceCalculator
             $sortedBalance[$min] += $delta;
             $sortedBalance[$max] -= $delta;
 
-            $transfers[] = [
-                'from' => $this->memberRepository->findOneBy([
-                    'id' => $sortedMembers[$min],
-                ]),
-                'to' => $this->memberRepository->findOneBy([
-                    'id' => $sortedMembers[$max],
-                ]),
-                'amount' => $delta,
-            ];
+            // On utilise >= 0.01 pour inclure exactement 1 centime
+            if ($delta >= 0.01) {
+                $transfers[] = [
+                    'from' => $this->memberRepository->findOneBy([
+                        'id' => $sortedMembers[$min],
+                    ]),
+                    'to' => $this->memberRepository->findOneBy([
+                        'id' => $sortedMembers[$max],
+                    ]),
+                    'amount' => $delta,
+                ];
+            }
 
-            if ($sortedBalance[$min] == 0) {
+            // Utilisation de abs() car les floats ne sont jamais exactement == 0
+            // À cause des erreurs d'arrondi (ex: -2.220446049250313E-16)
+            if (abs($sortedBalance[$min]) < 0.01) {
                 $min++;
             }
-            if ($sortedBalance[$max] == 0) {
+            if (abs($sortedBalance[$max]) < 0.01) {
                 $max--;
             }
         }

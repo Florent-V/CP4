@@ -37,20 +37,28 @@ class Member
     #[ORM\Column]
     private ?bool $editor = false;
 
-    #[ORM\OneToMany(mappedBy: 'paidBy', targetEntity: Expense::class, orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Expense::class, mappedBy: 'paidBy', orphanRemoval: true)]
     private Collection $paidExpenses;
 
     #[ORM\ManyToMany(targetEntity: Expense::class, mappedBy: 'beneficiaries')]
     private Collection $expenses;
 
-    #[ORM\OneToMany(mappedBy: 'member', targetEntity: AppUserMember::class, orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: AppUserMember::class, mappedBy: 'member', orphanRemoval: true)]
     private Collection $appUserMembers;
+
+    #[ORM\OneToMany(targetEntity: Transfer::class, mappedBy: 'fromMember', orphanRemoval: true)]
+    private Collection $transfersGiven;
+
+    #[ORM\OneToMany(targetEntity: Transfer::class, mappedBy: 'toMember', orphanRemoval: true)]
+    private Collection $transfersReceived;
 
     public function __construct()
     {
         $this->paidExpenses = new ArrayCollection();
         $this->expenses = new ArrayCollection();
         $this->appUserMembers = new ArrayCollection();
+        $this->transfersGiven = new ArrayCollection();
+        $this->transfersReceived = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,5 +165,65 @@ class Member
     public function getAppUserMembers(): Collection
     {
         return $this->appUserMembers;
+    }
+
+    /**
+     * @return Collection<int, Transfer>
+     */
+    public function getTransfersGiven(): Collection
+    {
+        return $this->transfersGiven;
+    }
+
+    public function addTransferGiven(Transfer $transfer): self
+    {
+        if (!$this->transfersGiven->contains($transfer)) {
+            $this->transfersGiven->add($transfer);
+            $transfer->setFromMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransferGiven(Transfer $transfer): self
+    {
+        if ($this->transfersGiven->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getFromMember() === $this) {
+                $transfer->setFromMember(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transfer>
+     */
+    public function getTransfersReceived(): Collection
+    {
+        return $this->transfersReceived;
+    }
+
+    public function addTransferReceived(Transfer $transfer): self
+    {
+        if (!$this->transfersReceived->contains($transfer)) {
+            $this->transfersReceived->add($transfer);
+            $transfer->setToMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransferReceived(Transfer $transfer): self
+    {
+        if ($this->transfersReceived->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getToMember() === $this) {
+                $transfer->setToMember(null);
+            }
+        }
+
+        return $this;
     }
 }
