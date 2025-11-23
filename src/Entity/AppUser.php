@@ -22,17 +22,21 @@ class AppUser
     #[ORM\ManyToMany(targetEntity: Splitter::class, inversedBy: 'favoritedByUsers')]
     private Collection $favoriteSplitters;
 
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Splitter::class, orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Splitter::class, mappedBy: 'owner', orphanRemoval: true)]
     private Collection $ownedSplitters;
 
-    #[ORM\OneToMany(mappedBy: 'addedBy', targetEntity: Expense::class)]
+    #[ORM\OneToMany(targetEntity: Expense::class, mappedBy: 'addedBy')]
     private Collection $expenses;
+
+    #[ORM\OneToMany(targetEntity: Transfer::class, mappedBy: 'addedBy')]
+    private Collection $transfers;
 
     public function __construct()
     {
         $this->favoriteSplitters = new ArrayCollection();
         $this->ownedSplitters = new ArrayCollection();
         $this->expenses = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +134,36 @@ class AppUser
             // set the owning side to null (unless already changed)
             if ($expense->getAddedBy() === $this) {
                 $expense->setAddedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transfer>
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfer $transfer): static
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers->add($transfer);
+            $transfer->setAddedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfer $transfer): static
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getAddedBy() === $this) {
+                $transfer->setAddedBy(null);
             }
         }
 
