@@ -45,4 +45,13 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'idb' => [
+        'version' => '8.0.3',
+    ],
+    'idb-keyval' => [
+        'version' => '6.2.2',
+    ],
+    '@spomky-labs/pwa/helpers' => [
+        'path' => './vendor/spomky-labs/pwa-bundle/assets/src/helpers.js',
+    ],
 ];

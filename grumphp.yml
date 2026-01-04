@@ -5,7 +5,7 @@ grumphp:
         phpversion:
             project: '8.3'
         phpcs:
-            standard: PSR12
+            standard: 'phpcs.xml.dist'
             ignore_patterns: [ 'migrations']
         phpstan:
             configuration: ./phpstan.dist.neon
