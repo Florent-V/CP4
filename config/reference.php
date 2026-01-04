@@ -4,6 +4,8 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Symfony\Component\Config\Loader\ParamConfigurator as Param;
+
 /**
  * This class provides array-shapes for configuring the services and bundles of an application.
  *
@@ -704,7 +706,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             user?: scalar|null|Param, // Defaults to "root" at runtime.
  *             password?: scalar|null|Param, // Defaults to null at runtime.
  *             override_url?: bool|Param, // Deprecated: The "doctrine.dbal.override_url" configuration key is deprecated.
- *             dbname_suffix?: scalar|null|Param,
+ *             dbname_suffix?: scalar|null|Param, // Adds the given suffix to the configured database name, this option has no effects for the SQLite platform
  *             application_name?: scalar|null|Param,
  *             charset?: scalar|null|Param,
  *             path?: scalar|null|Param,
@@ -755,7 +757,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *                 user?: scalar|null|Param, // Defaults to "root" at runtime.
  *                 password?: scalar|null|Param, // Defaults to null at runtime.
  *                 override_url?: bool|Param, // Deprecated: The "doctrine.dbal.override_url" configuration key is deprecated.
- *                 dbname_suffix?: scalar|null|Param,
+ *                 dbname_suffix?: scalar|null|Param, // Adds the given suffix to the configured database name, this option has no effects for the SQLite platform
  *                 application_name?: scalar|null|Param,
  *                 charset?: scalar|null|Param,
  *                 path?: scalar|null|Param,
@@ -787,7 +789,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *                 user?: scalar|null|Param, // Defaults to "root" at runtime.
  *                 password?: scalar|null|Param, // Defaults to null at runtime.
  *                 override_url?: bool|Param, // Deprecated: The "doctrine.dbal.override_url" configuration key is deprecated.
- *                 dbname_suffix?: scalar|null|Param,
+ *                 dbname_suffix?: scalar|null|Param, // Adds the given suffix to the configured database name, this option has no effects for the SQLite platform
  *                 application_name?: scalar|null|Param,
  *                 charset?: scalar|null|Param,
  *                 path?: scalar|null|Param,
@@ -815,10 +817,11 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  *     orm?: array{
  *         default_entity_manager?: scalar|null|Param,
- *         auto_generate_proxy_classes?: scalar|null|Param, // Auto generate mode possible values are: "NEVER", "ALWAYS", "FILE_NOT_EXISTS", "EVAL", "FILE_NOT_EXISTS_OR_CHANGED" // Default: false
+ *         auto_generate_proxy_classes?: scalar|null|Param, // Auto generate mode possible values are: "NEVER", "ALWAYS", "FILE_NOT_EXISTS", "EVAL", "FILE_NOT_EXISTS_OR_CHANGED", this option is ignored when the "enable_native_lazy_objects" option is true // Default: false
  *         enable_lazy_ghost_objects?: bool|Param, // Enables the new implementation of proxies based on lazy ghosts instead of using the legacy implementation // Default: true
- *         proxy_dir?: scalar|null|Param, // Default: "%kernel.build_dir%/doctrine/orm/Proxies"
- *         proxy_namespace?: scalar|null|Param, // Default: "Proxies"
+ *         enable_native_lazy_objects?: bool|Param, // Enables the new native implementation of PHP lazy objects instead of generated proxies // Default: false
+ *         proxy_dir?: scalar|null|Param, // Configures the path where generated proxy classes are saved when using non-native lazy objects, this option is ignored when the "enable_native_lazy_objects" option is true // Default: "%kernel.build_dir%/doctrine/orm/Proxies"
+ *         proxy_namespace?: scalar|null|Param, // Defines the root namespace for generated proxy classes when using non-native lazy objects, this option is ignored when the "enable_native_lazy_objects" option is true // Default: "Proxies"
  *         controller_resolver?: bool|array{
  *             enabled?: bool|Param, // Default: true
  *             auto_mapping?: bool|null|Param, // Set to false to disable using route placeholders as lookup criteria when the primary key doesn't match the argument name // Default: null
@@ -862,7 +865,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             repository_factory?: scalar|null|Param, // Default: "doctrine.orm.container_repository_factory"
  *             schema_ignore_classes?: list<scalar|null|Param>,
  *             report_fields_where_declared?: bool|Param, // Set to "true" to opt-in to the new mapping driver mode that was added in Doctrine ORM 2.16 and will be mandatory in ORM 3.0. See https://github.com/doctrine/orm/pull/10455. // Default: true
- *             validate_xml_mapping?: bool|Param, // Set to "true" to opt-in to the new mapping driver mode that was added in Doctrine ORM 2.14 and will be mandatory in ORM 3.0. See https://github.com/doctrine/orm/pull/6728. // Default: false
+ *             validate_xml_mapping?: bool|Param, // Set to "true" to opt-in to the new mapping driver mode that was added in Doctrine ORM 2.14. See https://github.com/doctrine/orm/pull/6728. // Default: false
  *             second_level_cache?: array{
  *                 region_cache_driver?: string|array{
  *                     type?: scalar|null|Param, // Default: null
@@ -917,6 +920,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  * }
  * @psalm-type DoctrineMigrationsConfig = array{
+ *     enable_service_migrations?: bool|Param, // Whether to enable fetching migrations from the service container. // Default: false
  *     migrations_paths?: array<string, scalar|null|Param>,
  *     services?: array<string, scalar|null|Param>,
  *     factories?: array<string, scalar|null|Param>,
@@ -1018,6 +1022,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         html_input?: "strip"|"allow"|"escape"|Param, // How to handle HTML input.
  *         allow_unsafe_links?: bool|Param, // Remove risky link and image URLs by setting this to false. // Default: true
  *         max_nesting_level?: int|Param, // The maximum nesting level for blocks. // Default: 9223372036854775807
+ *         max_delimiters_per_line?: int|Param, // The maximum number of strong/emphasis delimiters per line. // Default: 9223372036854775807
  *         slug_normalizer?: array{ // Array of options for configuring how URL-safe slugs are created.
  *             instance?: mixed,
  *             max_length?: int|Param, // Default: 255
@@ -1602,7 +1607,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  *     mappings?: array<string, array{ // Default: []
  *         uri_prefix?: scalar|null|Param, // Default: "/uploads"
- *         upload_destination: scalar|null|Param,
+ *         upload_destination?: scalar|null|Param, // Default: null
  *         namer?: string|array{
  *             service?: scalar|null|Param, // Default: null
  *             options?: mixed, // Default: null
@@ -1612,22 +1617,44 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             options?: mixed, // Default: null
  *         },
  *         delete_on_remove?: scalar|null|Param, // Default: true
+ *         erase_fields?: scalar|null|Param, // Default: true
  *         delete_on_update?: scalar|null|Param, // Default: true
  *         inject_on_load?: scalar|null|Param, // Default: false
+ *         namer_keep_extension?: scalar|null|Param, // Default: false
  *         db_driver?: scalar|null|Param, // Default: null
  *     }>,
  * }
  * @psalm-type PwaConfig = array{
+ *     asset_compiler?: bool|Param, // When true, the assets will be compiled when the command "asset-map:compile" is run. // Default: true
  *     favicons?: bool|array{
  *         enabled?: bool|Param, // Default: false
- *         src: scalar|null|Param, // The source of the favicon. Shall be a SVG or large PNG.
- *         background_color?: scalar|null|Param, // The background color of the application. If this value is not defined and that of the Manifest section is, the value of the latter will be used. // Default: null
+ *         default?: array{ // The favicon source and parameters. When used with "dark", this favicon will become the light version.
+ *             src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper, an absolute path or a Symfony UX Icon (if the bundle is installed).
+ *             background_color?: scalar|null|Param, // The background color of the application. If this value is not defined and that of the Manifest section is, the value of the latter will be used. // Default: null
+ *             border_radius?: int|Param, // The border radius of the icon. // Default: null
+ *             image_scale?: int|Param, // The scale of the icon. // Default: null
+ *             svg_attr?: array<string, mixed>,
+ *         },
+ *         dark?: array{ // The favicon source and parameters for the dark theme. Should only be used with "default".
+ *             src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper, an absolute path or a Symfony UX Icon (if the bundle is installed).
+ *             background_color?: scalar|null|Param, // The background color of the application. If this value is not defined and that of the Manifest section is, the value of the latter will be used. // Default: null
+ *             border_radius?: int|Param, // The border radius of the icon. // Default: null
+ *             image_scale?: int|Param, // The scale of the icon. // Default: null
+ *             svg_attr?: array<string, mixed>,
+ *         },
+ *         src?: scalar|null|Param, // Deprecated: The "src" configuration key is deprecated. Use the "default.src" configuration key instead. // The source of the favicon. Shall be a SVG or large PNG. // Default: null
+ *         src_dark?: scalar|null|Param, // Deprecated: The "src_dark" configuration key is deprecated. Use the "dark.src" configuration key instead. // The source of the favicon in dark mode. Shall be a SVG or large PNG. // Default: null
+ *         background_color?: scalar|null|Param, // Deprecated: The "background_color" configuration key is deprecated. Use the "default.background_color" configuration key instead. // The background color of the icon. // Default: null
+ *         background_color_dark?: scalar|null|Param, // Deprecated: The "background_color_dark" configuration key is deprecated. Use the "dark.background_color" configuration key instead. // The background color of the icon in dark mode. // Default: null
  *         safari_pinned_tab_color?: scalar|null|Param, // The color of the Safari pinned tab. Requires "use_silhouette" to be set to "true". // Default: null
  *         tile_color?: scalar|null|Param, // The color of the tile for Windows 8+. // Default: null
- *         border_radius?: int|Param, // The border radius of the icon. // Default: null
- *         image_scale?: int|Param, // The scale of the icon. // Default: null
+ *         border_radius?: int|Param, // Deprecated: The "border_radius" configuration key is deprecated. Use the "default.border_radius" or "dark.border_radius" configuration key instead. // The border radius of the icon. // Default: null
+ *         image_scale?: int|Param, // Deprecated: The "image_scale" configuration key is deprecated. Use the "default.image_scale" or "dark.image_scale" configuration key instead. // The scale of the icon. // Default: null
  *         low_resolution?: bool|Param, // Include low resolution icons. // Default: false
  *         use_silhouette?: bool|null|Param, // Use only the silhouette of the icon. Applicable for macOS Safari and Windows 8+. Requires potrace to be installed. // Default: null
+ *         use_start_image?: bool|Param, // Use the icon as a start image for the iOS splash screen. // Default: true
+ *         svg_color?: scalar|null|Param, // When the asset is a SVG file, replaces the currentColor attribute with this color. // Default: "#000"
+ *         monochrome?: bool|Param, // Use a monochrome icon. // Default: false
  *         potrace?: scalar|null|Param, // The path to the potrace binary. // Default: "potrace"
  *     },
  *     image_processor?: scalar|null|Param, // The image processor to use to generate the icons of different sizes. // Default: null
@@ -1648,7 +1675,11 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         name?: scalar|null|Param, // The name of the application.
  *         short_name?: scalar|null|Param, // The short name of the application.
  *         scope?: scalar|null|Param, // The scope of the application.
- *         start_url?: scalar|null|Param, // The start URL of the application.
+ *         start_url?: string|array{ // The start URL of the application.
+ *             path: scalar|null|Param, // The URL or route name.
+ *             path_type_reference?: int|Param, // The path type reference to generate paths/URLs. See https://symfony.com/doc/current/routing.html#generating-urls-in-controllers for more information. // Default: 1
+ *             params?: list<mixed>,
+ *         },
  *         theme_color?: scalar|null|Param, // The theme color of the application. If a dark theme color is specified, the theme color will be used for the light theme.
  *         dark_theme_color?: scalar|null|Param, // The dark theme color of the application.
  *         edge_side_panel?: array{ // Specifies whether or not your app supports the side panel view in Microsoft Edge.
@@ -1656,14 +1687,27 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         },
  *         iarc_rating_id?: scalar|null|Param, // Specifies the International Age Rating Coalition (IARC) rating ID for the app. See https://www.globalratings.com/how-iarc-works.aspx for more information.
  *         scope_extensions?: list<array{ // Default: []
+ *             type?: scalar|null|Param, // Specifies the type of scope extension. This is currently always origin (default), but future extensions may add other types. // Default: "origin"
  *             origin: scalar|null|Param, // Specifies the origin pattern to associate with.
  *         }>,
  *         handle_links?: scalar|null|Param, // Specifies the default link handling for the web app.
+ *         note_taking?: array{ // The note-taking capabilities of the application.
+ *             note_taking_url?: string|array{ // The URL to the note-taking service.
+ *                 path: scalar|null|Param, // The URL or route name.
+ *                 path_type_reference?: int|Param, // The path type reference to generate paths/URLs. See https://symfony.com/doc/current/routing.html#generating-urls-in-controllers for more information. // Default: 1
+ *                 params?: list<mixed>,
+ *             },
+ *         },
  *         icons?: list<string|array{ // Default: []
- *             src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper.
+ *             src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper, an absolute path or a Symfony UX Icon (if the bundle is installed).
  *             sizes?: list<int|Param>,
+ *             background_color?: scalar|null|Param, // The background color of the application. If this value is not defined and that of the Manifest section is, the value of the latter will be used. // Default: null
+ *             border_radius?: int|Param, // The border radius of the icon. // Default: null
+ *             image_scale?: int|Param, // The scale of the icon. // Default: null
  *             type?: scalar|null|Param, // The icon mime type.
+ *             format?: scalar|null|Param, // The icon format. When set, the "type" option is ignored and the image will be converted.
  *             purpose?: scalar|null|Param, // The purpose of the icon.
+ *             svg_attr?: array<string, mixed>,
  *         }>,
  *         screenshots?: list<string|array{ // Default: []
  *             src?: scalar|null|Param, // The path to the screenshot. Can be served by Asset Mapper.
@@ -1688,6 +1732,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         },
  *         protocol_handlers?: list<array{ // Default: []
  *             protocol: scalar|null|Param, // The protocol of the handler.
+ *             placeholder?: scalar|null|Param, // The placeholder of the handler. Will be replaced by "xxx=%s". // Default: null
  *             url?: string|array{ // The URL of the handler.
  *                 path: scalar|null|Param, // The URL or route name.
  *                 path_type_reference?: int|Param, // The path type reference to generate paths/URLs. See https://symfony.com/doc/current/routing.html#generating-urls-in-controllers for more information. // Default: 1
@@ -1714,10 +1759,15 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *                 params?: list<mixed>,
  *             },
  *             icons?: list<string|array{ // Default: []
- *                 src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper.
+ *                 src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper, an absolute path or a Symfony UX Icon (if the bundle is installed).
  *                 sizes?: list<int|Param>,
+ *                 background_color?: scalar|null|Param, // The background color of the application. If this value is not defined and that of the Manifest section is, the value of the latter will be used. // Default: null
+ *                 border_radius?: int|Param, // The border radius of the icon. // Default: null
+ *                 image_scale?: int|Param, // The scale of the icon. // Default: null
  *                 type?: scalar|null|Param, // The icon mime type.
+ *                 format?: scalar|null|Param, // The icon format. When set, the "type" option is ignored and the image will be converted.
  *                 purpose?: scalar|null|Param, // The purpose of the icon.
+ *                 svg_attr?: array<string, mixed>,
  *             }>,
  *         }>,
  *         share_target?: array{ // The share target of the application.
@@ -1732,7 +1782,10 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *                 title?: scalar|null|Param, // The title of the share target.
  *                 text?: scalar|null|Param, // The text of the share target.
  *                 url?: scalar|null|Param, // The URL of the share target.
- *                 files?: list<scalar|null|Param>,
+ *                 files?: list<array{ // Default: []
+ *                     name?: scalar|null|Param, // The name of the file parameter.
+ *                     accept?: list<scalar|null|Param>,
+ *                 }>,
  *             },
  *         },
  *         widgets?: list<array{ // Default: []
@@ -1740,10 +1793,15 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             short_name?: scalar|null|Param, // An alternative short version of the name.
  *             description: scalar|null|Param, // The description of the widget.
  *             icons?: list<string|array{ // Default: []
- *                 src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper.
+ *                 src: scalar|null|Param, // The path to the icon. Can be served by Asset Mapper, an absolute path or a Symfony UX Icon (if the bundle is installed).
  *                 sizes?: list<int|Param>,
+ *                 background_color?: scalar|null|Param, // The background color of the application. If this value is not defined and that of the Manifest section is, the value of the latter will be used. // Default: null
+ *                 border_radius?: int|Param, // The border radius of the icon. // Default: null
+ *                 image_scale?: int|Param, // The scale of the icon. // Default: null
  *                 type?: scalar|null|Param, // The icon mime type.
+ *                 format?: scalar|null|Param, // The icon format. When set, the "type" option is ignored and the image will be converted.
  *                 purpose?: scalar|null|Param, // The purpose of the icon.
+ *                 svg_attr?: array<string, mixed>,
  *             }>,
  *             screenshots?: list<string|array{ // Default: []
  *                 src?: scalar|null|Param, // The path to the screenshot. Can be served by Asset Mapper.
@@ -1791,14 +1849,16 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *                 max_entries?: int|Param, // The maximum number of entries in the Google fonts cache. // Default: null
  *             },
  *             cache_manifest?: bool|Param, // Whether to cache the manifest file. // Default: true
- *             version?: scalar|null|Param, // The version of workbox. When using local files, the version shall be "7.0.0." // Default: "7.0.0"
+ *             version?: scalar|null|Param, // The version of workbox. When using local files, the version shall be "7.0.0." // Default: "7.3.0"
  *             workbox_public_url?: scalar|null|Param, // The public path to the local workbox. Only used if use_cdn is false. // Default: "/workbox"
+ *             idb_public_url?: scalar|null|Param, // The public path to the local IndexDB. Only used if use_cdn is false. // Default: "/idb"
  *             workbox_import_placeholder?: scalar|null|Param, // Deprecated: The "workbox_import_placeholder" option is deprecated and will be removed in 2.0.0. No replacement. // The placeholder for the workbox import. Will be replaced by the workbox import. // Default: "//WORKBOX_IMPORT_PLACEHOLDER"
  *             standard_rules_placeholder?: scalar|null|Param, // Deprecated: The "standard_rules_placeholder" option is deprecated and will be removed in 2.0.0. No replacement. // The placeholder for the standard rules. Will be replaced by caching strategies. // Default: "//STANDARD_RULES_PLACEHOLDER"
  *             offline_fallback_placeholder?: scalar|null|Param, // Deprecated: The "offline_fallback_placeholder" option is deprecated and will be removed in 2.0.0. No replacement. // The placeholder for the offline fallback. Will be replaced by the URL. // Default: "//OFFLINE_FALLBACK_PLACEHOLDER"
  *             widgets_placeholder?: scalar|null|Param, // Deprecated: The "widgets_placeholder" option is deprecated and will be removed in 2.0.0. No replacement. // The placeholder for the widgets. Will be replaced by the widgets management events. // Default: "//WIDGETS_PLACEHOLDER"
  *             clear_cache?: bool|Param, // Whether to clear the cache during the service worker activation. // Default: true
  *             offline_fallback?: array{
+ *                 cache_name?: scalar|null|Param, // The name of the offline cache. // Default: "offline"
  *                 page?: string|array{ // The URL of the offline page fallback.
  *                     path: scalar|null|Param, // The URL or route name.
  *                     path_type_reference?: int|Param, // The path type reference to generate paths/URLs. See https://symfony.com/doc/current/routing.html#generating-urls-in-controllers for more information. // Default: 1
@@ -1855,11 +1915,31 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             background_sync?: list<array{ // Default: []
  *                 queue_name: scalar|null|Param, // The name of the queue.
  *                 match_callback: scalar|null|Param, // The regex or callback function to match the URLs.
+ *                 error_on_4xx?: bool|Param, // Whether to retry the request on 4xx errors. // Default: true
+ *                 error_on_5xx?: bool|Param, // Whether to retry the request on 5xx errors. // Default: true
+ *                 expected_status_codes?: list<int|Param>,
+ *                 expect_redirect?: bool|Param, // Whether to expect a redirect (JS response type should be "opaqueredirect" or the "redirected" property is "true"). // Default: false
  *                 method?: scalar|null|Param, // The HTTP method. // Default: "POST"
  *                 broadcast_channel?: scalar|null|Param, // The broadcast channel. Set null to disable. // Default: null
  *                 max_retention_time?: int|Param, // The maximum retention time in minutes. // Default: 1440
  *                 force_sync_fallback?: bool|Param, // If `true`, instead of attempting to use background sync events, always attempt to replay queued request at service worker startup. Most folks will not need this, unless you explicitly target a runtime like Electron that exposes the interfaces for background sync, but does not have a working implementation. // Default: false
  *             }>,
+ *             background_fetch?: bool|array{
+ *                 enabled?: bool|Param, // Default: false
+ *                 db_name?: scalar|null|Param, // The IndexDB name where downloads are stored // Default: "bgfetch-completed"
+ *                 progress_url?: string|array{ // The URL of the progress page.
+ *                     path: scalar|null|Param, // The URL or route name.
+ *                     path_type_reference?: int|Param, // The path type reference to generate paths/URLs. See https://symfony.com/doc/current/routing.html#generating-urls-in-controllers for more information. // Default: 1
+ *                     params?: list<mixed>,
+ *                 },
+ *                 success_url?: string|array{ // The URL of the success page.
+ *                     path: scalar|null|Param, // The URL or route name.
+ *                     path_type_reference?: int|Param, // The path type reference to generate paths/URLs. See https://symfony.com/doc/current/routing.html#generating-urls-in-controllers for more information. // Default: 1
+ *                     params?: list<mixed>,
+ *                 },
+ *                 success_message?: scalar|null|Param, // The message to display on success. This message is translated. // Default: null
+ *                 failure_message?: scalar|null|Param, // The message to display on success. This message is translated. // Default: null
+ *             },
  *             image_cache_name?: scalar|null|Param, // Deprecated: The "image_cache_name" option is deprecated and will be removed in 2.0.0. Please use "pwa.serviceworker.workbox.image_cache.cache_name" instead. // The name of the image cache. // Default: "images"
  *             font_cache_name?: scalar|null|Param, // Deprecated: The "font_cache_name" option is deprecated and will be removed in 2.0.0. Please use "pwa.serviceworker.workbox.font_cache.cache_name" instead. // The name of the font cache. // Default: "fonts"
  *             page_cache_name?: scalar|null|Param, // Deprecated: The "page_cache_name" option is deprecated and will be removed in 2.0.0. Please use "pwa.serviceworker.workbox.resource_caches[].cache_name" instead. // The name of the page cache. // Default: "pages"
