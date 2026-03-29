@@ -86,7 +86,7 @@ class ResetPasswordController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
         TranslatorInterface $translator,
-        string $token = null
+        ?string $token = null
     ): Response {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
