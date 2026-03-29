@@ -37,7 +37,7 @@ jobs:
 
       - name: code_quality
         run: |
-          ./vendor/bin/phpcs --standard=PSR12 src/
+          ./vendor/bin/phpcs --standard=phpcs.xml.dist src/
           ./vendor/bin/phpstan analyse src --xdebug --level 5
           ./vendor/bin/phpmd src text phpmd.xml
 

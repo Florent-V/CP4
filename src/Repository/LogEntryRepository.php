@@ -83,4 +83,41 @@ class LogEntryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Récupérer les logs pour plusieurs transferts via leurs IDs.
+     *
+     * @param string $entityClass La classe de l'entité (Transfer::class)
+     * @param array $objectIds Les IDs des objets concernés
+     * @return array Liste des logs
+     */
+    public function findLogsForMultipleTransfers(string $entityClass, array $objectIds): array
+    {
+        return $this->createQueryBuilder('log')
+            ->leftJoin('App\Entity\User', 'user', 'WITH', 'log.username = user.email')
+            ->leftJoin('App\Entity\Transfer', 'transfer', 'WITH', 'log.objectId = transfer.id')
+            ->leftJoin('transfer.fromMember', 'fromMember')
+            ->leftJoin('transfer.toMember', 'toMember')
+            ->where('log.objectClass = :entityClass')
+            ->andWhere('log.objectId IN (:objectIds)')
+            ->setParameter('entityClass', $entityClass)
+            ->setParameter('objectIds', $objectIds)
+            ->orderBy('log.loggedAt', 'DESC')
+            ->select([
+                'log.action AS action',
+                'log.version AS version',
+                'log.loggedAt AS loggedAt',
+                'log.data AS data',
+                'log.username AS username',
+                'user.email AS userEmail',
+                'user.firstName AS firstName',
+                'user.lastName AS lastName',
+                'transfer.amount AS transferAmount',
+                'transfer.description AS transferDescription',
+                'fromMember.nickname AS fromMemberName',
+                'toMember.nickname AS toMemberName',
+            ])
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -161,7 +161,7 @@ migration-migrate:
 	$(CONSOLE) doctrine:migrations:migrate --no-interaction
 
 # -------------- 🎨 Gestion des assets 🎨 --------------
-assets-isntall:
+assets-install:
 	@echo "${BLUE}Installation des assets...${RESET}"
 	$(CONSOLE) importmap:install
 

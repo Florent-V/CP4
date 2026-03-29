@@ -9,9 +9,11 @@ parameters:
         - tests/
         - src/Entity/
         - src/Security/EmailVerifier.php
+        - config/reference.php
     symfony:
         containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
+            - identifier: symfony.noControllerMethodInjection
             - '#Use invokable controller with __invoke\(\) method instead of named action method#'
             - '#Avoid class-level route prefixing. Use method route to keep single source of truth and focus#'
 
