@@ -17,7 +17,7 @@ class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
+    public function start(Request $request, ?AuthenticationException $authException = null): RedirectResponse
     {
 // add a custom flash message and redirect to the login page
         // @phpstan-ignore-next-line
