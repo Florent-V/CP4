@@ -4,28 +4,27 @@ on:
   push:
     branches:
       - prod
-  pull_request:
-    branches:
-      - prod
+
+# Prevent concurrent deployments — a deploy in progress must finish before
+# the next one starts. cancel-in-progress: false ensures we never leave
+# production in a half-deployed state.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
     name: Deploy to Server
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v4
-
-      # ===== PRE-DEPLOYMENT CHECKS =====
-      - name: 🔍 Pre-deployment verification
+      - name: 🔍 Pre-deployment info
         run: |
-          echo "🔍 Vérification pre-déploiement..."
-          echo "Branch: ${{ github.ref_name }}"
-          echo "Commit: ${{ github.sha }}"
-          echo "Author: ${{ github.actor }}"
+          echo "Branch : ${{ github.ref_name }}"
+          echo "Commit : ${{ github.sha }}"
+          echo "Author : ${{ github.actor }}"
 
-      # ===== DEPLOYMENT =====
       - name: 🚀 Deploy to server
         uses: appleboy/ssh-action@v1.2.2
         with:
@@ -34,15 +33,23 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            echo "🚀 Début du déploiement automatique"
+            set -euo pipefail
+
             cd ${{ secrets.DEPLOY_PATH }}
-            bash ~/deploy-kopeck.sh
-            echo "✅ Déploiement terminé"
 
-      - name: 📊 Notification de succès
+            echo "📥 Mise à jour du code source..."
+            git fetch origin prod
+            git reset --hard origin/prod
+
+            echo "🚀 Lancement du script de déploiement..."
+            bash deploy.sh prod
+
+            echo "✅ Déploiement terminé — commit : $(git rev-parse --short HEAD)"
+
+      - name: 🎉 Succès
         if: success()
-        run: echo "🎉 Déploiement réussi sur le serveur de production"
+        run: echo "Déploiement réussi en production (commit ${{ github.sha }})"
 
-      - name: ❌ Notification d'échec
+      - name: 💥 Échec
         if: failure()
-        run: echo "💥 Échec du déploiement"
+        run: echo "Échec du déploiement — vérifier les logs SSH ci-dessus"
