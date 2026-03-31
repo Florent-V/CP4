@@ -16,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Vich\Uploadable]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -92,24 +92,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private AppUser $appUser;
-
-    public function serialize(): ?string
-    {
-        return serialize(array(
-            $this->id,
-            $this->email,
-            $this->password
-        ));
-    }
-
-    public function unserialize(string $data): void
-    {
-        list(
-            $this->id,
-            $this->email,
-            $this->password,
-            ) = unserialize($data);
-    }
 
     public function __serialize(): array
     {

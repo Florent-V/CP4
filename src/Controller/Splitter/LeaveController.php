@@ -9,6 +9,7 @@ use App\Repository\SplitterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use App\Service\SplitterAccessManager;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     '/splitter/{id}/leave',
     name: 'app_splitter_leave',
     requirements: [
-        'id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
+        'id' => Requirement::UUID
     ],
     methods: ['GET']
 )]
