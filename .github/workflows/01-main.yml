@@ -35,10 +35,13 @@ jobs:
       - name: Composer
         run: composer install
 
+      - name: Warmup Symfony cache
+        run: php bin/console cache:warmup --env=dev
+
       - name: code_quality
         run: |
           ./vendor/bin/phpcs --standard=phpcs.xml.dist src/
-          ./vendor/bin/phpstan analyse src --xdebug --level 5
+          ./vendor/bin/phpstan analyse src --level 5
           ./vendor/bin/phpmd src text phpmd.xml
 
       - name: Run GrumPHP
