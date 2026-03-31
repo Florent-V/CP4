@@ -11,6 +11,7 @@
 /public/images/expense/
 /var/
 /vendor/
+/.claude/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
