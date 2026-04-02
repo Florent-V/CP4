@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Entity\Trait\BlameableEntity;
+use App\Enum\SplitType;
 use App\Repository\ExpenseRepository;
+use App\Validator\ValidExpenseShares;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,6 +23,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[Gedmo\Loggable]
 #[SoftDeleteable]
 #[Vich\Uploadable]
+#[ValidExpenseShares]
 class Expense
 {
     use TimestampableEntity;
@@ -78,9 +81,22 @@ class Expense
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     private ?AppUser $addedBy = null;
 
+    #[ORM\Column(length: 20, enumType: SplitType::class)]
+    private SplitType $splitType = SplitType::EQUAL;
+
+    #[ORM\OneToMany(
+        targetEntity: ExpenseShare::class,
+        mappedBy: 'expense',
+        cascade: ['persist', 'remove'],
+        fetch: 'EAGER',
+        orphanRemoval: true
+    )]
+    private Collection $shares;
+
     public function __construct()
     {
         $this->beneficiaries = new ArrayCollection();
+        $this->shares = new ArrayCollection();
         $this->setCreatedAt(new DateTime());
         $this->setUpdatedAt(new DateTime());
     }
@@ -234,5 +250,57 @@ class Expense
         $this->addedBy = $addedBy;
 
         return $this;
+    }
+
+    public function getSplitType(): SplitType
+    {
+        return $this->splitType;
+    }
+
+    public function setSplitType(SplitType $splitType): static
+    {
+        $this->splitType = $splitType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ExpenseShare>
+     */
+    public function getShares(): Collection
+    {
+        return $this->shares;
+    }
+
+    public function addShare(ExpenseShare $share): static
+    {
+        if (!$this->shares->contains($share)) {
+            $this->shares->add($share);
+            $share->setExpense($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShare(ExpenseShare $share): static
+    {
+        if ($this->shares->removeElement($share)) {
+            if ($share->getExpense() === $this) {
+                $share->setExpense(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getShareForMember(Member $member): ?ExpenseShare
+    {
+        foreach ($this->shares as $share) {
+            if ($share->getMember() === $member) {
+                return $share;
+            }
+        }
+
+        return null;
     }
 }
