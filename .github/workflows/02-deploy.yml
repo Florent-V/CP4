@@ -26,25 +26,17 @@ jobs:
           echo "Author : ${{ github.actor }}"
 
       - name: 🚀 Deploy to server
-        uses: appleboy/ssh-action@v1.2.2
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            set -euo pipefail
-
-            cd ${{ secrets.DEPLOY_PATH }}
-
-            echo "📥 Mise à jour du code source..."
-            git fetch origin prod
-            git reset --hard origin/prod
-
-            echo "🚀 Lancement du script de déploiement..."
-            bash deploy.sh prod
-
-            echo "✅ Déploiement terminé — commit : $(git rev-parse --short HEAD)"
+              echo "🚀 Début du déploiement automatique"
+              cd ${{ secrets.DEPLOY_PATH }}
+              bash ~/deploy-kopeck.sh
+              echo "✅ Déploiement terminé"
 
       - name: 🎉 Succès
         if: success()
