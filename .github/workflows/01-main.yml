@@ -24,6 +24,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.4
+          coverage: none
 
       - name: checks_directory
         run: |
@@ -37,6 +38,8 @@ jobs:
 
       - name: Warmup Symfony cache
         run: php bin/console cache:warmup --env=dev
+        env:
+          APP_SECRET: ci_secret_for_cache_warmup
 
       - name: code_quality
         run: |
