@@ -136,8 +136,12 @@ step "Permissions des répertoires sensibles"
 mkdir -p var/log var/cache var/share
 mkdir -p public/images/profil public/images/expense
 
+# chmod en premier (le deploy user possède encore les fichiers)
+chmod -R u+rwX,g+rX,o-rwx var/
+chmod -R u+rwX,g+rwX,o+rX public/images/profil/ public/images/expense/
+
 if [ "$MODE" = "prod" ]; then
-    # En production : ownership www-data (user PHP-FPM)
+    # En production : ownership www-data (user PHP-FPM) — après chmod
     WEB_USER="www-data"
 
     if id "$WEB_USER" &>/dev/null; then
@@ -148,12 +152,6 @@ if [ "$MODE" = "prod" ]; then
         warn "Utilisateur $WEB_USER introuvable. Vérifier le user PHP-FPM dans /etc/php/8.4/fpm/pool.d/www.conf"
     fi
 fi
-
-# var/ : writable par le propriétaire, readable par le groupe
-# (les commandes console lancées par le deploy user peuvent lire les logs)
-chmod -R u+rwX,g+rX,o-rwx var/
-# images/ : writable par propriétaire ET groupe (upload via www-data, lecture via caddy)
-chmod -R u+rwX,g+rwX,o+rX public/images/profil/ public/images/expense/
 
 ok "Permissions appliquées"
 
