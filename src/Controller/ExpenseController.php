@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -62,7 +63,7 @@ class ExpenseController extends AbstractController
         '/new',
         name: 'new',
         requirements: [
-            'splitter_id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
+            'splitter_id' => Requirement::UUID
         ],
         methods: ['GET', 'POST']
     )]
@@ -99,7 +100,7 @@ class ExpenseController extends AbstractController
         '/{expense_id}',
         name: 'show',
         requirements: [
-            'splitter_id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}',
+            'splitter_id' => Requirement::UUID,
             'expense_id' => '\d+'
         ],
         methods: ['GET']
@@ -123,7 +124,7 @@ class ExpenseController extends AbstractController
         '/{expense_id}/edit',
         name: 'edit',
         requirements: [
-            'splitter_id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}',
+            'splitter_id' => Requirement::UUID,
             'expense_id' => '\d+'
         ],
         methods: ['GET', 'POST']

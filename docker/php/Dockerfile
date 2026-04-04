@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-buster
+FROM php:8.4-fpm-bookworm
 ARG TIMEZONE
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini

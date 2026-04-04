@@ -9,12 +9,13 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 
 #[Route(
     '/splitter/{id}/guest/{unique_id}',
     name: 'app_splitter_guest_show',
     requirements: [
-        'id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}',
+        'id' => Requirement::UUID,
         'unique_id' => '^[0-9a-f]{32}$'
     ],
     methods: ['GET']
