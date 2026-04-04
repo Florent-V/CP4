@@ -10,6 +10,7 @@ use App\Service\SplitterAccessManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Role::USER->value)]
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     '/splitter/{id}/history',
     name: 'app_splitter_show_history',
     requirements: [
-        'id' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-6][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
+        'id' => Requirement::UUID
     ],
     methods: ['GET']
 )]
