@@ -1,6 +1,7 @@
-{{ form_start(form) }}
-
-<div>
+{{ form_start(form, {attr: {
+    'data-controller': 'expense-share',
+    'data-action': 'submit->expense-share#onSubmit',
+}}) }}
 
     <div class="mb-3" data-controller="custom-file-input">
         <div class="d-flex align-items-stretch">
@@ -39,16 +40,21 @@
         row_attr: {class: 'form-floating mb-3'},
     }) }}
 
-    <div class="input-group mb-3">
-        <div class="form-floating flex-grow-1">
-            {{ form_widget(form.amount) }}
-            {{ form_label(form.amount, 'Montant') }}
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="form-floating flex-grow-1">
+                {{ form_widget(form.amount, {attr: {
+                    'data-expense-share-target': 'amount',
+                    'data-action': 'input->expense-share#onAmountInput',
+                }}) }}
+                {{ form_label(form.amount, 'Montant') }}
+            </div>
+            <div class="input-group-text btn btn-secondary btn-square d-flex justify-content-center align-items-center">
+                <twig:ux:icon name="material-symbols:euro" height="24" width="24"/>
+            </div>
         </div>
-        <div class="input-group-text btn btn-secondary btn-square d-flex justify-content-center align-items-center">
-            <twig:ux:icon name="material-symbols:euro" height="24" width="24"/>
-        </div>
+        {{ form_errors(form.amount) }}
     </div>
-    {{ form_errors(form.amount) }}
 
     {{ form_row(form.paidBy, {
         label: 'Payé par :',
@@ -61,7 +67,11 @@
     }) }}
 
     {# Bénéficiaires #}
-    <div class="mb-3" id="js-beneficiaries-container">
+    <div
+        class="mb-3"
+        data-expense-share-target="beneficiaries"
+        data-action="change->expense-share#onBeneficiaryChange"
+    >
         {{ form_label(form.beneficiaries, 'Bénéficiaires :') }}
         {{ form_widget(form.beneficiaries) }}
         {{ form_errors(form.beneficiaries) }}
@@ -70,13 +80,16 @@
     {# Répartition #}
     <div class="mb-3">
         {{ form_label(form.splitType) }}
-        {{ form_widget(form.splitType) }}
+        {{ form_widget(form.splitType, {attr: {
+            'data-expense-share-target': 'splitType',
+            'data-action': 'change->expense-share#onSplitTypeChange',
+        }}) }}
         {{ form_errors(form.splitType) }}
     </div>
 
     {# Section shares — cachée par défaut en mode égalité #}
     <div
-        id="js-shares-section"
+        data-expense-share-target="sharesSection"
         class="mb-3{% if form.splitType.vars.data is null or form.splitType.vars.data.value == 'equal' %} d-none{% endif %}"
     >
         <div class="card">
@@ -84,32 +97,35 @@
                 <h6 class="card-title mb-3">Répartition par bénéficiaire</h6>
 
                 <div
-                    id="js-shares-collection"
+                    data-expense-share-target="sharesCollection"
                     data-index="{{ form.shares|length }}"
                     data-prototype="{{ form_widget(form.shares.vars.prototype)|e('html_attr') }}"
+                    data-action="input->expense-share#onShareInput"
                 >
                     {% for share_form in form.shares %}
                         {% set member = share_form.vars.data.member %}
                         <div
-                            class="js-share-row d-flex align-items-center gap-2 mb-2"
+                            class="js-share-row mb-2"
                             data-member-id="{{ member.id }}"
                         >
-                            <span class="fw-medium" style="min-width: 100px;">
-                                {{ member.nickname }}
-                            </span>
-                            {{ form_widget(share_form.member, {attr: {class: 'd-none'}}) }}
-                            {{ form_widget(share_form.share, {attr: {class: 'form-control form-control-sm js-share-input'}}) }}
-                            <span class="js-share-unit text-muted">
-                                {{ form.splitType.vars.data.value == 'percentage' ? '%' : '€' }}
-                            </span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fw-medium" style="min-width: 100px;">
+                                    {{ member.nickname }}
+                                </span>
+                                {{ form_widget(share_form.member, {attr: {class: 'd-none'}}) }}
+                                {{ form_widget(share_form.share, {attr: {class: 'form-control form-control-sm js-share-input'}}) }}
+                                <span class="js-share-unit text-muted">
+                                    {{ form.splitType.vars.data.value == 'percentage' ? '%' : '€' }}
+                                </span>
+                            </div>
                             {{ form_errors(share_form.share) }}
                         </div>
                     {% endfor %}
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-2">
-                    <span class="text-muted small" id="js-sum-display"></span>
-                    <span class="badge" id="js-sum-status"></span>
+                    <span class="text-muted small" data-expense-share-target="sumDisplay"></span>
+                    <span class="badge" data-expense-share-target="sumStatus"></span>
                 </div>
 
                 {{ form_errors(form.shares) }}
@@ -122,201 +138,4 @@
         <button class="btn btn-success valid-btn">{{ button_label|default('Ajouter') }}</button>
     </div>
 
-</div>
 {{ form_end(form) }}
-
-<script>
-{
-    const splitTypeSelect       = document.getElementById('{{ form.splitType.vars.id }}');
-    const sharesSection         = document.getElementById('js-shares-section');
-    const sharesCollection      = document.getElementById('js-shares-collection');
-    const amountInput           = document.getElementById('{{ form.amount.vars.id }}');
-    const sumDisplay            = document.getElementById('js-sum-display');
-    const sumStatus             = document.getElementById('js-sum-status');
-    const beneficiariesContainer = document.getElementById('js-beneficiaries-container');
-
-    if (!splitTypeSelect || !sharesSection || !sharesCollection) {
-        console.error('ExpenseShare: éléments introuvables dans le DOM.');
-    } else {
-        let nextIndex = parseInt(sharesCollection.dataset.index, 10) || 0;
-
-        const getSplitType = () => splitTypeSelect.value;
-        const getTotalAmount = () => parseFloat(amountInput?.value) || 0;
-        const getShareRows = () => [...sharesCollection.querySelectorAll('.js-share-row')];
-
-        const getCheckedBeneficiaries = () =>
-            [...beneficiariesContainer.querySelectorAll('input[type="checkbox"]:checked')]
-                .map(cb => ({
-                    id: cb.value,
-                    label: cb.closest('.form-check')?.querySelector('label')?.textContent.trim() ?? cb.value,
-                }));
-
-        const getExistingRowIds = () => getShareRows().map(row => row.dataset.memberId);
-
-        const addShareRow = (memberId, memberLabel) => {
-            const prototype = sharesCollection.dataset.prototype;
-            if (!prototype) return;
-
-            const html = prototype.replace(/__name__/g, nextIndex++);
-            sharesCollection.dataset.index = String(nextIndex);
-
-            const temp = document.createElement('div');
-            temp.innerHTML = html;
-
-            const row = document.createElement('div');
-            row.className = 'js-share-row d-flex align-items-center gap-2 mb-2';
-            row.dataset.memberId = String(memberId);
-
-            // Nom du membre
-            const nameSpan = document.createElement('span');
-            nameSpan.className = 'fw-medium';
-            nameSpan.style.minWidth = '100px';
-            nameSpan.textContent = memberLabel;
-            row.appendChild(nameSpan);
-
-            // <select> member → <input hidden>
-            const memberSelect = temp.querySelector('select');
-            if (memberSelect) {
-                const hidden = document.createElement('input');
-                hidden.type  = 'hidden';
-                hidden.name  = memberSelect.name;
-                hidden.value = memberId;
-                row.appendChild(hidden);
-            }
-
-            // Input share : on le repère par son name qui contient "[share]"
-            const shareInput = [...temp.querySelectorAll('input')]
-                .find(inp => inp.name?.includes('[share]'));
-            if (shareInput) {
-                shareInput.className = 'form-control form-control-sm js-share-input';
-                row.appendChild(shareInput);
-            }
-
-            // Unité
-            const unitSpan = document.createElement('span');
-            unitSpan.className = 'js-share-unit text-muted';
-            unitSpan.textContent = getSplitType() === 'percentage' ? '%' : '€';
-            row.appendChild(unitSpan);
-
-            sharesCollection.appendChild(row);
-        };
-
-        const removeShareRow = (memberId) => {
-            getShareRows()
-                .filter(row => row.dataset.memberId === String(memberId))
-                .forEach(row => row.remove());
-        };
-
-        const syncRowsWithBeneficiaries = () => {
-            const checked    = getCheckedBeneficiaries();
-            const checkedIds = checked.map(b => b.id);
-            const existingIds = getExistingRowIds();
-
-            checked
-                .filter(b => !existingIds.includes(b.id))
-                .forEach(b => addShareRow(b.id, b.label));
-
-            existingIds
-                .filter(id => !checkedIds.includes(id))
-                .forEach(id => removeShareRow(id));
-        };
-
-        const autoFill = () => {
-            const rows = getShareRows();
-            if (!rows.length) return;
-
-            const splitType = getSplitType();
-            const total = splitType === 'percentage' ? 100 : getTotalAmount();
-            if (splitType === 'equal') return;
-
-            const share = Math.round((total / rows.length) * 100) / 100;
-            rows.forEach((row, i) => {
-                const input = row.querySelector('.js-share-input');
-                if (!input) return;
-                input.value = i === rows.length - 1
-                    ? Math.round((total - share * (rows.length - 1)) * 100) / 100
-                    : share;
-            });
-        };
-
-        const updateUnits = () => {
-            const unit = getSplitType() === 'percentage' ? '%' : '€';
-            sharesCollection.querySelectorAll('.js-share-unit')
-                .forEach(el => (el.textContent = unit));
-        };
-
-        const setSumStatus = (valid, expected) => {
-            sumStatus.className   = `badge ${valid ? 'bg-success' : 'bg-danger'}`;
-            sumStatus.textContent = valid ? '✓' : `≠ ${expected}`;
-        };
-
-        const updateSum = () => {
-            const splitType = getSplitType();
-            if (splitType === 'equal') {
-                sumDisplay.textContent = '';
-                sumStatus.className    = 'badge';
-                sumStatus.textContent  = '';
-                return;
-            }
-
-            const sum = Math.round(
-                getShareRows().reduce((acc, row) => {
-                    return acc + (parseFloat(row.querySelector('.js-share-input')?.value) || 0);
-                }, 0) * 100
-            ) / 100;
-
-            if (splitType === 'percentage') {
-                sumDisplay.textContent = `Total : ${sum.toFixed(2)} %`;
-                setSumStatus(Math.abs(sum - 100) <= 0.01, '100 %');
-            } else {
-                const total = getTotalAmount();
-                sumDisplay.textContent = `Total : ${sum.toFixed(2)} €`;
-                setSumStatus(Math.abs(sum - total) <= 0.01, `${total.toFixed(2)} €`);
-            }
-        };
-
-        const syncVisibility = () => {
-            if (getSplitType() === 'equal') {
-                sharesSection.classList.add('d-none');
-                return;
-            }
-            sharesSection.classList.remove('d-none');
-            syncRowsWithBeneficiaries();
-            autoFill();
-            updateUnits();
-            updateSum();
-        };
-
-        // -- Événements ----------------------------------------------------------
-
-        splitTypeSelect.addEventListener('change', syncVisibility);
-
-        beneficiariesContainer.addEventListener('change', ({ target }) => {
-            if (target.type !== 'checkbox' || getSplitType() === 'equal') return;
-
-            if (target.checked) {
-                const label = target.closest('.form-check')?.querySelector('label')?.textContent.trim() ?? target.value;
-                addShareRow(target.value, label);
-            } else {
-                removeShareRow(target.value);
-            }
-            autoFill();
-            updateSum();
-        });
-
-        amountInput?.addEventListener('input', () => {
-            if (getSplitType() === 'amount') {
-                autoFill();
-                updateSum();
-            }
-        });
-
-        sharesCollection.addEventListener('input', ({ target }) => {
-            if (target.classList.contains('js-share-input')) updateSum();
-        });
-
-        // -- Init ----------------------------------------------------------------
-        syncVisibility();
-    }
-}
-</script>
