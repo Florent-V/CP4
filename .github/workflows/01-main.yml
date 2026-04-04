@@ -40,6 +40,7 @@ jobs:
         run: php bin/console cache:warmup --env=dev
         env:
           APP_SECRET: ci_secret_for_cache_warmup
+          APP_DEBUG: 1
 
       - name: code_quality
         run: |
