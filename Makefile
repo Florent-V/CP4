@@ -61,8 +61,6 @@ help:
 	@echo "  ${GREEN}lint${RESET}               - Vérifier la qualité du code"
 	@echo "  ${GREEN}grumphp-run${RESET}        - Exécuter GrumPHP sur tous les fichiers"
 	@echo "  ${GREEN}grumphp-git${RESET}        - Exécuter GrumPHP sur les fichiers Git modifiés"
-	@echo "  ${GREEN}prod-local${RESET}         - Simuler la prod en local (deploy.sh local)"
-	@echo "  ${GREEN}prod-deploy${RESET}        - Déployer en production réelle (deploy.sh prod)"
 	@echo "  ${GREEN}mailpit-open${RESET}        - Ouvrir l'interface Mailpit dans le navigateur"
 	@echo "  ${GREEN}mailpit-logs${RESET}        - Afficher les logs de Mailpit"
 	@echo ""
@@ -211,17 +209,5 @@ grumphp-git:
 	@echo "${BLUE}Exécution de GrumPHP sur les fichiers Git modifiés...${RESET}"
 	vendor/bin/grumphp run --git
 
-# -------------- 🚀 Environnement de production 🚀 --------------
-
-prod-local:
-	@echo "${BLUE}Simulation de l'environnement de production en local...${RESET}"
-	APP_ENV=prod APP_DEBUG=0 bash deploy.sh local
-	@echo "${GREEN}Simulation prod terminée. Lancer 'make server-start' pour tester.${RESET}"
-
-prod-deploy:
-	@echo "${BLUE}Déploiement en production...${RESET}"
-	APP_ENV=prod APP_DEBUG=0 bash deploy.sh prod
-	@echo "${GREEN}Déploiement terminé !${RESET}"
-
 # Pour éviter les conflits avec des fichiers du même nom
-.PHONY: help setup install update start stop restart up down db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build assets-watch cache-clear tests lint grumphp-run grumphp-git prod-local prod-deploy
+.PHONY: help setup install update start stop restart up down db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build assets-watch cache-clear tests lint grumphp-run grumphp-git
