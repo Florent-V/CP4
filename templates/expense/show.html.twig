@@ -38,7 +38,7 @@
                 </ul>
             </div>
         </div>
-        <div class="expense-detail">
+        <div class="expense-detail mb-4">
             <h2 class="expense-title">Informations de la dépense</h2>
             <div class="expense-info">
                 <div class="info-item">
@@ -89,7 +89,14 @@
                     <div class="info-item">
                         <p class="info-label">Photo :</p>
                         <p class="info-value">
-                            <img src="{{ vich_uploader_asset(expense, 'pictureFile') }}" alt="Photo de la dépense" class="expense-photo">
+                            <img
+                                src="{{ vich_uploader_asset(expense, 'pictureFile') }}"
+                                alt="Photo de la dépense"
+                                class="expense-photo"
+                                style="cursor: pointer;"
+                                data-bs-toggle="modal"
+                                data-bs-target="#expensePhotoModal"
+                            >
                         </p>
                     </div>
                 {% endif %}
@@ -97,5 +104,24 @@
         </div>
 
     </main>
+
+    {% if expense.picture %}
+        <div class="modal fade" id="expensePhotoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="background: transparent; border: none; box-shadow: none;">
+                    <div class="modal-header" style="border: none; padding-bottom: 0;">
+                        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    </div>
+                    <div class="modal-body text-center" style="padding-top: 0;">
+                        <img
+                            src="{{ vich_uploader_asset(expense, 'pictureFile') }}"
+                            alt="Photo de la dépense"
+                            style="max-width: 100%; height: auto; border-radius: 12px;"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

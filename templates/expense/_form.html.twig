@@ -12,13 +12,13 @@
                 {{ form_label(form.name, 'Titre') }}
             </div>
             <div class="ms-2">
-                {{ form_widget(form.pictureFile, {
+                {{ form_widget(form.pictureFile.file, {
                     attr: {
                         'data-custom-file-input-target': 'input',
                         class: 'd-none',
                     },
                 }) }}
-                <label for="{{ form.pictureFile.vars.id }}" class="btn btn-secondary h-100 d-flex align-items-center justify-content-center" data-action="click->custom-file-input#open">
+                <label for="{{ form.pictureFile.file.vars.id }}" class="btn btn-secondary h-100 d-flex align-items-center justify-content-center" data-action="click->custom-file-input#open">
                     <twig:ux:icon name="mdi:camera" height="24" width="24" />
                 </label>
             </div>
@@ -32,6 +32,27 @@
             {{ form_errors(form.pictureFile) }}
             <div class="form-text">{{ form_help(form.pictureFile) }}</div>
         </div>
+        {% if expense is defined and expense.picture %}
+            <div class="mt-2">
+                <img
+                    src="{{ vich_uploader_asset(expense, 'pictureFile') }}"
+                    alt="Photo actuelle"
+                    style="max-width: 100%; height: auto; border-radius: 8px;"
+                >
+                <div class="form-check mt-2">
+                    {% if form.pictureFile.delete is defined %}
+                    {{ form_widget(form.pictureFile.delete) }}
+                    {{ form_label(form.pictureFile.delete, 'Supprimer la photo') }}
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            {% if form.pictureFile.delete is defined %}
+            <div style="display: none;">
+                {{ form_widget(form.pictureFile.delete) }}
+            </div>
+            {% endif %}
+        {% endif %}
     </div>
 
     {{ form_row(form.madeAt, {

@@ -35,8 +35,8 @@ class ExpenseFormType extends AbstractType
                 'label' => 'Photo',
                 'required' => false,
                 'allow_delete' => true,
-                'download_uri' => true,
-                'image_uri' => true,
+                'download_uri' => false,
+                'image_uri' => false,
                 'asset_helper' => true,
                 'attr' => [
                     'accept' => 'image/jpeg, image/png, image/gif',
