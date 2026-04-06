@@ -33,9 +33,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+              set -euo pipefail
               echo "🚀 Début du déploiement automatique"
               cd ${{ secrets.DEPLOY_PATH }}
-              bash ~/deploy-kopeck.sh
+              bash -e ~/deploy-kopeck.sh
               echo "✅ Déploiement terminé"
 
       - name: 🎉 Succès
