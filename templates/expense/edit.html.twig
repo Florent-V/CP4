@@ -9,7 +9,7 @@
         <div class="d-flex align-items-center gap-3 my-3">
             <a
                     class="nav-link"
-                    href="{{ path('app_expense_show', {'expense_id': expense.id, 'splitter_id': splitter.id}) }}"
+                    href="{{ path('app_expense_show', {expense_id: expense.id, splitter_id: splitter.id}) }}"
                     title="Retourner à la dépense {{ expense.name }}"
             >
                 <twig:ux:icon name="ep:back" height="30" width="30"/>
@@ -17,7 +17,7 @@
             <h1 class="text-center my-2">Modifier la dépense</h1>
         </div>
 
-        {{ include('expense/_form.html.twig', {'button_label': 'Modifier', 'expense': expense}) }}
+        {{ include('expense/_form.html.twig', {button_label: 'Modifier', expense: expense}) }}
 
     </main>
 

@@ -13,7 +13,7 @@
                 <div class="info-user my-2">
                     <img src="{{ user.picture ? vich_uploader_asset(user, 'pictureFile') : asset('images/profil/Default_Profile_Picture.png') }}" alt="{% if user.picture %}Photo de profil{% else %}Photo de profil par défaut{% endif %}">
                     <p class="text-center m-0 mx-2" >Bienvenue <br>
-                        {{ user.pseudo ?? "Admin" }}
+                        {{ user.pseudo ?? 'Admin' }}
                     </p>
                     <a class="nav-link link-profile" href="{{ path('app_user_account') }}" title="Accéder à mon compte"></a>
                 </div>
@@ -28,11 +28,11 @@
                 <ul class="navbar-nav flex-lg-column">
                     {% for split in splitters %}
                         <li class="nav-item d-flex align-items-center">
-                            <a class="nav-link" aria-current="page" href="{{ path('app_splitter_show', {'id': split.id}) }}">
+                            <a class="nav-link" aria-current="page" href="{{ path('app_splitter_show', {id: split.id}) }}">
                                 {{ split.name }}
                             </a>
                             {% if split.owner == user.appUser %}
-                                <a class="link-info" href="{{ path('app_splitter_edit', {'id': split.id}) }}">
+                                <a class="link-info" href="{{ path('app_splitter_edit', {id: split.id}) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                             {% endif %}

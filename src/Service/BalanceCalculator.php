@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Entity\Expense;
 use App\Entity\Splitter;
+use App\Enum\SplitType;
 use App\Repository\MemberRepository;
 
 readonly class BalanceCalculator
@@ -15,7 +17,6 @@ readonly class BalanceCalculator
     public function calculateIndividualBalance(Splitter $splitter): array
     {
         $balancePerId = [];
-        $total = 0;
         //Initialize amount to 0 for all members
         foreach ($splitter->getMembers() as $member) {
             $balancePerId[$member->getId()] = 0;
@@ -26,12 +27,12 @@ readonly class BalanceCalculator
             $amount = $expense->getAmount();
             $payer = $expense->getPaidBy()->getId();
             $balancePerId[$payer] += $amount;
-            $beneficiaries = $expense->getBeneficiaries();
-            $average = $amount / count($beneficiaries);
-            $memberIds = array_map(fn ($member) => $member->getId(), $beneficiaries->toArray());
-            foreach ($memberIds as $id) {
-                $balancePerId[$id] -= $average;
-            }
+
+            match ($expense->getSplitType()) {
+                SplitType::EQUAL => $this->applyEqualSplit($expense, $balancePerId),
+                SplitType::PERCENTAGE => $this->applyPercentageSplit($expense, $balancePerId),
+                SplitType::AMOUNT => $this->applyAmountSplit($expense, $balancePerId),
+            };
         }
 
         //Apply transfers: from gives money to to
@@ -46,14 +47,33 @@ readonly class BalanceCalculator
             $balancePerId[$toId] -= $amount;
         }
 
-        //Calculate balance - the sum of all balances should be 0
-        $average = ($total / count($balancePerId));
-        foreach ($balancePerId as $id => $amount) {
-            $balancePerId[$id] = $amount - $average;
-        }
         asort($balancePerId);
 
         return $balancePerId;
+    }
+
+    private function applyEqualSplit(Expense $expense, array &$balancePerId): void
+    {
+        $beneficiaries = $expense->getBeneficiaries();
+        $share = $expense->getAmount() / count($beneficiaries);
+        foreach ($beneficiaries as $beneficiary) {
+            $balancePerId[$beneficiary->getId()] -= $share;
+        }
+    }
+
+    private function applyPercentageSplit(Expense $expense, array &$balancePerId): void
+    {
+        foreach ($expense->getShares() as $expenseShare) {
+            $share = $expense->getAmount() * ($expenseShare->getShare() / 100);
+            $balancePerId[$expenseShare->getMember()->getId()] -= $share;
+        }
+    }
+
+    private function applyAmountSplit(Expense $expense, array &$balancePerId): void
+    {
+        foreach ($expense->getShares() as $expenseShare) {
+            $balancePerId[$expenseShare->getMember()->getId()] -= $expenseShare->getShare();
+        }
     }
 
     public function calculateTransfer(array $balancePerId): array
