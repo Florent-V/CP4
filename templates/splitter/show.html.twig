@@ -26,7 +26,7 @@
                     {% if not app.user or (splitter not in app.user.appUser.favoriteSplitters) %}
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="Rejoindre"
-                               href="{{ path('app_splitter_join', {'id': splitter.id}) }}">
+                               href="{{ path('app_splitter_join', {id: splitter.id}) }}">
                                 <i class="bi bi-pencil"></i> <span>Rejoindre</span>
                             </a>
                         </li>
@@ -34,28 +34,28 @@
                     {% if app.user %}
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="ajouter une dépense"
-                               href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}">
+                               href="{{ path('app_expense_new', {splitter_id: splitter.id}) }}">
                                 <twig:ux:icon name="icon-park-twotone:add-web" height="24" width="24"/>
                                 <span>Ajouter une dépense</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="ajouter un transfert"
-                               href="{{ path('app_transfer_new', {'splitter_id': splitter.id}) }}">
+                               href="{{ path('app_transfer_new', {splitter_id: splitter.id}) }}">
                                 <twig:ux:icon name="mdi:bank-transfer" height="24" width="24"/>
                                 <span>Enregistrer un transfert</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="Voir historique"
-                               href="{{ path('app_splitter_show_history', {'id': splitter.id}) }}">
+                               href="{{ path('app_splitter_show_history', {id: splitter.id}) }}">
                                 <twig:ux:icon name="material-symbols:history-rounded" height="24" width="24"/>
                                 <span>Historique</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="Voir historique"
-                               href="{{ path('app_splitter_affect', {'id': splitter.id}) }}">
+                               href="{{ path('app_splitter_affect', {id: splitter.id}) }}">
                                 <twig:ux:icon name="tdesign:member" height="24" width="24"/>
                                 <span>Sélectionner qui je suis</span>
                             </a>
@@ -70,7 +70,7 @@
                         {% if splitter.owner == app.user.appUser %}
                             <li>
                                 <a class="dropdown-item d-flex align-items-center gap-2" title="Editer le splitter"
-                                   href="{{ path('app_splitter_edit', {'id': splitter.id}) }}">
+                                   href="{{ path('app_splitter_edit', {id: splitter.id}) }}">
                                     <twig:ux:icon name="ic:twotone-edit" height="24" width="24"/>
                                     <span>Modifier</span>
                                 </a>
@@ -83,13 +83,13 @@
                                             title="Supprimer le groupe"
                                             label="Supprimer"
                                     />
-{#                                    <span>Supprimer</span>#}
+{# <span>Supprimer</span> #}
                                 </div>
                             </li>
                         {% endif %}
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="Quitter le Splitter"
-                               href="{{ path('app_splitter_leave', {'id': splitter.id}) }}">
+                               href="{{ path('app_splitter_leave', {id: splitter.id}) }}">
                                 <twig:ux:icon name="mingcute:exit-line" height="24" width="24"/>
                                 <span>Quitter le groupe</span>
                             </a>
@@ -107,9 +107,9 @@
                  data-share-modal-splitter-id-value="{{ splitter.id }}"
                  data-share-modal-entity-type-value="splitter"
                  data-share-modal-entity-id-value="{{ splitter.id }}"
-                 data-share-modal-code-url-value="{{ url('api_share_code', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
-                 data-share-modal-qr-url-value="{{ url('api_share_qr_code', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
-                 data-share-modal-link-url-value="{{ url('api_share_link', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
+                 data-share-modal-code-url-value="{{ url('api_share_code', {entityType: 'splitter', entityId: splitter.id}) }}"
+                 data-share-modal-qr-url-value="{{ url('api_share_qr_code', {entityType: 'splitter', entityId: splitter.id}) }}"
+                 data-share-modal-link-url-value="{{ url('api_share_link', {entityType: 'splitter', entityId: splitter.id}) }}"
                  data-share-modal-splitter-name-value="{{ splitter.name }}"
             >
                 <div class="modal-dialog modal-dialog-centered">
@@ -328,12 +328,12 @@
                                     Vous avez dépensé {{ ((memberTotals[current_member.id])|default(0))|round(2) }} €
                                 </p>
                             {% elseif app.user %}
-                                {#                                    <a #}
-                                {#                                        href="{{ path('app_splitter_affect', {'id': splitter.id}) }}" #}
-                                {#                                        class="btn btn-outline-warning" #}
-                                {#                                    > #}
-                                {#                                        Choisir un Membre #}
-                                {#                                    </a> #}
+                                {# <a #}
+                                {# href="{{ path('app_splitter_affect', {'id': splitter.id}) }}" #}
+                                {# class="btn btn-outline-warning" #}
+                                {# > #}
+                                {# Choisir un Membre #}
+                                {# </a> #}
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="text-warning text-center">Aucun membre ne vous est associé.</div>
                                     <div class="dropdown action-menu">
@@ -348,7 +348,7 @@
                                                 <li>
                                                     <form method="POST" action="{{ path('app_splitter_associate_member', {
                                                         splitterId: splitter.id,
-                                                        memberId: member.id
+                                                        memberId: member.id,
                                                     }) }}" style="display: inline;">
                                                         <input type="hidden" name="_token"
                                                                value="{{ csrf_token('associate_member' ~ member.id) }}">
@@ -397,7 +397,7 @@
 
                                     <div class="expense-amount">{{ expense.amount }} {{ expense.devise }}</div>
                                     <a class="linkExpense"
-                                       href="{{ path(('app_expense_show'), {'expense_id': expense.id, 'splitter_id': splitter.id}) }}"
+                                       href="{{ path(('app_expense_show'), {expense_id: expense.id, splitter_id: splitter.id}) }}"
                                        title="Cliquer pour éditer"></a>
                                 </div>
                             {% endfor %}
@@ -431,7 +431,6 @@
                             </div>
                         </div>
                     {% endif %}
-
 
                     <div class="balance-list">
                         <div class="balance-subtitle">
@@ -520,7 +519,7 @@
 
         <div class="floating-add-button">
             <a class="add-button d-flex align-items-center gap-2" title="ajouter une dépense"
-               href="{{ path('app_expense_new', {'splitter_id': splitter.id}) }}">
+               href="{{ path('app_expense_new', {splitter_id: splitter.id}) }}">
                 <twig:ux:icon name="material-symbols:add-rounded" height="40" width="40"/>
             </a>
         </div>
@@ -587,7 +586,7 @@
                                     <twig:ux:icon name="mdi:close" height="16" width="16" class="me-1"/>
                                     Annuler
                                 </button>
-                                <form method="post" action="{{ path('app_transfer_delete', {'splitter_id': splitter.id, 'transfer_id': transfer.id}) }}" class="d-inline">
+                                <form method="post" action="{{ path('app_transfer_delete', {splitter_id: splitter.id, transfer_id: transfer.id}) }}" class="d-inline">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transfer.id) }}">
                                     <button type="submit" class="btn btn-danger">
                                         <twig:ux:icon name="mdi:delete-forever" height="16" width="16" class="me-1"/>

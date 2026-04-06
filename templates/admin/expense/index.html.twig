@@ -17,10 +17,10 @@
                 </nav>
             </div>
             {# Assuming a route 'admin_app_expense_new' exists for creating a new expense #}
-{#            #}{# <a href="{{ path('admin_app_expense_new') }}" class="btn btn-primary mt-3 mt-md-0">#}
-{#                <twig:ux:icon name="bi:plus-lg" class="me-1"  width="16" height="16" />#}
-{#                Nouvelle Dépense#}
-{#            </a> #}
+{##}{# <a href="{{ path('admin_app_expense_new') }}" class="btn btn-primary mt-3 mt-md-0"> #}
+{# <twig:ux:icon name="bi:plus-lg" class="me-1"  width="16" height="16" /> #}
+{# Nouvelle Dépense #}
+{# </a> #}
         </div>
 
         <!-- Content Panel -->
@@ -49,10 +49,10 @@
                             <td><span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">{{ expense.devise }}</span></td>
                             <td class="text-end">
                                 <div class="action-buttons">
-                                    <a href="{{ path('app_expense_show', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}" class="btn btn-sm btn-icon" title="Voir">
+                                    <a href="{{ path('app_expense_show', {splitter_id: expense.splitter.id, expense_id: expense.id}) }}" class="btn btn-sm btn-icon" title="Voir">
                                         <twig:ux:icon name="bi:eye-fill"  width="16" height="16" />
                                     </a>
-                                    <a href="{{ path('app_expense_edit', {'splitter_id': expense.splitter.id, 'expense_id': expense.id}) }}" class="btn btn-sm btn-icon" title="Modifier">
+                                    <a href="{{ path('app_expense_edit', {splitter_id: expense.splitter.id, expense_id: expense.id}) }}" class="btn btn-sm btn-icon" title="Modifier">
                                         <twig:ux:icon name="bi:pencil-fill"  width="16" height="16" />
                                     </a>
                                     <div class="d-inline-block" title="Supprimer">
