@@ -44,6 +44,7 @@ class Expense
 
     #[ORM\Column]
     #[Gedmo\Versioned]
+    #[Assert\GreaterThan(value: 0, message: 'Le montant doit être supérieur à 0.')]
     private ?float $amount = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -91,6 +92,7 @@ class Expense
         fetch: 'EAGER',
         orphanRemoval: true
     )]
+    #[Assert\Valid]
     private Collection $shares;
 
     public function __construct()

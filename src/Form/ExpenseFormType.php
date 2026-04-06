@@ -48,6 +48,10 @@ class ExpenseFormType extends AbstractType
             ])
             ->add('amount', MoneyType::class, [
                 'currency' => false,
+                'attr' => [
+                    'min' => '0.01',
+                    'step' => '0.01',
+                ],
             ])
             ->add('paidBy', EntityType::class, [
                 'class' => Member::class,
