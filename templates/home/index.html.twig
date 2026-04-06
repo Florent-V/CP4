@@ -16,11 +16,11 @@
                         <a class="link-card" href="{{ path('app_splitter_show', {id: split.id}) }}"></a>
                         <div class="cardIcons">
                             {% if split.owner == app.user.appUser %}
-                                <a href="{{ path('app_splitter_edit', {'id': split.id}) }}">
+                                <a href="{{ path('app_splitter_edit', {id: split.id}) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                             {% endif %}
-                            <a href="{{ path('app_expense_new', {'splitter_id': split.id}) }}">
+                            <a href="{{ path('app_expense_new', {splitter_id: split.id}) }}">
                                 <i class="bi bi-plus-lg"></i>
                             </a>
                         </div>
@@ -48,8 +48,8 @@
                             {% for expense in split.expenses|sort((a, b) => b.madeAt <=> a.madeAt)|slice(0, 3) %}
                                 <li class="list-group-item expenseItemList">
                                     <div class="expenseDate">
-                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="MMM")|upper }}</p>
-                                        <p>{{ expense.createdAt|format_datetime(locale='fr', pattern="dd")|upper }}</p>
+                                        <p>{{ expense.createdAt|format_datetime(locale: 'fr', pattern: 'MMM')|upper }}</p>
+                                        <p>{{ expense.createdAt|format_datetime(locale: 'fr', pattern: 'dd')|upper }}</p>
                                     </div>
                                     <div class="expenseInfos">
                                         <p>{{ expense.paidBy.nickname }} a payé pour {{ expense.name }}</p>

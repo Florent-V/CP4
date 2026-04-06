@@ -7,7 +7,7 @@
     <main class="container-md">
 
         <div class="d-flex align-items-center gap-3 mb-4">
-            <a class="nav-link" href="{{ path('app_splitter_show', {'id': splitter.id}) }}" title="Retour Groupe">
+            <a class="nav-link" href="{{ path('app_splitter_show', {id: splitter.id}) }}" title="Retour Groupe">
                 <twig:ux:icon name="ep:back" height="30" width="30"/>
             </a>
             <h1 class="text-center my-2">Partager le groupe {{ splitter.name }}</h1>
@@ -23,9 +23,9 @@
              data-share-modal-splitter-id-value="{{ splitter.id }}"
              data-share-modal-entity-type-value="splitter"
              data-share-modal-entity-id-value="{{ splitter.id }}"
-             data-share-modal-code-url-value="{{ url('api_share_code', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
-             data-share-modal-qr-url-value="{{ url('api_share_qr_code', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
-             data-share-modal-link-url-value="{{ url('api_share_link', {'entityType': 'splitter', 'entityId': splitter.id}) }}"
+             data-share-modal-code-url-value="{{ url('api_share_code', {entityType: 'splitter', entityId: splitter.id}) }}"
+             data-share-modal-qr-url-value="{{ url('api_share_qr_code', {entityType: 'splitter', entityId: splitter.id}) }}"
+             data-share-modal-link-url-value="{{ url('api_share_link', {entityType: 'splitter', entityId: splitter.id}) }}"
              data-share-modal-splitter-name-value="{{ splitter.name }}"
         >
             <div class="share-body">

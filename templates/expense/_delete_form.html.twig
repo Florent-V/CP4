@@ -1,7 +1,7 @@
 <form
         title= "Supprimer la dépense"
         method="post"
-        action="{{ path('app_expense_delete', {'expense_id': expense.id, 'splitter_id': splitter.id}) }}"
+        action="{{ path('app_expense_delete', {expense_id: expense.id, splitter_id: splitter.id}) }}"
         onsubmit="return confirm('Etes-vous sur de vouloir supprimer cette depense ?');"
 >
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ expense.id) }}">

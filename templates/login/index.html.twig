@@ -10,7 +10,7 @@
             <div class="alert alert-warning" role="alert" aria-live="assertive">
                 {% if error.code == 2000 %}
                     &#9785;&#65039;  {{ error.messageKey|trans(error.messageData, 'security')|raw }}
-                {% elseif error.message == "The presented password is invalid." or error.message == "Bad credentials." %}
+                {% elseif error.message == 'The presented password is invalid.' or error.message == 'Bad credentials.' %}
                     &#9785;&#65039; Les identifiants sont incorrects. Veuillez les vérifier et réessayer.
                 {% else %}
                     {{ error.messageKey|trans(error.messageData, 'security')|raw }}

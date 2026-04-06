@@ -80,7 +80,7 @@
             <div class="info-card">
                 {% if user.appUser.favoriteSplitters is not empty %}
                     {% for splitter in user.appUser.favoriteSplitters %}
-                        <a href="{{ path('app_splitter_show', {'id': splitter.id}) }}" class="group-list-item">
+                        <a href="{{ path('app_splitter_show', {id: splitter.id}) }}" class="group-list-item">
                             <twig:ux:icon name="{{ splitter.category.icon }}" height="24" width="24" class="me-3"/>
                             <span>{{ splitter.name }}</span>
                         </a>
@@ -113,7 +113,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        {{ include('user/_delete_form.html.twig', {'button_class': 'btn btn-danger'}) }}
+        {{ include('user/_delete_form.html.twig', {button_class: 'btn btn-danger'}) }}
       </div>
     </div>
   </div>

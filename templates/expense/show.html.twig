@@ -9,7 +9,7 @@
     >
 
         <div class="splitter-header d-flex justify-content-between align-items-center my-2">
-            <a class="nav-link" href="{{ path('app_splitter_show', {'id': expense.splitter.id}) }}" title="Retour home">
+            <a class="nav-link" href="{{ path('app_splitter_show', {id: expense.splitter.id}) }}" title="Retour home">
                 <twig:ux:icon name="ep:back" height="24" width="24"/>
             </a>
             <div class="d-flex gap-3 align-items-center">
@@ -24,14 +24,14 @@
                     {% if splitter.owner == app.user.appUser or expense.addedBy == app.user.appUser %}
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" title="Editer la dépense"
-                               href="{{ path('app_expense_edit', {'expense_id': expense.id, 'splitter_id': splitter.id}) }}">
+                               href="{{ path('app_expense_edit', {expense_id: expense.id, splitter_id: splitter.id}) }}">
                                 <twig:ux:icon name="ic:twotone-edit" height="24" width="24"/>
                                 <span>Modifier</span>
                             </a>
                         </li>
                         <li>
                             <div style="cursor:pointer;" class="dropdown-item d-flex align-items-center gap-2">
-                                {% include 'expense/_delete_form.html.twig' %}
+                                {{ include('expense/_delete_form.html.twig') }}
                             </div>
                         </li>
                     {% endif %}
@@ -47,7 +47,7 @@
                 </div>
                 <div class="info-item">
                     <p class="info-label">Le :</p>
-                    <p class="info-value">{{ expense.madeAt|date("d/m/Y") }}</p>
+                    <p class="info-value">{{ expense.madeAt|date('d/m/Y') }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Catégorie :</p>
@@ -63,6 +63,26 @@
                         {% for beneficiary in expense.beneficiaries %}
                             <span>{{ beneficiary.nickname }}</span>{% if not loop.last %}, {% endif %}
                         {% endfor %}
+                    </p>
+                </div>
+                <div class="info-item">
+                    <p class="info-label">Répartition :</p>
+                    <p class="info-value">
+                        {% if expense.splitType.value == 'equal' %}
+                            Égalité ({{ (expense.amount / expense.beneficiaries|length)|number_format(2) }}{{ expense.devise }} chacun)
+                        {% elseif expense.splitType.value == 'percentage' %}
+                            {% for share in expense.shares %}
+                                <span>
+                                    {{ share.member.nickname }} :
+                                    {{ share.share|number_format(1) }}%
+                                    ({{ (expense.amount * share.share / 100)|number_format(2) }}{{ expense.devise }})
+                                </span>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% for share in expense.shares %}
+                                <span>{{ share.member.nickname }} : {{ share.share|number_format(2) }}{{ expense.devise }}</span>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </p>
                 </div>
                 {% if expense.picture %}

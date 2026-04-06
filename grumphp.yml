@@ -25,6 +25,14 @@ grumphp:
             ruleset: 'FriendsOfTwig\Twigcs\Ruleset\Official'
             triggered_by: [ 'twig' ]
             exclude: [ 'vendor' ]
+        twigcsfixer:
+            paths: [ ]
+            level: ~
+            config: ~
+            report: 'text'
+            no-cache: false
+            verbose: false
+            triggered_by: [ 'twig' ]
     fixer:
         enabled: true
         fix_by_default: true

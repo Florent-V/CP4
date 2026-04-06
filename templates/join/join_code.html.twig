@@ -20,15 +20,15 @@
 
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true, 'data-share-code-target': 'form'}}) }}
+                        {{ form_start(form, {attr: {class: 'needs-validation', novalidate: true, 'data-share-code-target': 'form'}}) }}
 
                         <div class="mb-4">
-                            {{ form_label(form.code, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-                            {{ form_widget(form.code, {'attr': {
-                                'class': 'form-control form-control-lg text-center code-input',
-                                'style': 'font-size: 1.5rem;',
+                            {{ form_label(form.code, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                            {{ form_widget(form.code, {attr: {
+                                class: 'form-control form-control-lg text-center code-input',
+                                style: 'font-size: 1.5rem;',
                                 'data-share-code-target': 'codeInput',
-                                'data-action': 'input->share-code#formatCode keyup->share-code#checkAutoSubmit'
+                                'data-action': 'input->share-code#formatCode keyup->share-code#checkAutoSubmit',
                             }}) }}
                             <div class="form-text text-adaptive">
                                 <twig:ux:icon name="heroicons:information-circle" height="16" width="16" class="me-1"/>
@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="d-grid">
-                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+                            {{ form_widget(form.submit, {attr: {class: 'btn btn-primary btn-lg'}}) }}
                         </div>
 
                         {{ form_end(form) }}

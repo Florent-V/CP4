@@ -54,7 +54,6 @@ help:
 	@echo "  ${GREEN}migration-migrate${RESET}  - Exécuter les migrations"
 	@echo ""
 	@echo "  ${GREEN}assets-build${RESET}       - Compiler les assets avec Asset Mapper"
-	@echo "  ${GREEN}assets-watch${RESET}       - Surveiller les modifications des assets"
 	@echo ""
 	@echo "  ${GREEN}cache-clear${RESET}        - Vider le cache"
 	@echo "  ${GREEN}tests${RESET}              - Exécuter les tests"
@@ -169,10 +168,6 @@ assets-build:
 	@echo "${BLUE}Compilation des assets...${RESET}"
 	$(CONSOLE) asset-map:compile
 
-assets-watch:
-	@echo "${BLUE}Surveillance des assets...${RESET}"
-	$(CONSOLE) asset-map:compile --watch
-
 sass-watch:
 	@echo "${BLUE}Surveillance des fichiers SASS...${RESET}"
 	$(CONSOLE) sass:build --watch
@@ -210,4 +205,4 @@ grumphp-git:
 	vendor/bin/grumphp run --git
 
 # Pour éviter les conflits avec des fichiers du même nom
-.PHONY: help setup install update start stop restart up down db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build assets-watch cache-clear tests lint grumphp-run grumphp-git
+.PHONY: help setup install update start stop restart up down db-status db-create db-drop db-reset db-migrate db-fixtures db-recreate migration-generate migration-migrate assets-build cache-clear tests lint grumphp-run grumphp-git
