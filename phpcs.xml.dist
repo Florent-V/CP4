@@ -15,6 +15,7 @@
 Dear Wilder using Windows, it seems you miss something in readme during project install. You should edit your IDE settings as recommended in the install instruction.</message>
     </rule>
 
+    <file>bin/</file>
     <file>config/</file>
     <file>public/</file>
     <file>src/</file>
@@ -25,4 +26,6 @@ Dear Wilder using Windows, it seems you miss something in readme during project 
     <exclude-pattern>public/index.php</exclude-pattern>
     <exclude-pattern>src/kernel.php</exclude-pattern>
     <exclude-pattern>migrations/</exclude-pattern>
+    <exclude-pattern>config/reference\.php$</exclude-pattern>
+
 </ruleset>
