@@ -12,6 +12,7 @@ class SplitterExpenseAggregator
      * - regroupement par date
      * - total par membre payeur
      *
+     * @SuppressWarnings("PHPMD.ShortVariable")
      * @param Splitter $splitter
      * @return array [groupTotal, expensesByDate, memberTotals]
      */
@@ -43,6 +44,8 @@ class SplitterExpenseAggregator
         }
 
         krsort($expensesByDate);
+
+        usort($expensesWithPicture, static fn ($a, $b) => $b->getMadeAt() <=> $a->getMadeAt());
 
         return [
             'groupTotal' => $groupTotal,

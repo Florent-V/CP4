@@ -515,22 +515,43 @@
                             <p class="mt-3">Aucune photo pour ce groupe.</p>
                         </div>
                     {% else %}
-                        <div class="photo-gallery">
-                            {% for expense in expensesWithPicture %}
-                                <div class="photo-item"
-                                     data-bs-toggle="modal"
-                                     data-bs-target="#photoModal{{ expense.id }}">
-                                    <img
-                                        src="{{ vich_uploader_asset(expense, 'pictureFile') }}"
-                                        alt="Photo — {{ expense.name }}"
-                                        loading="lazy"
-                                    >
-                                    <div class="photo-overlay">
-                                        <span class="photo-name">{{ expense.name }}</span>
-                                        <span class="photo-amount">{{ expense.amount }}{{ expense.devise }}</span>
+                        <div
+                            {{ stimulus_controller('photo-gallery', {pageSize: 12}) }}
+                        >
+                            <div class="photo-gallery">
+                                {% for expense in expensesWithPicture %}
+                                    <div class="photo-item"
+                                         {{ stimulus_target('photo-gallery', 'item') }}
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#photoModal{{ expense.id }}">
+                                        <img
+                                            src="{{ vich_uploader_asset(expense, 'pictureFile') }}"
+                                            alt="Photo — {{ expense.name }}"
+                                            loading="lazy"
+                                        >
+                                        <div class="photo-overlay">
+                                            <span class="photo-name">{{ expense.name }}</span>
+                                            <span class="photo-amount">{{ expense.amount }}{{ expense.devise }}</span>
+                                        </div>
                                     </div>
+                                {% endfor %}
+                            </div>
+
+                            {% if expensesWithPicture|length > 12 %}
+                                <div class="photo-pagination">
+                                    <button class="btn btn-sm btn-outline-secondary"
+                                            {{ stimulus_target('photo-gallery', 'prev') }}
+                                            {{ stimulus_action('photo-gallery', 'prev') }}>
+                                        <twig:ux:icon name="ep:arrow-left" height="16" width="16"/>
+                                    </button>
+                                    <span {{ stimulus_target('photo-gallery', 'info') }} class="photo-pagination-info"></span>
+                                    <button class="btn btn-sm btn-outline-secondary"
+                                            {{ stimulus_target('photo-gallery', 'next') }}
+                                            {{ stimulus_action('photo-gallery', 'next') }}>
+                                        <twig:ux:icon name="ep:arrow-right" height="16" width="16"/>
+                                    </button>
                                 </div>
-                            {% endfor %}
+                            {% endif %}
                         </div>
 
                         {% for expense in expensesWithPicture %}
