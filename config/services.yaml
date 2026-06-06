@@ -8,7 +8,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     upload_directory: '%kernel.project_dir%/public/images/'
-    
+    app.expense_upload_dir: '%kernel.project_dir%/var/uploads/expense'
+
     # Email configuration
     app.mail_from: 'kopeck@f5t.com'
 
@@ -29,6 +30,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Controller\Expense\ImageController:
+        arguments:
+            $expenseUploadDir: '%app.expense_upload_dir%'
 
     App\Service\ShareCodeManager:
         arguments:
