@@ -50,6 +50,7 @@ class ShowController extends AbstractController
             'balancePerId' => $balancePerId,
             'transfers' => $transfers,
             'memberTotals' => $aggregated['memberTotals'],
+            'expensesWithPicture' => $aggregated['expensesWithPicture'],
         ]);
     }
 }

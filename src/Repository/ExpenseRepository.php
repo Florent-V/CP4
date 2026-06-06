@@ -40,6 +40,11 @@ class ExpenseRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByPicture(string $filename): ?Expense
+    {
+        return $this->findOneBy(['picture' => $filename]);
+    }
+
     public function findSoftDeletedInSplitter(Uuid $splitterId): array
     {
         // We temporarily disable the softdeleteable filter to access soft-deleted records

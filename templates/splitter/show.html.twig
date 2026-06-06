@@ -509,10 +509,55 @@
 
                 </div>
                 <div id="photos" class="tab-pane">
-                    <div class="photo-placeholder">
-                        <!-- Placeholder pour les photos -->
-                        <p>Les photos seront affichées ici.</p>
-                    </div>
+                    {% if expensesWithPicture is empty %}
+                        <div class="photo-placeholder text-center text-muted py-5">
+                            <twig:ux:icon name="material-symbols:photo-library-outline" height="48" width="48"/>
+                            <p class="mt-3">Aucune photo pour ce groupe.</p>
+                        </div>
+                    {% else %}
+                        <div class="photo-gallery">
+                            {% for expense in expensesWithPicture %}
+                                <div class="photo-item"
+                                     data-bs-toggle="modal"
+                                     data-bs-target="#photoModal{{ expense.id }}">
+                                    <img
+                                        src="{{ vich_uploader_asset(expense, 'pictureFile') }}"
+                                        alt="Photo — {{ expense.name }}"
+                                        loading="lazy"
+                                    >
+                                    <div class="photo-overlay">
+                                        <span class="photo-name">{{ expense.name }}</span>
+                                        <span class="photo-amount">{{ expense.amount }}{{ expense.devise }}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        {% for expense in expensesWithPicture %}
+                            <div class="modal fade" id="photoModal{{ expense.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content" style="background: transparent; border: none; box-shadow: none;">
+                                        <div class="modal-header" style="border: none; padding-bottom: 0;">
+                                            <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                        </div>
+                                        <div class="modal-body text-center" style="padding-top: 0;">
+                                            <img
+                                                src="{{ vich_uploader_asset(expense, 'pictureFile') }}"
+                                                alt="Photo — {{ expense.name }}"
+                                                style="max-width: 100%; height: auto; border-radius: 12px;"
+                                            >
+                                            <div class="mt-3 text-white">
+                                                <strong>{{ expense.name }}</strong>
+                                                — {{ expense.amount }}{{ expense.devise }}
+                                                — Payé par {{ expense.paidBy.nickname }}
+                                                — <a href="{{ path('app_expense_show', {expense_id: expense.id, splitter_id: splitter.id}) }}" class="text-white">Voir la dépense</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>
