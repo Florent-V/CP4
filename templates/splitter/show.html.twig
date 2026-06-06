@@ -583,7 +583,7 @@
             </div>
         </div>
 
-        <div class="floating-add-button">
+        <div class="floating-add-button" {{ stimulus_target('splitterTabs', 'addButton') }}>
             <a class="add-button d-flex align-items-center gap-2" title="ajouter une dépense"
                href="{{ path('app_expense_new', {splitter_id: splitter.id}) }}">
                 <twig:ux:icon name="material-symbols:add-rounded" height="40" width="40"/>
