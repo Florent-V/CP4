@@ -20,16 +20,14 @@ class SplitterExpenseAggregator
         $groupTotal = 0;
         $expensesByDate = [];
         $memberTotals = [];
+        $expensesWithPicture = [];
 
         foreach ($splitter->getExpenses() as $expense) {
-            // Total général
             $groupTotal += $expense->getAmount();
 
-            // Regroupement par date
             $date = $expense->getMadeAt()->format('Y-m-d');
             $expensesByDate[$date][] = $expense;
 
-            // Total par membre payeur
             $member = $expense->getPaidBy();
             if ($member !== null) {
                 $memberId = $member->getId();
@@ -38,14 +36,19 @@ class SplitterExpenseAggregator
                 }
                 $memberTotals[$memberId] += $expense->getAmount();
             }
+
+            if ($expense->getPicture() !== null) {
+                $expensesWithPicture[] = $expense;
+            }
         }
-        // Tri des dates du plus récent au plus ancien
+
         krsort($expensesByDate);
 
         return [
             'groupTotal' => $groupTotal,
             'expensesByDate' => $expensesByDate,
             'memberTotals' => $memberTotals,
+            'expensesWithPicture' => $expensesWithPicture,
         ];
     }
 }
