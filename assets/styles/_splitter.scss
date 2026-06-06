@@ -206,6 +206,21 @@
       }
     }
 
+    .photo-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+
+      .photo-pagination-info {
+        font-size: 0.85rem;
+        color: var(--color-text-muted, #888);
+        min-width: 80px;
+        text-align: center;
+      }
+    }
+
     .splitter-members {
       color: var(--color-accent);
       font-size: 0.97rem;
